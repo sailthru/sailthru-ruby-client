@@ -17,7 +17,7 @@ spec = Gem::Specification.new do |s|
 
   # Change these as appropriate
   s.name              = "sailthru-ruby-client"
-  s.version           = "0.1.0"
+  s.version           = "1.01"
   s.summary           = "Sailthru Ruby Client "
   s.author            = "Prajwal Tuladhar"
   s.email             = "praj@sailthru.com"
@@ -33,7 +33,7 @@ spec = Gem::Specification.new do |s|
 
   # If you want to depend on other gems, add them here, along with any
   # relevant versions
-  # s.add_dependency("some_other_gem", "~> 0.1.0")
+  s.add_dependency("json")
 
   # If your tests use any gems, include them here
   # s.add_development_dependency("mocha") # for example
