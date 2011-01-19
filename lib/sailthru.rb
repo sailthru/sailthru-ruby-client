@@ -77,7 +77,7 @@ class SailthruClient
     if schedule_time != nil
         post[:schedule_time] = schedule_time
     end
-    result = self.api_post(:send, post)
+    return self.api_post(:send, post)
   end
 
   
@@ -335,6 +335,12 @@ class SailthruClient
       # puts "k,v: #{k}, #{v}"
       if v.class == Hash
         values.concat SailthruClient.extract_param_values(v)
+     elsif v.class == Array
+        temp_hash = Hash.new()
+        v.each_with_index do |v_,i_|
+          temp_hash[i_.to_s] = v_
+        end
+        values.concat self.extract_param_values(temp_hash)
       else
         values.push v.to_s()
       end
