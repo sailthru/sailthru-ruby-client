@@ -248,7 +248,7 @@ class SailthruClient
     data[:sig] = SailthruClient.get_signature_hash(data, @secret)
     _result = self.http_request("#{@api_uri}/#{action}", data, request_type)
     
-    
+
     # NOTE: don't do the unserialize here
     unserialized = JSON.parse(_result)
     return unserialized ? unserialized : _result
@@ -307,6 +307,15 @@ class SailthruClient
         flatten_nested_hash(value).each do |k, v|
           f["#{_key}#{k}"] = v
         end
+      elsif value.class == Array
+        temp_hash = Hash.new()
+        value.each_with_index do |v, i|
+           temp_hash[i.to_s] = v
+        end
+        flatten_nested_hash(temp_hash).each do |k, v|
+          f["#{_key}#{k}"] = v
+        end
+
       else
         f[_key] = value
       end
