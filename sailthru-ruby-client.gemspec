@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.email = %q{praj@sailthru.com}
   s.extra_rdoc_files = ["README.md"]
   s.files = ["README.md", "lib/sailthru.rb"]
-  s.homepage = %q{http://www.sailthru.com}
+  s.homepage = %q{http://docs.sailthru.com}
   s.rdoc_options = ["--main", "README.md"]
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.4.1}

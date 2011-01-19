@@ -21,7 +21,7 @@ spec = Gem::Specification.new do |s|
   s.summary           = "Sailthru Ruby Client "
   s.author            = "Prajwal Tuladhar"
   s.email             = "praj@sailthru.com"
-  s.homepage          = "http://www.sailthru.com"
+  s.homepage          = "http://docs.sailthru.com"
 
   s.has_rdoc          = true
   s.extra_rdoc_files  = %w(README.md)
