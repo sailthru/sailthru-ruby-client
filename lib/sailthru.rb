@@ -45,10 +45,7 @@ end
 class SailthruClient
   attr_accessor :api_uri, :api_key, :secret, :version, :last_request
   
-  API_URI = SAILTHRU_API_URI
-  API_KEY = SAILTHRU_CLIENT_API_KEY # specific to CLIENT_NAME
-  SECRET  = SAILTHRU_CLIENT_SECRET # specific to CLIENT_NAME
-  VERSION = '1.0'
+  VERSION = '1.01'
 
   # params:
   #   api_key, String
@@ -56,10 +53,10 @@ class SailthruClient
   #   api_uri, String
   # 
   # Instantiate a new client; constructor optionally takes overrides for key/secret/uri.
-  def initialize(api_key =nil, secret=nil, api_uri=nil)
-    @api_key = api_key || API_KEY
-    @secret  = secret || SECRET
-    @api_uri = api_uri || API_URI
+  def initialize(api_key, secret, api_uri)
+    @api_key = api_key
+    @secret  = secret
+    @api_uri = api_uri
   end
   
   # params:
@@ -71,12 +68,15 @@ class SailthruClient
   #     test: send as test email (subject line will be marked, will not count towards stats)
   # returns:
   #   Hash, response data from server
-  def send(template_name, email, vars, options = {})
+  def send(template_name, email, vars, options = {}, schedule_time = nil)
     post = {}
     post[:template] = template_name
     post[:email] = email
     post[:vars] = vars
     post[:options] = options
+    if schedule_time != nil
+        post[:schedule_time] = schedule_time
+    end
     result = self.api_post(:send, post)
   end
 
@@ -327,10 +327,21 @@ class SailthruClient
       if v.class == Hash
         values.concat SailthruClient.extract_param_values(v)
       else
-        values.push v
+        values.push v.to_s()
       end
     end
     return values
+  end
+
+  # params:
+  #   params, Hash
+  #   secret, String
+  # returns:
+  #   String
+  #
+  # Returns the unhashed signature string (secret + sorted list of param values) for an API call.
+  def self.get_signature_string(params, secret)
+    return secret + self.extract_param_values(params).sort.join("")
   end
   
   
@@ -338,10 +349,11 @@ class SailthruClient
   #   params, Hash
   #   secret, String
   # returns:
-  #   String, an MD5 hash of the secret + sorted list of parameter values for an API call.
+  #   String
+  #
+  # Returns an MD5 hash of the signature string for an API call.
   def self.get_signature_hash(params, secret)
-    string = secret + self.extract_param_values(params).sort.join("")
-    MD5.md5(string) # debuggin
+    return MD5.md5(self.get_signature_string(params, secret)) # debuggin
   end
   
 end
