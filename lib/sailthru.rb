@@ -35,6 +35,7 @@
  
 require 'net/http'
 require 'uri'
+require 'cgi'
 require 'rubygems'
 require 'json'
 require 'md5'
@@ -267,9 +268,8 @@ class SailthruClient
     if method == 'POST'
       post_data = data
     else
-      uri += "?" + data.map{ |key, value| "#{key}=#{value}" }.join("&")
+      uri += "?" + data.map{ |key, value| "#{CGI::escape(key)}=#{CGI::escape(value)}" }.join("&")
     end
-    
     req = nil
     headers = {"User-Agent" => "Sailthru API Ruby Client #{VERSION}"}
     
@@ -368,7 +368,7 @@ class SailthruClient
   #
   # Returns an MD5 hash of the signature string for an API call.
   def self.get_signature_hash(params, secret)
-    return MD5.md5(self.get_signature_string(params, secret)) # debuggin
+    return MD5.md5(self.get_signature_string(params, secret)).to_s # debuggin
   end
   
 end
