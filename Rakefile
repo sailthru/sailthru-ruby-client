@@ -16,9 +16,9 @@ end
 spec = Gem::Specification.new do |s|
 
   # Change these as appropriate
-  s.name              = "sailthru-ruby-client"
+  s.name              = "sailthru-client"
   s.version           = "1.01"
-  s.summary           = "Sailthru Ruby Client "
+  s.summary           = "A simple client library to remotely access the Sailthru REST API." 
   s.author            = "Prajwal Tuladhar"
   s.email             = "praj@sailthru.com"
   s.homepage          = "http://docs.sailthru.com"
