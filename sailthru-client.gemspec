@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 
 Gem::Specification.new do |s|
-  s.name = %q{sailthru-ruby-client}
+  s.name = %q{sailthru-client}
   s.version = "1.01"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
@@ -14,7 +14,7 @@ Gem::Specification.new do |s|
   s.rdoc_options = ["--main", "README.md"]
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.4.1}
-  s.summary = %q{Sailthru Ruby Client}
+  s.summary = %q{A simple client library to remotely access the Sailthru REST API.}
 
   if s.respond_to? :specification_version then
     s.specification_version = 3
