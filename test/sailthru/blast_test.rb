@@ -33,5 +33,22 @@ class BlastTest < Test::Unit::TestCase
       assert_not_nil response['error']
       assert_not_nil response['errormsg']
     end
+
+    should "be able to schedule blast with given blast name, list, schedule_time, from name, from email, subject, content html, content text" do
+      blast_name = 'Default Blast 222'
+      list = 'default-list'
+      schedule_time = '+3 hours'
+      from_name = 'Daily Newsletter'
+      from_email = 'praj@sailthru.com'
+      subject = 'Hello World!'
+      content_html = '<p>Hello World</p>'
+      content_text= 'Hello World'
+      stub_post(@api_call_url, 'blast_post_valid.json')
+      response = @sailthru_client.schedule_blast(blast_name, list, schedule_time, from_name, from_email, subject, content_html, content_text)      
+      assert_equal blast_name, response['name']
+      assert_equal list, response['list']
+      assert_equal from_email, response['from_email']
+      assert_equal from_name, response['from_name']
+    end
   end
 end
