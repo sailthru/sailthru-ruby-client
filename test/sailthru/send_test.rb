@@ -31,7 +31,7 @@ class SendTest < Test::Unit::TestCase
       assert_equal template_name, response['template']
     end
 
-    should "be able to post send with invalid template name and/or email" do
+    should "not be able to post send with invalid template name and/or email" do
       template_name = 'invalid-template'
       email = 'example@example.com'
       stub_post(@api_call_url, 'send_post_invalid.json')
