@@ -7,6 +7,8 @@ require 'md5'
 
 module Sailthru
 
+  Version = VERSION = '1.0.2'
+
   class SailthruClientException < Exception
   end
 
@@ -100,8 +102,6 @@ module Sailthru
   class SailthruClient
 
     include Helpers
-    
-    VERSION = '1.01'
 
     # params:
     #   api_key, String
