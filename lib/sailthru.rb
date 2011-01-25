@@ -176,7 +176,7 @@ module Sailthru
     #   Hash, response data from server
     #
     # Schedule a mass mail blast
-    def schedule_blast(name, list, schedule_time, from_name, from_email, subject, content_html, content_text, options)
+    def schedule_blast(name, list, schedule_time, from_name, from_email, subject, content_html, content_text, options = {})
       post = options ? options : {}
       post[:name] = name
       post[:list] = list
