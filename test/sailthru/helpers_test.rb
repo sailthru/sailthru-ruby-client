@@ -2,8 +2,6 @@ $:.unshift File.join(File.dirname(__FILE__),'..')
 require 'test_helper'
 
 class HelpersTest < Test::Unit::TestCase
-  include Sailthru::Helpers
-  
   context "Helper tests" do
     should "convert simple hash to array" do
       expected_array = ["xyz", "my_secret", "my template"].sort

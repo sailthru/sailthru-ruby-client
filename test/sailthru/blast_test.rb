@@ -2,9 +2,6 @@ $:.unshift File.join(File.dirname(__FILE__),'..')
 require 'test_helper'
 
 class BlastTest < Test::Unit::TestCase
-
-  include Sailthru::Helpers
-
   context "API Call: blast" do
     setup do
       api_url = 'http://api.sailthru.com'

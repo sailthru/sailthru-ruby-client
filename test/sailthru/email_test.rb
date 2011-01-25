@@ -2,7 +2,6 @@ $:.unshift File.join(File.dirname(__FILE__),'..')
 require 'test_helper'
 
 class EmailTest < Test::Unit::TestCase
-  include Sailthru::Helpers
   context "API Call: email" do
     setup do
       api_url = 'http://api.sailthru.com'

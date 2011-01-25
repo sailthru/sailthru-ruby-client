@@ -14,6 +14,9 @@ require 'sailthru'
 FakeWeb.allow_net_connect = false
 
 class Test::Unit::TestCase
+
+  include Sailthru::Helpers
+
   def setup
     FakeWeb.clean_registry
   end
