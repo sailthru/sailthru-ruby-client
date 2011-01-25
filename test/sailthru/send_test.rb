@@ -4,8 +4,7 @@ require 'test_helper'
 class SendTest < Test::Unit::TestCase
   context "API Call: send" do
     setup do
-      api_url = 'http://api.sailthru.com'
-      #@sailthru_client = SailthruClient.new("my_api_key", "my_secret", api_url)
+      api_url = 'http://api.sailthru.com'      
       @sailthru_client = Sailthru::SailthruClient.new("my_api_key", "my_secret", api_url)
       @api_call_url = sailthru_api_call_url(api_url, 'send')
     end
