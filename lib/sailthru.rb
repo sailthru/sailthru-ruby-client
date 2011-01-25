@@ -83,6 +83,18 @@ module Sailthru
       end
       return f
     end
+
+    def verify_purchase_items (items)
+      if items.class == Array and !items.empty?
+        required_item_fields = ['qty', 'title', 'price', 'id', 'url'].sort
+        items.each do |v|
+          keys = v.keys.sort
+          return false if keys != required_item_fields
+        end
+        return true
+      end
+      return false
+    end
   end
 
   class SailthruClient
@@ -293,15 +305,27 @@ module Sailthru
       end
     end
 
-
+    # params:
+    #   email, String
+    #   items, String
+    #   incomplete, Integer
+    #   message_id, String
+    # returns:
+    #   hash, response from server
+    #
     # Record that a user has made a purchase, or has added items to their purchase total.
     def purchase(email, items, incomplete = nil, message_id = nil)
       data = {}
       data[:email] = email
-      data[:items] = items
+      
+      if verify_purchase_items(items)
+        data[:items] = items
+      end
+
       if incomplete != nil
         data[:incomplete] = incomplete.to_i
       end
+      
       if message_id != nil
         data[:message_id] = message_id
       end
