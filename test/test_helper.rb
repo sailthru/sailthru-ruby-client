@@ -38,6 +38,11 @@ class Test::Unit::TestCase
     FakeWeb.register_uri(:get, URI.parse(url), options)
   end
 
+  def stub_delete(url, filename)
+    options = { :body => fixture_file(filename), :content_type => 'application/json' }
+    FakeWeb.register_uri(:delete, URI.parse(url), options)
+  end
+
   def stub_post(url, filename)
     FakeWeb.register_uri(:post, URI.parse(url), :body => fixture_file(filename), :content_type => 'application/json')
   end
