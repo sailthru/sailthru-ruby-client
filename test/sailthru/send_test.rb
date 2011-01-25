@@ -39,5 +39,20 @@ class SendTest < Test::Unit::TestCase
       response = @sailthru_client.send template_name, email, {"name" => "Unix",  "myvar" => [1111,2,3], "mycomplexvar" => {"tags" => ["obama", "aaa", "c"]}}
       assert_equal 14, response['error']
     end
+
+    should "be able to send multiple emails with valid template" do
+      template_name = 'default'
+      emails = 'example@example.com, example3@example.com'
+      stub_post(@api_call_url, 'send_post_multiple_valid.json')
+      response = @sailthru_client.multi_send(template_name, emails)
+      assert_equal 2, response['sent_count']
+    end
+
+    should "be able to cancel scheduled send" do
+      send_id = 'TT4gSGdj2Z17AAGb'
+      stub_delete(@api_call_url + '?format=json&send_id=' + send_id + '&api_key=my_api_key&sig=03ac23dc831df297bec953691f3d64b2', 'send_cancel.json')
+      response = @sailthru_client.cancel_send(send_id)
+      assert_equal response['send_id'], send_id
+    end
   end
 end
