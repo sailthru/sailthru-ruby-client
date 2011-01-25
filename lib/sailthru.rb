@@ -332,6 +332,16 @@ module Sailthru
       api_post(:purchase, data)
     end
 
+    # params:
+    #   stat, String
+    #
+    #  returns:
+    #   hash, response from server
+    # Request various stats from Sailthru.
+    def get_stats(stat)
+      api_get(:stats, {:stat => stat})
+    end
+
 
     protected
 
