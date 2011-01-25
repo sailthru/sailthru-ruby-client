@@ -89,8 +89,6 @@ module Sailthru
 
     include Helpers
     
-    attr_accessor :api_uri, :api_key, :secret, :last_request
-
     VERSION = '1.01'
 
     # params:
@@ -362,7 +360,6 @@ module Sailthru
         end
       end
 
-      @last_request = req
       begin
         response = Net::HTTP.start(_uri.host, _uri.port) {|http|
           http.request(req)
@@ -376,11 +373,6 @@ module Sailthru
       else
         raise SailthruClientException.new("No response received from stream: #{_uri.to_s}")
       end
-
-    end
-
-   
-
+    end    
   end
-
 end
