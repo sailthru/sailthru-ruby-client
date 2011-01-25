@@ -114,15 +114,37 @@ module Sailthru
     #     test: send as test email (subject line will be marked, will not count towards stats)
     # returns:
     #   Hash, response data from server
-    def send(template_name, email, vars, options = {}, schedule_time = nil)
+    def send(template_name, email, vars={}, options = {}, schedule_time = nil)
       post = {}
       post[:template] = template_name
       post[:email] = email
-      post[:vars] = vars
       post[:options] = options
+
+      if vars.length > 0
+        post[:vars] = vars
+      end
+      
       if schedule_time != nil
           post[:schedule_time] = schedule_time
       end
+      return self.api_post(:send, post)
+    end
+
+
+    def multi_send(template_name, emails, vars={}, options = {}, schedule_time = nil)
+      post = {}
+      post[:template] = template_name
+      post[:email] = emails
+      post[:options] = options
+
+      if schedule_time != nil
+          post[:schedule_time] = schedule_time
+      end
+
+      if vars.length > 0
+        post[:vars] = vars
+      end
+
       return self.api_post(:send, post)
     end
 
@@ -135,6 +157,11 @@ module Sailthru
     # Get the status of a send.
     def get_send(send_id)
       self.api_get(:send, {:send_id => send_id.to_s})
+    end
+
+    
+    def cancel_send(send_id)
+      self.api_delete(:send, {:send_id => send_id.to_s})
     end
 
     # params:
@@ -279,6 +306,11 @@ module Sailthru
       api_request(action, data, 'POST')
     end
 
+    #Perform API DELETE request
+    def api_delete(action, data)
+      api_request(action, data, 'DELETE')
+    end
+
     # params:
     #   action, String
     #   data, Hash
@@ -316,13 +348,18 @@ module Sailthru
       end
       req = nil
       headers = {"User-Agent" => "Sailthru API Ruby Client #{VERSION}"}
-
+      
       _uri  = URI.parse(uri)
       if method == 'POST'
         req = Net::HTTP::Post.new(_uri.path, headers)
         req.set_form_data(data)
       else
-        req = Net::HTTP::Get.new("#{_uri.path}?#{_uri.query}", headers)
+        request_uri = "#{_uri.path}?#{_uri.query}"
+        if method == 'DELETE'
+          req = Net::HTTP::Delete.new(request_uri, headers)
+        else
+          req = Net::HTTP::Get.new(request_uri, headers)
+        end
       end
 
       @last_request = req
