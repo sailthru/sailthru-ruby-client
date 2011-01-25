@@ -95,6 +95,6 @@ task :publish do
     sh "rake gem"
     sh "rake gemspec"
     sh "git tag v#{Sailthru::Version}"
-    sh "push origin v#{Sailthru::Version}"
+    sh "git push origin v#{Sailthru::Version}"
     sh "git push origin master"
 end
