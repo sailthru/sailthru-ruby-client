@@ -294,6 +294,23 @@ module Sailthru
     end
 
 
+    # Record that a user has made a purchase, or has added items to their purchase total.
+    def purchase(email, items, incomplete = nil, message_id = nil)
+      data = {}
+      data[:email] = email
+      data[:items] = items
+      if incomplete != nil
+        data[:incomplete] = incomplete.to_i
+      end
+      if message_id != nil
+        data[:message_id] = message_id
+      end
+      api_post(:purchase, data)
+    end
+
+
+    protected
+
     # Perform API GET request
     def api_get(action, data)
       api_request(action, data, 'GET')
