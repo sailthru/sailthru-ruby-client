@@ -50,5 +50,35 @@ class BlastTest < Test::Unit::TestCase
       assert_equal from_email, response['from_email']
       assert_equal from_name, response['from_name']
     end
+
+    should "not be able to schedule blast with invalid email" do
+      blast_name = 'Default Blast 222'
+      list = 'default-list'
+      schedule_time = '+3 hours'
+      from_name = 'Daily Newsletter'
+      from_email_invalid = 'praj@'
+      subject = 'Hello World!'
+      content_html = '<p>Hello World</p>'
+      content_text= 'Hello World'
+      stub_post(@api_call_url, 'blast_post_invalid_email.json')
+      response = @sailthru_client.schedule_blast(blast_name, list, schedule_time, from_name, from_email_invalid, subject, content_html, content_text)
+      assert_not_nil response['error']
+      assert_not_nil response['errormsg']
+    end
+
+    should "not be able to schedule blast with invalid list" do
+      blast_name = 'Default Blast 222'
+      list_invalid = 'this-list-does-not-exist'
+      schedule_time = '+3 hours'
+      from_name = 'Daily Newsletter'
+      from_email = 'praj@'
+      subject = 'Hello World!'
+      content_html = '<p>Hello World</p>'
+      content_text= 'Hello World'
+      stub_post(@api_call_url, 'blast_post_invalid_list.json')
+      response = @sailthru_client.schedule_blast(blast_name, list_invalid, schedule_time, from_name, from_email, subject, content_html, content_text)
+      assert_not_nil response['error']
+      assert_not_nil response['errormsg']
+    end
   end
 end
