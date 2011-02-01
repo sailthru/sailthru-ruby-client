@@ -2,3 +2,4 @@
 *.un~
 .rvmrc
 *.gem
+.loadpath
