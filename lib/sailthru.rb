@@ -198,18 +198,78 @@ module Sailthru
       post[:subject] = subject
       post[:content_html] = content_html
       post[:content_text] = content_text
-      self.api_post(:blast, post)
+      api_post(:blast, post)
+    end
+
+
+    # params
+    #   blast_id, Fixnum | String
+    #   name, String
+    #   list, String
+    #   schedule_time, String
+    #   from_name, String
+    #   from_email, String
+    #   subject, String
+    #   content_html, String
+    #   content_text, String
+    #   options, hash
+    #
+    # updates existing blast
+    def update_blast(blast_id, name = nil, list = nil, schedule_time = nil, from_name = nil, from_email = nil, subject = nil, content_html = nil, content_text = nil, options = {})
+      data = options ? options : {}
+      data[:blast_id] = blast_id
+      if name != nil
+        data[:name] = name
+      end
+      if list !=  nil
+        data[:list] = list
+      end
+      if schedule_time != nil
+        data[:schedule_time] = schedule_time
+      end
+      if from_name != nil
+        data[:from_name] = from_name
+      end
+      if from_email != nil
+        data[:from_email] = from_email
+      end
+      if subject != nil
+        data[:subject] = subject
+      end
+      if content_html != nil
+        data[:content_html] = content_html
+      end
+      if content_text != nil
+        data[:content_text] = content_text
+      end
+      api_post(:blast, data)
     end
 
 
     # params:
-    #   blast_id, Fixnum
+    #   blast_id, Fixnum | String
     # returns:
     #   Hash, response data from server
     #
     # Get information on a previously scheduled email blast
     def get_blast(blast_id)
-      self.api_get(:blast, {:blast_id => blast_id.to_s})
+      api_get(:blast, {:blast_id => blast_id.to_s})
+    end
+
+    # params:
+    #   blast_id, Fixnum | String
+    #
+    # Cancel a scheduled Blast
+    def cancel_blast(blast_id)
+      api_post(:blast, {:blast_id => blast_id, :schedule_time => ''})
+    end
+
+    # params:
+    #   blast_id, Fixnum | String
+    #
+    # Delete a Blast
+    def delete_blast(blast_id)
+      api_delete(:blast, {:blast_id => blast_id})
     end
 
     # params:
@@ -219,7 +279,7 @@ module Sailthru
     #
     # Return information about an email address, including replacement vars and lists.
     def get_email(email)
-      self.api_get(:email, {:email => email})
+      api_get(:email, {:email => email})
     end
 
     # params:
