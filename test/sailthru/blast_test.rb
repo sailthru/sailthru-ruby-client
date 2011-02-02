@@ -26,7 +26,7 @@ class BlastTest < Test::Unit::TestCase
       params = {'format' => 'json', 'api_key' => @api_key, 'blast_id' => invalid_blast_id}
       query_string = create_query_string(@secret, params)
       stub_get(@api_call_url + '?' + query_string, 'blast_get_invalid.json')
-      response =  @sailthru_client.get_blast(invalid_blast_id)      
+      response =  @sailthru_client.get_blast(invalid_blast_id)
       assert_not_nil response['error']
       assert_not_nil response['errormsg']
     end
@@ -41,7 +41,7 @@ class BlastTest < Test::Unit::TestCase
       content_html = '<p>Hello World</p>'
       content_text= 'Hello World'
       stub_post(@api_call_url, 'blast_post_valid.json')
-      response = @sailthru_client.schedule_blast(blast_name, list, schedule_time, from_name, from_email, subject, content_html, content_text)      
+      response = @sailthru_client.schedule_blast(blast_name, list, schedule_time, from_name, from_email, subject, content_html, content_text)
       assert_equal blast_name, response['name']
       assert_equal list, response['list']
       assert_equal from_email, response['from_email']
@@ -77,5 +77,41 @@ class BlastTest < Test::Unit::TestCase
       assert_not_nil response['error']
       assert_not_nil response['errormsg']
     end
+
+    should "be able to update blast with valid blast_id" do
+      blast_id = 42499
+      name = 'blast name changed'
+      from_name = 'prajwal tuladhar'
+      stub_post(@api_call_url, 'blast_post_update_valid.json')
+      response = @sailthru_client.update_blast(blast_id = blast_id, from_name = from_name)
+      assert_equal(name, response['name'])
+    end
+
+    should "be able to delete valid blast" do
+      blast_id = 42499
+      params = {'format' => 'json', 'api_key' => @api_key, 'blast_id' => blast_id}
+      query_string = create_query_string(@secret, params)
+      stub_delete(@api_call_url + '?' + query_string, 'blast_delete_valid.json')
+      response = @sailthru_client.delete_blast(blast_id)
+      assert_equal(blast_id, response['blast_id'])
+    end
+
+    should "not be able delete invalid blast" do
+      invalid_blast_id = '88787'
+      params = {'format' => 'json', 'api_key' => @api_key, 'blast_id' => invalid_blast_id}
+      query_string = create_query_string(@secret, params)
+      stub_delete(@api_call_url + '?' + query_string, 'blast_delete_invalid.json')
+      response = @sailthru_client.delete_blast(invalid_blast_id)
+      assert_not_nil response['error']
+      assert_not_nil response['errormsg']
+    end
+
+    should "be able to cancel a valid blast" do
+      blast_id = 42499
+      stub_post(@api_call_url, 'blast_post_update_valid.json')
+      response = @sailthru_client.cancel_blast(blast_id)
+      assert_equal(blast_id, response['blast_id'])
+    end
+
   end
 end
