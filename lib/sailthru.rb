@@ -133,7 +133,7 @@ module Sailthru
       if vars.length > 0
         post[:vars] = vars
       end
-      
+
       if schedule_time != nil
           post[:schedule_time] = schedule_time
       end
@@ -169,7 +169,7 @@ module Sailthru
       self.api_get(:send, {:send_id => send_id.to_s})
     end
 
-    
+
     def cancel_send(send_id)
       self.api_delete(:send, {:send_id => send_id.to_s})
     end
@@ -317,7 +317,7 @@ module Sailthru
     def purchase(email, items, incomplete = nil, message_id = nil)
       data = {}
       data[:email] = email
-      
+
       if verify_purchase_items(items)
         data[:items] = items
       end
@@ -325,13 +325,15 @@ module Sailthru
       if incomplete != nil
         data[:incomplete] = incomplete.to_i
       end
-      
+
       if message_id != nil
         data[:message_id] = message_id
       end
       api_post(:purchase, data)
     end
 
+
+    # <b>DEPRECATED:</b> Please use either stats_list or stats_blast
     # params:
     #   stat, String
     #
@@ -343,7 +345,58 @@ module Sailthru
     end
 
 
+    # params
+    #   list, String
+    #   date, String
+    #
+    # returns:
+    #   hash, response from server
+    # Retrieve information about your subscriber counts on a particular list, on a particular day.
+    def stats_list(list = nil, date = nil)
+      data = {}
+      if list != nil
+        data[:list] = list
+      end
+      if date != nil
+        data[:date] = date
+      end
+      data[:stat] = 'list'
+
+      stats(data)
+    end
+
+
+    # params
+    #   blast_id, String
+    #   start_date, String
+    #   end_date, String
+    #   options, Hash
+    #
+    # returns:
+    #   hash, response from server
+    # Retrieve information about a particular blast or aggregated information from all of blasts over a specified date range
+    def stats_blast(blast_id = nil, start_date = nil, end_date = nil, options = {})
+      data = options
+      if blast_id != nil
+        data[:blast_id] = blast_id
+      end
+      if start_date != nil
+        data[:start_date] = start_date
+      end
+      if end_date != nil
+        data[:end_date] = end_date
+      end
+      data[:stat] = 'blast'
+      stats(data)
+    end
+
+
     protected
+
+    # Make Stats API Request
+    def stats(data)
+      api_get(:stats, data)
+    end
 
     # Perform API GET request
     def api_get(action, data)
@@ -397,7 +450,7 @@ module Sailthru
       end
       req = nil
       headers = {"User-Agent" => "Sailthru API Ruby Client #{VERSION}"}
-      
+
       _uri  = URI.parse(uri)
       if method == 'POST'
         req = Net::HTTP::Post.new(_uri.path, headers)
@@ -424,6 +477,6 @@ module Sailthru
       else
         raise SailthruClientException.new("No response received from stream: #{_uri.to_s}")
       end
-    end    
+    end
   end
 end
