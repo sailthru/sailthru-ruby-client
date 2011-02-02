@@ -479,6 +479,37 @@ module Sailthru
       api_post(:content, data)
     end
 
+    # params
+    #   list, String
+    #   format, String
+    #
+    # Download a list. Obviously, this can potentially be a very large download.
+    # 'txt' is default format since, its more compact as compare to others
+    def get_list(list, format = 'txt')
+      return api_get(:list, {:list => list, :format => format})
+    end
+
+
+    # params
+    #   list, String
+    #   emails, String | Array
+    # Upload a list. The list import job is queued and will happen shortly after the API request.
+    def save_list(list, emails)
+      data = {}
+      data[:list] = list
+      data[:emails] = (emails.class == Array) ? emails.join(',') : emails
+      return api_post(:list, data)
+    end
+
+
+    # params
+    #   list, String
+    #
+    # Deletes a list
+    def delete_list(list)
+      api_delete(:list, {:list => list})
+    end
+
 
     protected
 
@@ -519,8 +550,15 @@ module Sailthru
 
 
       # NOTE: don't do the unserialize here
-      unserialized = JSON.parse(_result)
-      return unserialized ? unserialized : _result
+     if data[:format] == 'json'
+        begin
+           unserialized = JSON.parse(_result)
+          return unserialized ? unserialized : _result
+        rescue JSON::JSONError => e
+          return {'error' => e}
+        end
+     end
+     return _result
     end
 
 
