@@ -30,5 +30,23 @@ class StatsTest < Test::Unit::TestCase
       assert_not_nil response['error']
       assert_not_nil response['errormsg']
     end
+
+    should "be able to get stats list data when list and date are not null" do
+      params = {'format' => 'json', 'api_key' => @api_key, 'stat' => 'list'}
+      query_string = create_query_string(@secret, params)
+      stub_get(@api_call_url + '?' + query_string, 'stats_lists_valid.json')
+      response = @sailthru_client.stats_list()
+      assert_not_nil response['lists_signup_count']
+    end
+
+    should "not be able to stats list data when list is given and invalid" do
+      list = 'not-listed'
+      params = {'format' => 'json', 'api_key' => @api_key, 'stat' => 'list', 'list' => list}
+      query_string = create_query_string(@secret, params)
+      stub_get(@api_call_url + '?' + query_string, 'stats_lists_invalid.json')
+      response = @sailthru_client.stats_list(list = list)
+      assert_not_nil response['error']
+      assert_not_nil response['errormsg']
+    end
   end
 end
