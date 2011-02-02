@@ -391,6 +391,35 @@ module Sailthru
     end
 
 
+    # params
+    #   title, String
+    #   url, String
+    #   date, String
+    #   tags, Array or Comma separated string
+    #   vars, Hash
+    #
+    # Push a new piece of content to Sailthru, triggering any applicable alerts.
+    # http://docs.sailthru.com/api/content
+    def push_content(title, url, date = nil, tags = nil, vars = {})
+      data = {}
+      data[:title] = title
+      data[:url] = url
+      if date != nil
+        data[:date] = date
+      end
+      if tags != nil
+        if tags.class == Array
+          tags = tags.join(',')
+        end
+        data[:tags] = tags
+      end
+      if vars.length > 0
+        data[:vars] = vars
+      end
+      api_post(:content, data)
+    end
+
+
     protected
 
     # Make Stats API Request

@@ -4,7 +4,7 @@ require 'test_helper'
 class StatsTest < Test::Unit::TestCase
   context "API Call: stats" do
     setup do
-      api_url = 'http://api.sailthru.com'
+       api_url = 'http://api.sailthru.com'
       @secret = 'my_secret'
       @api_key = 'my_api_key'
       @sailthru_client = Sailthru::SailthruClient.new(@api_key, @secret, api_url)
