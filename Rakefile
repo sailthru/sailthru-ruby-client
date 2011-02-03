@@ -28,7 +28,7 @@ spec = Gem::Specification.new do |s|
   # Change these as appropriate
   s.name              = "sailthru-client"
   s.version           = "#{Sailthru::Version}"
-  s.summary           = "A simple client library to remotely access the Sailthru REST API." 
+  s.summary           = "A simple client library to remotely access the Sailthru REST API."
   s.author            = "Prajwal Tuladhar"
   s.email             = "praj@sailthru.com"
   s.homepage          = "http://docs.sailthru.com"
@@ -44,7 +44,7 @@ spec = Gem::Specification.new do |s|
   # If you want to depend on other gems, add them here, along with any
   # relevant versions
   s.add_dependency("json")
-  
+
   s.add_development_dependency("fakeweb") # for example
 end
 
@@ -53,7 +53,7 @@ end
 # be automatically building a gem for this project. If you're not
 # using GitHub, edit as appropriate.
 #
-# To publish your gem online, install the 'gemcutter' gem; Read more 
+# To publish your gem online, install the 'gemcutter' gem; Read more
 # about that here: http://gemcutter.org/pages/gem_docs
 Rake::GemPackageTask.new(spec) do |pkg|
   pkg.gem_spec = spec
@@ -94,6 +94,7 @@ task :publish do
     sh "rake clean"
     sh "rake gem"
     sh "rake gemspec"
+    sh "git commit -am 'new gemspec'"
     sh "git tag v#{Sailthru::Version}"
     sh "git push origin v#{Sailthru::Version}"
     sh "git push origin master"
