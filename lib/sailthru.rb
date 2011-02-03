@@ -401,6 +401,7 @@ module Sailthru
     #   hash, response from server
     # Request various stats from Sailthru.
     def get_stats(stat)
+      warn "[DEPRECATION] `get_stats` is deprecated. Please use `stats_list` and `stats_blast` instead"
       api_get(:stats, {:stat => stat})
     end
 
