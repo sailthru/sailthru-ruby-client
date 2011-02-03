@@ -7,7 +7,7 @@ require 'md5'
 
 module Sailthru
 
-  Version = VERSION = '1.02'
+  Version = VERSION = '1.03'
 
   class SailthruClientException < Exception
   end
