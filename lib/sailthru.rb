@@ -533,11 +533,50 @@ module Sailthru
     # sets horizon data
     def set_horizon(email, tags)
       data = {}
-      data[:email] = email
+      data[
+      :email] = email
       data[:tags] = (tags.class == Array) ? tags.join(',') : tags
       api_post(:horizon, data)
     end
 
+    # params
+    #   email, String
+    #
+    # get user alert data
+    def get_alert(email)
+      api_get(:alert, {:email => email})
+    end
+
+    # params
+    #   email, String
+    #   type, String
+    #   template, String
+    #   _when, String
+    #   options, hash
+    #
+    # Add a new alert to a user. You can add either a realtime or a summary alert (daily/weekly).
+    # _when is only required when alert type is weekly or daily
+    def save_alert(email, type, template, _when = nil, options = {})
+      data = options
+      data[:email] = email
+      data[:type] = type
+      data[:template] = template
+      if (type == 'weekly' || type == 'daily')
+        data[:when] = _when
+      end
+      api_post(:alert, data)
+    end
+
+
+    # params
+    #   email, String
+    #   alert_id, String
+    #
+    # delete user alert
+    def delete_alert(email, alert_id)
+      data = {:email => email, :alert_id => alert_id}
+      api_delete(:alert, data)
+    end
 
     protected
 
