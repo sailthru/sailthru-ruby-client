@@ -499,7 +499,7 @@ module Sailthru
       data = {}
       data[:list] = list
       data[:emails] = (emails.class == Array) ? emails.join(',') : emails
-      return api_post(:list, data)
+     return api_post(:list, data)
     end
 
 
@@ -509,6 +509,33 @@ module Sailthru
     # Deletes a list
     def delete_list(list)
       api_delete(:list, {:list => list})
+    end
+
+    # params
+    #   email, String
+    #   hid_only, Boolean
+    #
+    # gets horizon data
+    def get_horizon(email, hid_only = false)
+      data = {}
+      data[:email] = email
+     if hid_only == true
+        data[:hid_only] = 1
+     end
+      api_get(:horizon, data)
+    end
+
+
+    # params
+    #   email, String
+    #   tags, String | Array
+    #
+    # sets horizon data
+    def set_horizon(email, tags)
+      data = {}
+      data[:email] = email
+      data[:tags] = (tags.class == Array) ? tags.join(',') : tags
+      api_post(:horizon, data)
     end
 
 
