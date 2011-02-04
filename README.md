@@ -22,7 +22,7 @@ It can make requests to following [API calls](http://docs.sailthru.com/api):
 
 Examples
 --------
-	require 'lib/sailthru'
+	require 'sailthru' #if using as gem
 
  	api_key = "api_key";
     api_secret = 'secret';
