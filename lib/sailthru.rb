@@ -3,11 +3,11 @@ require 'uri'
 require 'cgi'
 require 'rubygems'
 require 'json'
-require 'md5'
+require 'digest/md5'
 
 module Sailthru
 
-  Version = VERSION = '1.03'
+  Version = VERSION = '1.04'
 
   class SailthruClientException < Exception
   end
@@ -57,7 +57,7 @@ module Sailthru
     #
     # Returns an MD5 hash of the signature string for an API call.
     def get_signature_hash(params, secret)
-      MD5.md5(get_signature_string(params, secret)).to_s # debuggin
+      Digest::MD5.hexdigest(get_signature_string(params, secret)).to_s
     end
 
 
