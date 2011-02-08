@@ -94,7 +94,7 @@ task :publish do
     sh "rake clean"
     sh "rake gem"
     sh "rake gemspec"
-    sh "git commit -am 'new gemspec'"
+    sh "git commit -am 'new gemspec for tag #{Sailthru::Version}'"
     sh "git tag v#{Sailthru::Version}"
     sh "git push origin v#{Sailthru::Version}"
     sh "git push origin master"
