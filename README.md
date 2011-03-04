@@ -66,7 +66,7 @@ Examples
 
 ### [blast](http://docs.sailthru.com/api/blast)
 
-	# schedule blast
+	#schedule blast
 	blast_name = 'My blast name'
 	template = 'my-template'
 	schedule_time = '+5 hours'
@@ -76,6 +76,22 @@ Examples
 	html = '<p>Lorem ispum is great</p>'
 	text = 'Lorem ispum is great'
 	response = sailthru.schedule_blast(blast_name, template, schedule_time, from_name, from_email, subject, html, text)
+
+    #schedule blast from template
+    template = 'default'
+    list = 'default'
+    schdule_time = 'now'
+    response = sailthru.schedule_blast_from_template(template, list, schedule_time)
+
+    #schedule blast from previous blast
+    blast_id = 67535
+    schedule_time ='now'
+    vars = {
+        'my_var' => '3y6366546363',
+        'my_var2' => [7,8,9],
+        'my_var3' => {'president' => 'obama', 'nested' => {'vp' => 'palin'}}
+    }
+    response = sailthru.schedule_blast_from_blast(blast_id, "now", vars)
 
 	#update blast
 	blast_id = 7886
