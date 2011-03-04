@@ -578,8 +578,6 @@ module Sailthru
       api_delete(:alert, data)
     end
 
-    protected
-
     # Make Stats API Request
     def stats(data)
       api_get(:stats, data)
@@ -599,6 +597,8 @@ module Sailthru
     def api_delete(action, data)
       api_request(action, data, 'DELETE')
     end
+    
+    protected
 
     # params:
     #   action, String
