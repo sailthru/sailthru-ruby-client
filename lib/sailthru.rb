@@ -201,6 +201,41 @@ module Sailthru
       api_post(:blast, post)
     end
 
+    # Schedule a mass mail blast from template
+    def schedule_blast_from_template(template, list, schedule_time, options={})
+      post = options ? options : {}
+      post[:copy_template] = template
+      post[:list] = list
+      post[:schedule_time] = schedule_time
+      api_post(:blast, post)
+    end
+
+    # Schedule a mass mail blast from previous blast
+    def schedule_blast_from_blast(blast_id, schedule_time, options={})
+      post = options ? options : {}
+      post[:copy_blast] = blast_id
+      #post[:name] = name
+      post[:schedule_time] = schedule_time
+      api_post(:blast, post)
+    end
+
+    def schedule_blast_from_copy(copy_blast = nil, copy_template = nil, options = {})
+        if copy_blast.nil? and copy_template.nil?
+            raise SailthruClientException.new('copy_blast and copy_template are both null')
+        end
+        
+        post = options ? options : {}
+        if copy_blast != nil
+            post[:copy_blast] = copy_blast
+        end
+
+        if copy_template != nil
+            post[:copy_template] = copy_template
+        end
+
+        api_post(:blast, post)
+    end
+    
 
     # params
     #   blast_id, Fixnum | String
