@@ -91,7 +91,8 @@ Examples
         'my_var2' => [7,8,9],
         'my_var3' => {'president' => 'obama', 'nested' => {'vp' => 'palin'}}
     }
-    response = sailthru.schedule_blast_from_blast(blast_id, "now", vars)
+    options = {:vars => vars}
+    response = sailthru.schedule_blast_from_blast(blast_id, "now", options)
 
 	#update blast
 	blast_id = 7886
