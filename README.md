@@ -80,7 +80,7 @@ Examples
     #schedule blast from template
     template = 'default'
     list = 'default'
-    schdule_time = 'now'
+    schedule_time = 'now'
     response = sailthru.schedule_blast_from_template(template, list, schedule_time)
 
     #schedule blast from previous blast
