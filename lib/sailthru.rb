@@ -395,10 +395,7 @@ module Sailthru
     def purchase(email, items, incomplete = nil, message_id = nil)
       data = {}
       data[:email] = email
-
-      if verify_purchase_items(items)
-        data[:items] = items
-      end
+      data[:items] = items
 
       if incomplete != nil
         data[:incomplete] = incomplete.to_i
