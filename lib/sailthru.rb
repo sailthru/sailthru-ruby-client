@@ -7,7 +7,7 @@ require 'digest/md5'
 
 module Sailthru
 
-  Version = VERSION = '1.07'
+  Version = VERSION = '1.08'
 
   class SailthruClientException < Exception
   end
@@ -125,10 +125,9 @@ module Sailthru
     # returns:
     #   Hash, response data from server
     def send(template_name, email, vars={}, options = {}, schedule_time = nil)
-      post = {}
+      post = options ? options : {}
       post[:template] = template_name
       post[:email] = email
-      post[:options] = options
 
       if vars.length > 0
         post[:vars] = vars
@@ -142,10 +141,9 @@ module Sailthru
 
 
     def multi_send(template_name, emails, vars={}, options = {}, schedule_time = nil)
-      post = {}
+      post = options ? options : {}
       post[:template] = template_name
       post[:email] = emails
-      post[:options] = options
 
       if schedule_time != nil
           post[:schedule_time] = schedule_time
