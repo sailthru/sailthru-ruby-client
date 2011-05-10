@@ -7,7 +7,7 @@ require 'digest/md5'
 
 module Sailthru
 
-  Version = VERSION = '1.08'
+  Version = VERSION = '1.09'
 
   class SailthruClientException < Exception
   end
@@ -352,6 +352,16 @@ module Sailthru
       data = template_fields
       data[:template] = template_name
       self.api_post(:template, data)
+    end
+    
+    # params:
+    #   template_name, String
+    # returns:
+    #   Hash of response data.
+    #
+    # Delete a template.
+    def delete_template(template_name)
+      self.api_delete(:template, {:template => template_name})
     end
 
 

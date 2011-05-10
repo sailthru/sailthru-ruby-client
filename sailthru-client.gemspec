@@ -2,11 +2,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{sailthru-client}
-  s.version = "1.08"
+  s.version = "1.09"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Prajwal Tuladhar"]
-  s.date = %q{2011-04-26}
+  s.date = %q{2011-05-10}
   s.email = %q{praj@sailthru.com}
   s.extra_rdoc_files = ["README.md"]
   s.files = ["README.md", "lib/sailthru.rb"]

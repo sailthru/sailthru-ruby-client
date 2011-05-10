@@ -5,13 +5,17 @@ class TemplateTest < Test::Unit::TestCase
   context "API Call: template" do
     setup do
       api_url = 'http://api.sailthru.com'
-      @sailthru_client = Sailthru::SailthruClient.new("my_api_key", "my_secret", api_url)
+      @secret = 'my_secret'
+      @api_key = 'my_api_key'
+      @sailthru_client = Sailthru::SailthruClient.new(@api_key, @secret, api_url)
       @api_call_url = sailthru_api_call_url(api_url, 'template')
     end
 
     should "be able to get template information when template name is valid" do
       valid_template_name = 'default'
-      stub_get(@api_call_url + '?format=json&api_key=my_api_key&template=' + valid_template_name + '&sig=23a108917794dd66c9e46fcc19ffa48b', 'template_valid_get.json')
+      params = {'format' => 'json', 'api_key' => @api_key, 'template' => valid_template_name}
+      query_string = create_query_string(@secret, params)
+      stub_get(@api_call_url + '?' + query_string, 'template_valid_get.json')
       response = @sailthru_client.get_template(valid_template_name)
       assert_equal valid_template_name, response['name']
     end
@@ -32,6 +36,25 @@ class TemplateTest < Test::Unit::TestCase
       assert_equal valid_template_name, response['name']
       assert_equal from_email, response['from_email']
       assert_equal from_name, response['from_name']
+    end
+    
+    should "be able to delete a template with valid template name" do
+      template_name = 'my-template'
+      params = {'format' => 'json', 'api_key' => @api_key, 'template' => template_name}
+      query_string = create_query_string(@secret, params)
+      stub_delete(@api_call_url + '?' + query_string, 'template_delete_valid.json')
+      response = @sailthru_client.delete_template(template_name)
+      assert_equal template_name, response['template']
+    end
+    
+    should "not be able to delete a template with invalid template name" do
+      template_name = 'my-template'
+      params = {'format' => 'json', 'api_key' => @api_key, 'template' => template_name}
+      query_string = create_query_string(@secret, params)
+      stub_delete(@api_call_url + '?' + query_string, 'blast_delete_invalid.json')
+      response = @sailthru_client.delete_template(template_name)
+      assert_not_nil response['error']
+      assert_not_nil response['errormsg']
     end
   end
 end
