@@ -43,7 +43,7 @@ spec = Gem::Specification.new do |s|
 
   # required gems
   s.add_dependency("json")
-  s.add_dependenncy("multipart-post")
+  s.add_dependency("multipart-post")
 
   s.add_development_dependency("fakeweb")
 end
