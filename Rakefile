@@ -41,11 +41,11 @@ spec = Gem::Specification.new do |s|
   s.files             = %w(README.md) + Dir.glob("{lib}/**/*")
   s.require_paths     = ["lib"]
 
-  # If you want to depend on other gems, add them here, along with any
-  # relevant versions
+  # required gems
   s.add_dependency("json")
+  s.add_dependenncy("multipart-post")
 
-  s.add_development_dependency("fakeweb") # for example
+  s.add_development_dependency("fakeweb")
 end
 
 # This task actually builds the gem. We also regenerate a static
