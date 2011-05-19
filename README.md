@@ -196,7 +196,7 @@ Examples
 	tags = ['red', 'blue']
 	response = sailthru.set_horizon(email, tags)
 
-### [job] (http://docs.sailhru.com/api/job)
+### [job] (http://docs.sailthru.com/api/job)
 
     # get status of job id
     job_id = '4dd58f036803fa3b5500000b'
