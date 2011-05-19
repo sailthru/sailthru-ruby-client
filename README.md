@@ -195,3 +195,29 @@ Examples
 	email = 'praj@sailthru.com'
 	tags = ['red', 'blue']
 	response = sailthru.set_horizon(email, tags)
+
+### [job] (http://docs.sailhru.com/api/job)
+
+    # get status of job id
+    job_id = '4dd58f036803fa3b5500000b'
+    response = sailthru.get_job_status(job_id)
+
+    # process import job for email string
+    list = 'test-list'
+    emails = 'a@a.com,b@b.com'
+    response = sailthru.process_import_job(list, emails)
+
+    # process import job from CSV or text file
+    list = 'test-list'
+    source_file = '/home/praj/Desktop/emails.txt'
+    response = sailthru.process_import_job(list, source_file)
+
+    # process snapshot job
+    query = {}
+    report_email = 'praj@sailthru.com'
+    postback_url = 'http://example.com/reports/snapshot_postback'
+    response = sailthru.process_snapshot_job(query)
+
+    # process export list job
+    list = 'test-list'
+    response = sailthru.process_export_list_job(list)
