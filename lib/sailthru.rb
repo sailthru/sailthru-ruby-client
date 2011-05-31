@@ -105,16 +105,19 @@ module Sailthru
 
     include Helpers
 
+    attr_accessor :verify_ssl
+
     # params:
     #   api_key, String
     #   secret, String
     #   api_uri, String
     #
     # Instantiate a new client; constructor optionally takes overrides for key/secret/uri.
-    def initialize(api_key, secret, api_uri)
+    def initialize(api_key, secret, api_uri = nil)
       @api_key = api_key
       @secret  = secret
-      @api_uri = api_uri
+      @api_uri = if api_uri.nil? then 'https://api.sailthru.com' else api_uri end
+      @verify_ssl = true
     end
 
     # params:
@@ -764,7 +767,7 @@ module Sailthru
         
         if _uri.scheme == 'https'
             http.use_ssl = true
-            http.verify_mode = OpenSSL::SSL::VERIFY_NONE # some openSSL client doesn't work without doing this
+            http.verify_mode = OpenSSL::SSL::VERIFY_NONE if @verify_ssl != true  # some openSSL client doesn't work without doing this
         end
 
         response = http.start {
