@@ -1,4 +1,5 @@
 require 'rubygems'
+require 'net/https'
 require 'net/http'
 require 'uri'
 require 'cgi'
@@ -743,7 +744,6 @@ module Sailthru
         if (!binary_key.nil?) 
           binary_data = data[binary_key]
           data[binary_key] = UploadIO.new(File.open(binary_data), "text/plain")
-          #req = Net::HTTP::Post::Multipart.new(_uri.path, binary_key => UploadIO.new(File.open(binary_data), "text/plain"))
           req = Net::HTTP::Post::Multipart.new(_uri.path, data)
         else
           req = Net::HTTP::Post.new(_uri.path, headers)
@@ -760,11 +760,19 @@ module Sailthru
       end
 
       begin
-        response = Net::HTTP.start(_uri.host, _uri.port) {|http|
-          http.request(req)
+        http = Net::HTTP.new(_uri.host, _uri.port)
+        
+        if _uri.scheme == 'https'
+            http.use_ssl = true
+            http.verify_mode = OpenSSL::SSL::VERIFY_NONE # some openSSL client doesn't work without doing this
+        end
+
+        response = http.start {
+            http.request(req)
         }
+        
       rescue Exception => e
-        raise SailthruClientException.new("Unable to open stream: #{_uri.to_s}");
+        raise SailthruClientException.new("Unable to open stream: #{_uri.to_s}\n" + e);
       end
       
       if response.body
