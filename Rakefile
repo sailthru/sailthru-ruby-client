@@ -46,6 +46,7 @@ spec = Gem::Specification.new do |s|
   s.add_dependency("multipart-post")
 
   s.add_development_dependency("fakeweb")
+  s.add_development_dependency("shoulda")
 end
 
 # This task actually builds the gem. We also regenerate a static
