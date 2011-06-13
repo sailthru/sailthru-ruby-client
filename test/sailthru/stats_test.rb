@@ -13,8 +13,8 @@ class StatsTest < Test::Unit::TestCase
 
     should "be able to get information about given valid field" do
       stat_field = 'list'
-      params = {'format' => 'json', 'api_key' => @api_key, 'stat' => stat_field}
-      query_string = create_query_string(@secret, params)
+      params = {'stat' => stat_field}
+      query_string = create_json_payload(@api_key, @secret, params)
       stub_get(@api_call_url + '?' + query_string, 'stat_get_valid.json')
       response = @sailthru_client.get_stats(stat_field)
       assert_nil response['error']
@@ -23,8 +23,8 @@ class StatsTest < Test::Unit::TestCase
 
     should "not be able to get information about given field when it's invalid" do
       stat_field = 'invalid_field'
-      params = {'format' => 'json', 'api_key' => @api_key, 'stat' => stat_field}
-      query_string = create_query_string(@secret, params)
+      params = {'stat' => stat_field}
+      query_string = create_json_payload(@api_key, @secret, params)
       stub_get(@api_call_url + '?' + query_string, 'stat_get_invalid.json')
       response = @sailthru_client.get_stats(stat_field)
       assert_not_nil response['error']
@@ -32,8 +32,8 @@ class StatsTest < Test::Unit::TestCase
     end
 
     should "be able to get stats list data when list and date are not null" do
-      params = {'format' => 'json', 'api_key' => @api_key, 'stat' => 'list'}
-      query_string = create_query_string(@secret, params)
+      params = {'stat' => 'list'}
+      query_string = create_json_payload(@api_key, @secret, params)
       stub_get(@api_call_url + '?' + query_string, 'stats_lists_valid.json')
       response = @sailthru_client.stats_list()
       assert_not_nil response['lists_signup_count']
@@ -41,10 +41,12 @@ class StatsTest < Test::Unit::TestCase
 
     should "not be able to stats list data when list is given and invalid" do
       list = 'not-listed'
-      params = {'format' => 'json', 'api_key' => @api_key, 'stat' => 'list', 'list' => list}
-      query_string = create_query_string(@secret, params)
+      params = {}
+      params[:stat] = 'list'
+      params[:list] = list
+      query_string = create_json_payload(@api_key, @secret, params)
       stub_get(@api_call_url + '?' + query_string, 'stats_lists_invalid.json')
-      response = @sailthru_client.stats_list(list = list)
+      response = @sailthru_client.stats_list(list)
       assert_not_nil response['error']
       assert_not_nil response['errormsg']
     end

@@ -35,8 +35,8 @@ class ListTest < Test::Unit::TestCase
     should "be able to get list data in json format when list is valid" do
       list = 'listname'
       format = 'json'
-      params = {'format' => format, 'api_key' => @api_key, 'list' => list}
-      query_string = create_query_string(@secret, params)
+      params = {:list => list, :format => format}
+      query_string = create_json_payload(@api_key, @secret, params)
       stub_get(@api_call_url + '?' + query_string, 'list_get_valid.json')
       response = @sailthru_client.get_list(list, format)
       assert(response['result'].length == 3)
@@ -45,8 +45,8 @@ class ListTest < Test::Unit::TestCase
     should "get empty response for invalid list in json format" do
       list = 'invalidlistname'
       format = 'json'
-      params = {'format' => format, 'api_key' => @api_key, 'list' => list}
-      query_string = create_query_string(@secret, params)
+      params = {:list => list, :format => 'json'} 
+      query_string = create_json_payload(@api_key, @secret, params)
       stub_get(@api_call_url + '?' + query_string, 'list_get_invalid.json')
       response = @sailthru_client.get_list(list, format)
       assert_not_nil response['errormsg']
@@ -64,8 +64,8 @@ class ListTest < Test::Unit::TestCase
 
     should "not be able to delete invalid list" do
       list = 'invalid-list'
-      params = {'format' => 'json', 'api_key' => @api_key, 'list' => list}
-      query_string = create_query_string(@secret, params)
+      params = {'list' => list}
+      query_string = create_json_payload(@api_key, @secret, params)
       stub_delete(@api_call_url + '?' + query_string, 'list_delete_invalid.json')
       response = @sailthru_client.delete_list(list)
       assert_not_nil response['error']
@@ -73,8 +73,8 @@ class ListTest < Test::Unit::TestCase
 
     should "be able to delete invalid list" do
       list = 'my-list'
-      params = {'format' => 'json', 'api_key' => @api_key, 'list' => list}
-      query_string = create_query_string(@secret, params)
+      params = {:list => list}
+      query_string = create_json_payload(@api_key, @secret, params)
       stub_delete(@api_call_url + '?' + query_string, 'list_delete_valid.json')
       response = @sailthru_client.delete_list(list)
       assert_equal(list, response['list'])

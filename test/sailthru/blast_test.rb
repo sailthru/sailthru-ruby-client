@@ -13,8 +13,8 @@ class BlastTest < Test::Unit::TestCase
 
     should "be able to get the status of a blast when blast_id is valid" do
       valid_blast_id = '665215'
-      params = {'format' => 'json', 'api_key' => @api_key, 'blast_id' => valid_blast_id}
-      query_string = create_query_string(@secret, params)
+      params = {'blast_id' => valid_blast_id}
+      query_string = create_json_payload(@api_key, @secret, params)
       stub_get(@api_call_url + '?' + query_string, 'blast_get_valid.json')
       response = @sailthru_client.get_blast(valid_blast_id)
       assert_not_nil response['name']
@@ -23,8 +23,8 @@ class BlastTest < Test::Unit::TestCase
 
     should "be able to get blast error message when blast_id is invalid" do
       invalid_blast_id = '88787'
-      params = {'format' => 'json', 'api_key' => @api_key, 'blast_id' => invalid_blast_id}
-      query_string = create_query_string(@secret, params)
+      params = {'blast_id' => invalid_blast_id}
+      query_string = create_json_payload(@api_key, @secret, params)
       stub_get(@api_call_url + '?' + query_string, 'blast_get_invalid.json')
       response =  @sailthru_client.get_blast(invalid_blast_id)
       assert_not_nil response['error']
@@ -89,8 +89,8 @@ class BlastTest < Test::Unit::TestCase
 
     should "be able to delete valid blast" do
       blast_id = 42499
-      params = {'format' => 'json', 'api_key' => @api_key, 'blast_id' => blast_id}
-      query_string = create_query_string(@secret, params)
+      params = {'blast_id' => blast_id}
+      query_string = create_json_payload(@api_key, @secret, params)
       stub_delete(@api_call_url + '?' + query_string, 'blast_delete_valid.json')
       response = @sailthru_client.delete_blast(blast_id)
       assert_equal(blast_id, response['blast_id'])
@@ -98,8 +98,8 @@ class BlastTest < Test::Unit::TestCase
 
     should "not be able delete invalid blast" do
       invalid_blast_id = '88787'
-      params = {'format' => 'json', 'api_key' => @api_key, 'blast_id' => invalid_blast_id}
-      query_string = create_query_string(@secret, params)
+      params = {'blast_id' => invalid_blast_id}
+      query_string = create_json_payload(@api_key, @secret, params)
       stub_delete(@api_call_url + '?' + query_string, 'blast_delete_invalid.json')
       response = @sailthru_client.delete_blast(invalid_blast_id)
       assert_not_nil response['error']

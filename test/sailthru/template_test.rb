@@ -13,8 +13,8 @@ class TemplateTest < Test::Unit::TestCase
 
     should "be able to get template information when template name is valid" do
       valid_template_name = 'default'
-      params = {'format' => 'json', 'api_key' => @api_key, 'template' => valid_template_name}
-      query_string = create_query_string(@secret, params)
+      params = {'template' => valid_template_name}
+      query_string = create_json_payload(@api_key, @secret, params)
       stub_get(@api_call_url + '?' + query_string, 'template_valid_get.json')
       response = @sailthru_client.get_template(valid_template_name)
       assert_equal valid_template_name, response['name']
@@ -22,7 +22,9 @@ class TemplateTest < Test::Unit::TestCase
 
     should "be able to get error message when template name is invalid" do
       invalid_template_name = 'invalid_template'
-      stub_get(@api_call_url + '?format=json&api_key=my_api_key&template=' + invalid_template_name + '&sig=953692626fb11e044f969a1fed4ec071', 'template_invalid_get.json')
+      params = {'template' => invalid_template_name}
+      query_string = create_json_payload(@api_key, @secret, params)
+      stub_get(@api_call_url + '?' + query_string, 'template_invalid_get.json')
       response = @sailthru_client.get_template(invalid_template_name)
       assert_equal 14, response['error']
     end
@@ -40,8 +42,8 @@ class TemplateTest < Test::Unit::TestCase
     
     should "be able to delete a template with valid template name" do
       template_name = 'my-template'
-      params = {'format' => 'json', 'api_key' => @api_key, 'template' => template_name}
-      query_string = create_query_string(@secret, params)
+      params = {'template' => template_name}
+      query_string = create_json_payload(@api_key, @secret, params)
       stub_delete(@api_call_url + '?' + query_string, 'template_delete_valid.json')
       response = @sailthru_client.delete_template(template_name)
       assert_equal template_name, response['template']
@@ -49,8 +51,8 @@ class TemplateTest < Test::Unit::TestCase
     
     should "not be able to delete a template with invalid template name" do
       template_name = 'my-template'
-      params = {'format' => 'json', 'api_key' => @api_key, 'template' => template_name}
-      query_string = create_query_string(@secret, params)
+      params = {'template' => template_name}
+      query_string = create_json_payload(@api_key, @secret, params)
       stub_delete(@api_call_url + '?' + query_string, 'blast_delete_invalid.json')
       response = @sailthru_client.delete_template(template_name)
       assert_not_nil response['error']

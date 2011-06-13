@@ -13,8 +13,8 @@ class EmailTest < Test::Unit::TestCase
 
     should "be able to get email information for one of the client's user" do
       email = 'praj@sailthru.com'
-      params = {'format' => 'json', 'api_key' => @api_key, 'sig' => '', 'email' => email}
-      query_string = create_query_string(@secret, params)
+      params = {'email' => email}
+      query_string = create_json_payload(@api_key, @secret, params)
       stub_get(@api_call_url + '?' + query_string, 'email_get_listed_email.json')
       response = @sailthru_client.get_email(email)
       assert_not_nil response['verified']

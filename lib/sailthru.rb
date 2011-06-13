@@ -695,33 +695,34 @@ module Sailthru
     # Perform an API request, using the shared-secret auth hash.
     #
     def api_request(action, data, request_type, binary_key = nil)
-      
-      data[:api_key] = @api_key
-      data[:format] ||= 'json'
-      
       if (!binary_key.nil?)
         binary_key_data = data[binary_key]
         data.delete(binary_key)
       end
-      
-      data[:sig] = get_signature_hash(data, @secret)
+
+      if data[:format].nil? or data[:format] == 'json'
+        data = self.prepare_json_payload(data)
+      else
+        data[:api_key] = @api_key
+        data[:format] ||= 'json'
+        data[:sig] = get_signature_hash(data, @secret)
+      end
       
       if (!binary_key.nil?)
         data[binary_key] = binary_key_data
       end 
       _result = self.http_request("#{@api_uri}/#{action}", data, request_type, binary_key)
 
-
       # NOTE: don't do the unserialize here
-     if data[:format] == 'json'
+      if data[:format] == 'json'
         begin
-           unserialized = JSON.parse(_result)
-          return unserialized ? unserialized : _result
+            unserialized = JSON.parse(_result)
+            return unserialized ? unserialized : _result
         rescue JSON::JSONError => e
-          return {'error' => e}
+            return {'error' => e}
         end
-     end
-     return _result
+      end
+      return _result
     end
 
 
@@ -788,6 +789,16 @@ module Sailthru
     def http_multipart_request(uri, data)
       req = Net::HTTP::Post::Multipart.new url.path,
         "file" => UploadIO.new(data['file'], "application/octet-stream")
+    end
+
+    def prepare_json_payload(data)
+        payload = {
+            :api_key => @api_key,
+            :format => 'json', #fuck XML
+            :json => data.to_json
+        }
+        payload[:sig] = get_signature_hash(payload, @secret)
+        payload
     end
   end
 end

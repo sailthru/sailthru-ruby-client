@@ -2,6 +2,7 @@ require 'rubygems'
 require 'test/unit'
 require 'shoulda'
 require 'uri'
+require 'json'
 
 gem 'fakeweb', ">= 1.2.6"
 require 'fakeweb'
@@ -53,5 +54,14 @@ class Test::Unit::TestCase
   def create_query_string(secret, params)
     params['sig'] = get_signature_hash(params, secret)
     params.map{ |key, value| "#{CGI::escape(key.to_s)}=#{CGI::escape(value.to_s)}" }.join("&")
+  end
+
+  def create_json_payload(api_key, secret, params)
+      data = {}
+      data['api_key'] = api_key
+      data['format'] = 'json'
+      data['json'] = params.to_json
+      data['sig'] = get_signature_hash(data, secret)
+      data.map{ |key, value| "#{CGI::escape(key.to_s)}=#{CGI::escape(value.to_s)}" }.join("&")
   end
 end
