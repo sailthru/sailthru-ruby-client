@@ -9,7 +9,7 @@ require 'net/http/post/multipart'
 
 module Sailthru
 
-  Version = VERSION = '1.10'
+  Version = VERSION = '1.11'
 
   class SailthruClientException < Exception
   end
