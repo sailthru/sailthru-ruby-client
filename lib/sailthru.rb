@@ -130,34 +130,24 @@ module Sailthru
     # returns:
     #   Hash, response data from server
     def send(template_name, email, vars={}, options = {}, schedule_time = nil)
-      post = options ? options : {}
+      post = {}
       post[:template] = template_name
       post[:email] = email
-
-      if vars.length > 0
-        post[:vars] = vars
-      end
-
-      if schedule_time != nil
-          post[:schedule_time] = schedule_time
-      end
+      post[:vars] = vars if vars.length >= 1
+      post[:options] = options if options.length >= 1
+      post[:schedule_time] = schedule_time if !schedule_time.nil?
       return self.api_post(:send, post)
     end
 
 
-    def multi_send(template_name, emails, vars={}, options = {}, schedule_time = nil)
-      post = options ? options : {}
+    def multi_send(template_name, emails, vars={}, options = {}, schedule_time = nil, evars = {})
+      post = {}
       post[:template] = template_name
       post[:email] = emails
-
-      if schedule_time != nil
-          post[:schedule_time] = schedule_time
-      end
-
-      if vars.length > 0
-        post[:vars] = vars
-      end
-
+      post[:vars] = vars if vars.length >= 1
+      post[:options] = options if options.length >= 1
+      post[:schedule_time] = schedule_time if !schedule_time.nil?
+      post[:evars] = evars if evars.length >= 1
       return self.api_post(:send, post)
     end
 
