@@ -87,18 +87,7 @@ module Sailthru
       end
       return f
     end
-
-    def verify_purchase_items (items)
-      if items.class == Array and !items.empty?
-        required_item_fields = ['qty', 'title', 'price', 'id', 'url'].sort
-        items.each do |v|
-          keys = v.keys.sort
-          return false if keys != required_item_fields
-        end
-        return true
-      end
-      return false
-    end
+    
   end
 
   class SailthruClient
