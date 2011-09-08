@@ -380,12 +380,13 @@ module Sailthru
     #   items, String
     #   incomplete, Integer
     #   message_id, String
+    #   options, Hash
     # returns:
     #   hash, response from server
     #
     # Record that a user has made a purchase, or has added items to their purchase total.
-    def purchase(email, items, incomplete = nil, message_id = nil)
-      data = {}
+    def purchase(email, items, incomplete = nil, message_id = nil, options = {})
+      data = options
       data[:email] = email
       data[:items] = items
 
