@@ -756,13 +756,13 @@ module Sailthru
         }
         
       rescue Exception => e
-        raise SailthruClientException.new("Unable to open stream: #{_uri.to_s}\n" + e);
+        raise SailthruClientException.new("Unable to open stream: #{_uri}\n#{e}");
       end
       
       if response.body
         return response.body
       else
-        raise SailthruClientException.new("No response received from stream: #{_uri.to_s}")
+        raise SailthruClientException.new("No response received from stream: #{_uri}")
       end
     end
     
