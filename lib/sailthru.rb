@@ -304,6 +304,19 @@ module Sailthru
     end
 
     # params:
+    #   email, String
+    #   email_was, String
+    # returns:
+    #   Hash, response data from server
+    #
+    # Set replacement email address for an existing email address
+    def update_email(email, email_was)
+      data = {:email => email}
+      data[:email_was] = email_was
+      self.api_post(:email, data)
+    end
+
+    # params:
     #  email, String
     #  password, String
     #  with_names, Boolean
