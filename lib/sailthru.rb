@@ -746,7 +746,7 @@ module Sailthru
       end
 
       begin
-        http = Net::HTTP::PROXY(@proxy_host, @proxy_port).new(_uri.host, _uri.port)
+        http = Net::HTTP::Proxy(@proxy_host, @proxy_port).new(_uri.host, _uri.port)
 
         if _uri.scheme == 'https'
             http.use_ssl = true
