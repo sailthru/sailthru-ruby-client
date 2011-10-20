@@ -254,7 +254,9 @@ module Sailthru
     #
     # Get information on a previously scheduled email blast
     def get_blast(blast_id, vars)
-      api_get(:blast, {:blast_id => blast_id.to_s, :vars => vars})
+      data = {:blast_id => blsat_id.to_s}
+      data[:vars] = vars unless vars.empty?
+      api_get(:blast, data)
     end
 
     # params:
@@ -287,15 +289,17 @@ module Sailthru
     #   email, String
     #   vars, Hash
     #   lists, Hash mapping list name => 1 for subscribed, 0 for unsubscribed
+    #   optout, String => all, blast or none
     # returns:
     #   Hash, response data from server
     #
     # Set replacement vars and/or list subscriptions for an email address.
-    def set_email(email, vars = {}, lists = {}, templates = {})
+    def set_email(email, vars = {}, lists = {}, templates = {}, optout)
       data = {:email => email}
       data[:vars] = vars unless vars.empty?
       data[:lists] = lists unless lists.empty?
       data[:templates] = templates unless templates.empty?
+      data[:optout] = optout unless optout.empty?
       self.api_post(:email, data)
     end
 
