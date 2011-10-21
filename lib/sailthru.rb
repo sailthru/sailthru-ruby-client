@@ -289,17 +289,28 @@ module Sailthru
     #   email, String
     #   vars, Hash
     #   lists, Hash mapping list name => 1 for subscribed, 0 for unsubscribed
-    #   optout, String => all, blast or none
     # returns:
     #   Hash, response data from server
     #
     # Set replacement vars and/or list subscriptions for an email address.
-    def set_email(email, vars = {}, lists = {}, templates = {}, *optout)
+    def set_email(email, vars = {}, lists = {}, templates = {})
       data = {:email => email}
       data[:vars] = vars unless vars.empty?
       data[:lists] = lists unless lists.empty?
       data[:templates] = templates unless templates.empty?
-      data[:optout] = optout unless optout.empty?
+      self.api_post(:email, data)
+    end
+
+    # params:
+    #   email, String
+    #   optout, String => all, blast or none
+    # returns:
+    #   Hash, response data from server
+    #
+    # Set optout for an email address.
+    def set_optout(email, optout)
+      data = {:email => email}
+      data[:optout] = optout
       self.api_post(:email, data)
     end
 
