@@ -294,7 +294,7 @@ module Sailthru
     #   Hash, response data from server
     #
     # Set replacement vars and/or list subscriptions for an email address.
-    def set_email(email, vars = {}, lists = {}, templates = {}, optout)
+    def set_email(email, vars = {}, lists = {}, templates = {}, *optout)
       data = {:email => email}
       data[:vars] = vars unless vars.empty?
       data[:lists] = lists unless lists.empty?
