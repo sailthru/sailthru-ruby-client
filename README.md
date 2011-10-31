@@ -116,6 +116,10 @@ Examples
 
 ### [list](http://docs.sailthru.com/api/list)
 
+This call can currently be used to download or upload email addresses.
+
+**NOTE: This functionality is going to be deprecated in favor of the job call.**  (See also the [API Docs](http://docs.sailthru.com/api/list))
+
 	#save list
 	list_name = 'my-list'
 	emails = ['praj@sailthru.com', 'ian@sailthru.com']
