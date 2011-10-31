@@ -254,7 +254,7 @@ module Sailthru
     #
     # Get information on a previously scheduled email blast
     def get_blast(blast_id, vars)
-      data = {:blast_id => blsat_id.to_s}
+      data = {:blast_id => blast_id.to_s}
       data[:vars] = vars unless vars.empty?
       api_get(:blast, data)
     end
@@ -655,6 +655,35 @@ module Sailthru
       data['list'] = list
       data['file'] = file_path
       process_job(:import, data, report_email, postback_url, 'file')
+    end
+
+    # implementation for update_job
+    def process_update_job(emails, update = {}, report_email = nil, postback_url = nil)
+      data = {}
+      data['emails'] = emails
+      data[:update] = update unless update.empty?
+      process_job(:update, data, report_email, postback_url)
+    end
+
+    # implementation for update job using file upload
+    def process_update_job_from_file(file_path, report_email = nil, postback_url = nil)
+      data = {}
+      data['file'] = file_path
+      process_job(:update, data, report_email, postback_url, 'file')
+    end
+
+    # implementation for update job using URL
+    def process_update_job_from_url(url, report_email = nil, postback_url = nil)
+      data = {}
+      data['url'] = url
+      process_job(:update, data, report_email, postback_url)
+    end
+
+    # implementation for update job using query
+    def process_update_job_from_query(query = {}, report_email = nil, postback_url = nil)
+      data = {}
+      data['query'] = query
+      process_job(:update, data, report_email, postback_url)
     end
 
     # implementation for snapshot job
