@@ -488,6 +488,7 @@ module Sailthru
       api_post(:content, data)
     end
 
+    # <b>DEPRECATED:</b> Please use process_import_job
     # params
     #   list, String
     #   format, String
@@ -495,6 +496,7 @@ module Sailthru
     # Download a list. Obviously, this can potentially be a very large download.
     # 'txt' is default format since, its more compact as compare to others
     def get_list(list, format = 'txt')
+      warn "[DEPRECATION] `get_list` is deprecated. Please use `process_import_job` instead"
       return api_get(:list, {:list => list, :format => format})
     end
 
