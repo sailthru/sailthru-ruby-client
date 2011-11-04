@@ -614,11 +614,13 @@ module Sailthru
       api_post(:job, data, binary_key)
     end
     
+    # params
+    #   emails, String | Array
     # implementation for import_job  
     def process_import_job(list, emails, report_email = nil, postback_url = nil)
       data = {}
       data['list'] = list
-      data['emails'] = emails
+      data['emails'] = Array(emails).join(',')
       process_job(:import, data, report_email, postback_url)
     end
     
