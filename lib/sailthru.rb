@@ -87,7 +87,7 @@ module Sailthru
       end
       return f
     end
-    
+
   end
 
   class SailthruClient
@@ -101,11 +101,13 @@ module Sailthru
     #   secret, String
     #   api_uri, String
     #
-    # Instantiate a new client; constructor optionally takes overrides for key/secret/uri.
-    def initialize(api_key, secret, api_uri = nil)
+    # Instantiate a new client; constructor optionally takes overrides for key/secret/uri and proxy server settings.
+    def initialize(api_key, secret, api_uri=nil, proxy_host=nil, proxy_port=nil)
       @api_key = api_key
       @secret  = secret
       @api_uri = if api_uri.nil? then 'https://api.sailthru.com' else api_uri end
+      @proxy_host = proxy_host
+      @proxy_port = proxy_port
       @verify_ssl = true
     end
 
@@ -200,7 +202,7 @@ module Sailthru
       post[:schedule_time] = schedule_time
       api_post(:blast, post)
     end
-    
+
 
     # params
     #   blast_id, Fixnum | String
@@ -337,7 +339,7 @@ module Sailthru
       data[:template] = template_name
       self.api_post(:template, data)
     end
-    
+
     # params:
     #   template_name, String
     # returns:
@@ -592,7 +594,7 @@ module Sailthru
     def stats(data)
       api_get(:stats, data)
     end
-    
+
     # params
     #   job, String
     #   options, hash
@@ -607,7 +609,7 @@ module Sailthru
       if !report_email.nil?
         data['report_email'] = report_email
       end
-      
+
       if !postback_url.nil?
         data['postback_url'] = postback_url
       end
@@ -623,7 +625,7 @@ module Sailthru
       data['emails'] = Array(emails).join(',')
       process_job(:import, data, report_email, postback_url)
     end
-    
+
     # implementation for import job using file upload
     def process_import_job_from_file(list, file_path, report_email = nil, postback_url = nil)
       data = {}
@@ -631,26 +633,26 @@ module Sailthru
       data['file'] = file_path
       process_job(:import, data, report_email, postback_url, 'file')
     end
-    
+
     # implementation for snapshot job
     def process_snapshot_job(query = {}, report_email = nil, postback_url = nil)
       data = {}
       data['query'] = query
       process_job(:snapshot, data, report_email, postback_url)
     end
-    
+
     # implementation for export list job
     def process_export_list_job(list, report_email = nil, postback_url = nil)
       data = {}
       data['list'] = list
       process_job(:export_list_data, data, report_email, postback_url)
     end
-    
+
     # get status of a job
     def get_job_status(job_id)
       api_get(:job, {'job_id' => job_id})
     end
-    
+
 
     # Perform API GET request
     def api_get(action, data)
@@ -666,7 +668,7 @@ module Sailthru
     def api_delete(action, data)
       api_request(action, data, 'DELETE')
     end
-    
+
     protected
 
     # params:
@@ -691,10 +693,10 @@ module Sailthru
         data[:format] ||= 'json'
         data[:sig] = get_signature_hash(data, @secret)
       end
-      
+
       if (!binary_key.nil?)
         data[binary_key] = binary_key_data
-      end 
+      end
       _result = self.http_request("#{@api_uri}/#{action}", data, request_type, binary_key)
 
       # NOTE: don't do the unserialize here
@@ -718,18 +720,18 @@ module Sailthru
     #   String, body of response
     def http_request(uri, data, method = 'POST', binary_key = nil)
       data = flatten_nested_hash(data, false)
-      
+
       if method != 'POST'
         uri += "?" + data.map{ |key, value| "#{CGI::escape(key.to_s)}=#{CGI::escape(value.to_s)}" }.join("&")
       end
-      
+
       req = nil
       headers = {"User-Agent" => "Sailthru API Ruby Client #{VERSION}"}
 
       _uri  = URI.parse(uri)
-      
+
       if method == 'POST'
-        if (!binary_key.nil?) 
+        if (!binary_key.nil?)
           binary_data = data[binary_key]
           data[binary_key] = UploadIO.new(File.open(binary_data), "text/plain")
           req = Net::HTTP::Post::Multipart.new(_uri.path, data)
@@ -737,7 +739,7 @@ module Sailthru
           req = Net::HTTP::Post.new(_uri.path, headers)
           req.set_form_data(data)
         end
-        
+
       else
         request_uri = "#{_uri.path}?#{_uri.query}"
         if method == 'DELETE'
@@ -748,8 +750,8 @@ module Sailthru
       end
 
       begin
-        http = Net::HTTP.new(_uri.host, _uri.port)
-        
+        http = Net::HTTP::Proxy(@proxy_host, @proxy_port).new(_uri.host, _uri.port)
+
         if _uri.scheme == 'https'
             http.use_ssl = true
             http.verify_mode = OpenSSL::SSL::VERIFY_NONE if @verify_ssl != true  # some openSSL client doesn't work without doing this
@@ -758,18 +760,18 @@ module Sailthru
         response = http.start {
             http.request(req)
         }
-        
+
       rescue Exception => e
         raise SailthruClientException.new("Unable to open stream: #{_uri}\n#{e}");
       end
-      
+
       if response.body
         return response.body
       else
         raise SailthruClientException.new("No response received from stream: #{_uri}")
       end
     end
-    
+
     def http_multipart_request(uri, data)
       req = Net::HTTP::Post::Multipart.new url.path,
         "file" => UploadIO.new(data['file'], "application/octet-stream")
