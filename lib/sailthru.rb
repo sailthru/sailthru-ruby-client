@@ -490,7 +490,7 @@ module Sailthru
       api_post(:content, data)
     end
 
-    # <b>DEPRECATED:</b> Please use process_import_job
+    # <b>DEPRECATED:</b> Please use export_list_data
     # params
     #   list, String
     #   format, String
@@ -498,16 +498,18 @@ module Sailthru
     # Download a list. Obviously, this can potentially be a very large download.
     # 'txt' is default format since, its more compact as compare to others
     def get_list(list, format = 'txt')
-      warn "[DEPRECATION] `get_list` is deprecated. Please use `process_import_job` instead"
+      warn "[DEPRECATION] `get_list` is deprecated. Please use `export_list_data` instead"
       return api_get(:list, {:list => list, :format => format})
     end
 
 
+    # <b>DEPRECATED:</b> Please use process_import_job
     # params
     #   list, String
     #   emails, String | Array
     # Upload a list. The list import job is queued and will happen shortly after the API request.
     def save_list(list, emails)
+      warn "[DEPRECATION] `save_list` is deprecated. Please use `process_import_job` instead"
       data = {}
       data[:list] = list
       data[:emails] = (emails.class == Array) ? emails.join(',') : emails
