@@ -308,7 +308,7 @@ module Sailthru
     #   Hash, response data from server
     #
     # Set optout for an email address.
-    def set_optout(email, optout)
+    def set_email_optout(email, optout)
       data = {:email => email}
       data[:optout] = optout
       self.api_post(:email, data)
@@ -662,27 +662,6 @@ module Sailthru
       data = {}
       data['emails'] = emails
       data[:update] = update unless update.empty?
-      process_job(:update, data, report_email, postback_url)
-    end
-
-    # implementation for update job using file upload
-    def process_update_job_from_file(file_path, report_email = nil, postback_url = nil)
-      data = {}
-      data['file'] = file_path
-      process_job(:update, data, report_email, postback_url, 'file')
-    end
-
-    # implementation for update job using URL
-    def process_update_job_from_url(url, report_email = nil, postback_url = nil)
-      data = {}
-      data['url'] = url
-      process_job(:update, data, report_email, postback_url)
-    end
-
-    # implementation for update job using query
-    def process_update_job_from_query(query = {}, report_email = nil, postback_url = nil)
-      data = {}
-      data['query'] = query
       process_job(:update, data, report_email, postback_url)
     end
 
