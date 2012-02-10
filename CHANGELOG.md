@@ -1,3 +1,8 @@
+## 1.14 (Feb 10, 2012)
+  - Remove contact API call
+  - Update list API call: save_list() cannot be used for saving emails
+  - Added get_lists() for retrieving all available lists information
+
 ## 1.13 (September 8, 2011)
   - Explicitly convert Exception to string for Ruby 1.9 (Robert Coker)
   - Update purchase() call
