@@ -1,1 +1,8 @@
-{"result":[{"added":"Wed, 02 Feb 2011 18:20:55 -0500","status":"unknown","email":"ian@sailthru.com"},{"added":"Wed, 02 Feb 2011 18:20:55 -0500","status":"unknown","email":"dynamism360@gmail.com"},{"added":"Wed, 02 Feb 2011 18:19:11 -0500","status":"unknown","email":"praj@sailthru.com"}],"email_count":3,"list":"default2","create_time":"Wed, 02 Feb 2011 18:19:11 -0500","send_time":""}
+{
+"list": "list1",
+"create_time": "Wed, 10 Aug 2011 14:19:44 -0400",
+"send_time": "Tue, 27 Sep 2011 12:00:05 -0400",
+"count": 837080,
+"type": "normal",
+"primary": true
+}

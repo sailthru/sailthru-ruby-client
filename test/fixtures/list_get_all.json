@@ -1,0 +1,14 @@
+{
+    "lists": [
+        {
+            "name": "list1",
+            "email_count": 837080,
+            "create_time": "Wed, 10 Aug 2011 14:19:44 -0400"
+        },
+        {
+            "name": "list2",
+            "email_count": 5,
+            "create_time": "Thu, 17 Mar 2011 11:17:10 -0400"
+        }
+    ]
+}
