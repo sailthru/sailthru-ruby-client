@@ -301,22 +301,6 @@ module Sailthru
     end
 
     # params:
-    #  email, String
-    #  password, String
-    #  with_names, Boolean
-    # returns:
-    #  Hash, response data from server
-    #
-    # Fetch email contacts from an address book at one of the major email providers (aol/gmail/hotmail/yahoo)
-    # Use the with_names parameter if you want to fetch the contact names as well as emails
-    def import_contacts(email, password, with_names = false)
-      data = { :email => email, :password => password }
-      data[:names] = 1 if with_names
-      self.api_post(:contacts, data)
-    end
-
-
-    # params:
     #   template_name, String
     # returns:
     #   Hash of response data.

@@ -143,15 +143,6 @@ list_name = 'my-list'
 response = sailthru.delete_list(list_name)
 ```
 
-### [contacts](http://docs.sailthru.com/api/contacts)
-``` ruby
-#import contacts
-email = 'infynyxx@aol.com'
-password = 'my super awesome password'
-with_names = true
-response = sailthru.import_contacts(email, password, with_names)
-```
-
 ### [content](http://docs.sailthru.com/api/content)
 ``` ruby
 #push content
