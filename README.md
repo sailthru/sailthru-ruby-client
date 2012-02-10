@@ -121,19 +121,22 @@ response = sailthru.delete_blast(blast_id)
 
 ### [list](http://docs.sailthru.com/api/list)
 
-This call can currently be used to download or upload email addresses.
+Get information about a list, or create a list.
 
-**NOTE: This functionality is going to be deprecated in favor of the job call.**  (See also the [API Docs](http://docs.sailthru.com/api/list))
 ``` ruby
 #save list
 list_name = 'my-list'
-emails = ['praj@sailthru.com', 'ian@sailthru.com']
-response = sailthru.save_list(list_name, emails)
+options = {
+    'primary' => 1,
+}
+response = sailthru.save_list(list_name, options)
 
-#download /get list
+#get list information
 list_name = 'my-list'
-format = 'json'
-response = sailthru.get_list(list_name, format)
+response = sailthru.get_list(list_name)
+
+#get all lists
+response = sailthru.get_lists()
 
 #delete list
 list_name = 'my-list'

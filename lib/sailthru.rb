@@ -507,12 +507,11 @@ module Sailthru
 
     # params
     #   list, String
-    #   emails, String | Array
-    # Upload a list. The list import job is queued and will happen shortly after the API request.
-    def save_list(list, type = nil)
-      data = {}
+    #   options, Hash
+    # Create a list, or update a list.
+    def save_list(list, options = {})
+      data = options
       data[:list] = list
-      data[:type] = type if !type.nil?
      return api_post(:list, data)
     end
 

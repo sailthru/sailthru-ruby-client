@@ -41,12 +41,11 @@ class ListTest < Test::Unit::TestCase
     should "be able to save list information" do
         list = 'new-list2'
         primary = 1
-        data = {
-            'list' => list,
+        options = {
             'primary' => primary
         }
         stub_post(@api_call_url, 'list_save_valid.json')
-        response = @sailthru_client.save_list(list, data)
+        response = @sailthru_client.save_list(list, options)
         assert_equal(response['list'], list)
     end
 
