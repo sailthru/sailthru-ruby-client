@@ -2,24 +2,25 @@
 
 Gem::Specification.new do |s|
   s.name = %q{sailthru-client}
-  s.version = "1.13"
+  s.version = "1.14"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
-  s.authors = [%q{Prajwal Tuladhar}]
-  s.date = %q{2011-09-08}
+  s.authors = ["Prajwal Tuladhar"]
+  s.date = %q{2012-02-10}
   s.email = %q{praj@sailthru.com}
-  s.extra_rdoc_files = [%q{README.md}]
-  s.files = [%q{README.md}, %q{lib/sailthru.rb}]
+  s.extra_rdoc_files = ["README.md"]
+  s.files = ["README.md", "lib/sailthru.rb"]
   s.homepage = %q{http://docs.sailthru.com}
-  s.rdoc_options = [%q{--main}, %q{README.md}]
-  s.require_paths = [%q{lib}]
-  s.rubygems_version = %q{1.8.8}
+  s.rdoc_options = ["--main", "README.md"]
+  s.require_paths = ["lib"]
+  s.rubygems_version = %q{1.3.6}
   s.summary = %q{A simple client library to remotely access the Sailthru REST API.}
 
   if s.respond_to? :specification_version then
+    current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION
     s.specification_version = 3
 
-    if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
+    if Gem::Version.new(Gem::RubyGemsVersion) >= Gem::Version.new('1.2.0') then
       s.add_runtime_dependency(%q<json>, [">= 0"])
       s.add_runtime_dependency(%q<multipart-post>, [">= 0"])
       s.add_development_dependency(%q<fakeweb>, [">= 0"])
