@@ -764,7 +764,7 @@ module Sailthru
     def prepare_json_payload(data)
         payload = {
             :api_key => @api_key,
-            :format => 'json', #fuck XML
+            :format => 'json', #<3 XML
             :json => data.to_json
         }
         payload[:sig] = get_signature_hash(payload, @secret)
