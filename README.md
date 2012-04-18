@@ -32,6 +32,40 @@ api_key = "api_key";
 api_secret = 'secret';
 api_url = "https://api.sailthru.com";
 sailthru = Sailthru::SailthruClient.new(api_key, api_secret, api_url)
+
+# GET http://docs.sailthru.com/api/user API call
+user_key = 'email'
+email = 'praj@sailthru.com'
+fields = {'vars' => 1, 'lists' => 1}
+data = {
+    'id' => email,
+    'key' => user_key,
+    'fields' => fields
+}
+response = sailthru.api_get('user', data)
+
+# POST http://docs.sailthru.com/api/user API call
+user_sid = '4e2879472d7acd6d97144f9e' #sailthru ID
+lists = {
+    "list-A" => 1,
+    "list-B" => 1,
+    "list-C" => 0 #optout of this list
+}
+vars = {
+    'name' => 'Prajwal Tuladhar',
+    'address' => {
+        'city': 'New York',
+        'state': 'NY',
+        'zipcode': 10011
+    }
+}
+data = {
+    'id' => user_sid,
+    'lists' => lists,
+    'vars' => vars
+}
+response = sailthru.api_post('user', data)
+
 ```
 
 ### [send](http://docs.sailthru.com/api/send)
