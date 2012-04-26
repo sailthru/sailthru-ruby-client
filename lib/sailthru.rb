@@ -529,8 +529,7 @@ module Sailthru
     # sets horizon data
     def set_horizon(email, tags)
       data = {}
-      data[
-      :email] = email
+      data[:email] = email
       data[:tags] = (tags.class == Array) ? tags.join(',') : tags
       api_post(:horizon, data)
     end
@@ -637,6 +636,33 @@ module Sailthru
       api_get(:job, {'job_id' => job_id})
     end
 
+    # Get user by Sailthru ID
+    def get_user_by_sid(id, fields = {})
+        api_get(:user, {'id' => id, 'fields' => fields})
+    end
+
+    # Get user by specified key
+    def get_user_by_key(id, key, fields = {})
+        data = {
+            'id' => id,
+            'key' => key,
+            'fields' => fields
+        }
+        api_get(:user, data)
+    end
+
+    # Creates new user
+    def create_new_user(options = {})
+        options.delete('id')
+        api_post(:user, options)
+    end
+
+    # Save existing user
+    def save_user(id, options = {})
+        data = options
+        data['id'] = id
+        api_post(:user, data)
+    end
 
     # Perform API GET request
     def api_get(action, data)

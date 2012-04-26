@@ -8,6 +8,7 @@ By default, it will make request in `JSON` format.
 It can make requests to following [API calls](http://docs.sailthru.com/api):
 
 * [email](http://docs.sailthru.com/api/email)
+* [user](http://docs.sailthru.com/api/user)
 * [send](http://docs.sailthru.com/api/send)
 * [blast](http://docs.sailthru.com/api/blast)
 * [template](http://docs.sailthru.com/api/template)
@@ -59,6 +60,54 @@ vars = {'name' => 'Prajwal Tuladhar', "myvar" => [1111,2,3]}
 options = {'test' => 1}
 response = sailthru.multi_send(template_name, emails, vars, options)
 ```
+
+### [user](http://docs.sailthru.com/api/user)
+```ruby
+#create new user profile
+options = {
+    'vars' => {
+        'name' => 'Prajwal Tuladhar',
+        'address' => 'New York, NY'
+    }
+}
+response = sailthru.create_new_user(options)
+
+#update existing user by Sailthru ID
+options = {
+    'keys' => {
+        'email' => 'praj@sailthru.com',
+        'twitter' => 'infynyxx',
+        'fb' => 726310296
+    },
+    'lists' => {
+        'list-1' => 1,
+        'list-2' => 1,
+    }
+}
+response = sailthru.save_user('4e2879472d7acd6d97144f9e', options)
+
+#update existing user by email
+options = {
+    'key' => 'email',
+    'lists' => {
+        'list-1' => 0
+    }
+}
+response = sailthru.save_user('praj@sailthru.com', options)
+
+#get user by Sailthru ID
+fields = {
+    'keys' => 1,
+    'vars' => 1,
+    'activity' => 1
+}
+response = sailthru.get_user_by_sid('4e2879472d7acd6d97144f9e')
+
+#get user by Custom key
+response = sailthru.get_user_by_key('praj@sailthru.com', 'email', fields)
+
+```
+
 
 ### [email](http://docs.sailthru.com/api/email)
 ``` ruby
