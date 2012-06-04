@@ -31,8 +31,7 @@ require 'sailthru' #if using as gem
 
 api_key = "api_key";
 api_secret = 'secret';
-api_url = "https://api.sailthru.com";
-sailthru = Sailthru::SailthruClient.new(api_key, api_secret, api_url)
+sailthru = Sailthru::SailthruClient.new(api_key, api_secret)
 
 # GET http://docs.sailthru.com/api/user API call
 user_key = 'email'
