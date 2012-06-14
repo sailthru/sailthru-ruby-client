@@ -18,7 +18,6 @@ It can make requests to following [API calls](http://docs.sailthru.com/api):
 * [alert](http://docs.sailthru.com/api/alert)
 * [stats](http://docs.sailthru.com/api/stats)
 * [purchase](http://docs.sailthru.com/api/purchase)
-* [horizon](http://docs.sailthru.com/api/horizon)
 
 ### Installing from rubygems.org (Tested with Ruby 1.8.7)
     $ gem install sailthru-client
@@ -277,19 +276,6 @@ response = sailthru.stats_list()
 blast_id = 42382
 response = sailthru.stats_blast(blast_id)
 ```
-
-### [horizon](http://docs.sailthru.com/api/horizon)
-``` ruby
-#get horizon user info
-email = 'praj@sailthru.com'
-response = sailthru.get_horizon(email)
-
-#set horizon data
-email = 'praj@sailthru.com'
-tags = ['red', 'blue']
-response = sailthru.set_horizon(email, tags)
-```
-
 
 ### [job] (http://docs.sailthru.com/api/job)
 ``` ruby
