@@ -1,0 +1,3 @@
+{"email" : "test@test.com", "vars" : {"name" : "Dan"}}
+{"email" : "test2@test.com", "vars" : {"name" : "Dan 2"}}
+{"email" : "test3@test.com", "vars" : {"name" : "Dan 3"}}

@@ -42,8 +42,8 @@ class StatsTest < Test::Unit::TestCase
     should "not be able to stats list data when list is given and invalid" do
       list = 'not-listed'
       params = {}
-      params[:stat] = 'list'
       params[:list] = list
+      params[:stat] = 'list'
       query_string = create_json_payload(@api_key, @secret, params)
       stub_get(@api_call_url + '?' + query_string, 'stats_lists_invalid.json')
       response = @sailthru_client.stats_list(list)
