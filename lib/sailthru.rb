@@ -416,7 +416,6 @@ module Sailthru
         data[:date] = date
       end
       data[:stat] = 'list'
-
       stats(data)
     end
 
@@ -728,6 +727,28 @@ module Sailthru
       return _result
     end
 
+    # set up our post request
+    def set_up_post_request(uri, data, headers, binary_key = nil)
+      if (!binary_key.nil?)
+        binary_data = data[binary_key]
+
+        if binary_data.is_a?(StringIO)
+          data[binary_key] = UploadIO.new(
+            binary_data, "text/plain"
+          )
+        else
+          data[binary_key] = UploadIO.new(
+            File.open(binary_data), "text/plain"
+          )
+        end
+
+        req = Net::HTTP::Post::Multipart.new(uri.path, data)
+      else
+        req = Net::HTTP::Post.new(uri.path, headers)
+        req.set_form_data(data)
+      end
+      req
+    end
 
     # params:
     #   uri, String
@@ -748,14 +769,9 @@ module Sailthru
       _uri  = URI.parse(uri)
 
       if method == 'POST'
-        if (!binary_key.nil?)
-          binary_data = data[binary_key]
-          data[binary_key] = UploadIO.new(File.open(binary_data), "text/plain")
-          req = Net::HTTP::Post::Multipart.new(_uri.path, data)
-        else
-          req = Net::HTTP::Post.new(_uri.path, headers)
-          req.set_form_data(data)
-        end
+        req = self.set_up_post_request(
+          _uri, data, headers, binary_key
+        )
 
       else
         request_uri = "#{_uri.path}?#{_uri.query}"

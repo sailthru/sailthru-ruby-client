@@ -3,6 +3,10 @@ require 'test/unit'
 require 'shoulda'
 require 'uri'
 require 'json'
+require 'mocha'
+
+require 'ruby-debug'
+Debugger.start
 
 gem 'fakeweb', ">= 1.2.6"
 require 'fakeweb'
@@ -24,8 +28,11 @@ class Test::Unit::TestCase
 
   def fixture_file(filename)
     return '' if filename == ''
-    file_path = File.expand_path(File.dirname(__FILE__) + '/fixtures/' + filename)
-    File.read(file_path)
+    File.read(fixture_file_path(filename))
+  end
+
+  def fixture_file_path(filename)
+    File.expand_path(File.dirname(__FILE__) + '/fixtures/' + filename)
   end
 
   def sailthru_api_base_url(url)
