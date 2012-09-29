@@ -24,7 +24,7 @@ end
 #   http://rubygems.org/read/chapter/20
 #
 spec = Gem::Specification.new do |s|
-  require 'lib/sailthru'
+  require File.join(File.dirname(__FILE__), 'lib', 'sailthru')
   # Change these as appropriate
   s.name              = "sailthru-client"
   s.version           = "#{Sailthru::Version}"
@@ -47,6 +47,7 @@ spec = Gem::Specification.new do |s|
 
   s.add_development_dependency("fakeweb")
   s.add_development_dependency("shoulda")
+  s.add_development_dependency("mocha")
 end
 
 # This task actually builds the gem. We also regenerate a static
@@ -91,7 +92,7 @@ end
 #
 desc "Push a new version to Gemcutter"
 task :publish do
-    require 'lib/sailthru'
+    require File.join(File.dirname(__FILE__), 'lib', 'sailthru')
     sh "rake clean"
     sh "rake gem"
     sh "rake gemspec"
