@@ -120,7 +120,7 @@ module Sailthru
     #     test: send as test email (subject line will be marked, will not count towards stats)
     # returns:
     #   Hash, response data from server
-    def send(template_name, email, vars={}, options = {}, schedule_time = nil)
+    def send_email(template_name, email, vars={}, options = {}, schedule_time = nil)
       post = {}
       post[:template] = template_name
       post[:email] = email

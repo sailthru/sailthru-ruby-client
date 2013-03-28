@@ -35,7 +35,7 @@ class SendTest < Test::Unit::TestCase
       template_name = 'default'
       email = 'example@example.com'
       stub_post(@api_call_url, 'send_get_valid.json')
-      response = @sailthru_client.send template_name, email, {"name" => "Unix",  "myvar" => [1111,2,3], "mycomplexvar" => {"tags" => ["obama", "aaa", "c"]}}
+      response = @sailthru_client.send_email template_name, email, {"name" => "Unix",  "myvar" => [1111,2,3], "mycomplexvar" => {"tags" => ["obama", "aaa", "c"]}}
       assert_equal template_name, response['template']
     end
 
@@ -43,7 +43,7 @@ class SendTest < Test::Unit::TestCase
       template_name = 'invalid-template'
       email = 'example@example.com'
       stub_post(@api_call_url, 'send_post_invalid.json')
-      response = @sailthru_client.send template_name, email, {"name" => "Unix",  "myvar" => [1111,2,3], "mycomplexvar" => {"tags" => ["obama", "aaa", "c"]}}
+      response = @sailthru_client.send_email template_name, email, {"name" => "Unix",  "myvar" => [1111,2,3], "mycomplexvar" => {"tags" => ["obama", "aaa", "c"]}}
       assert_equal 14, response['error']
     end
 
