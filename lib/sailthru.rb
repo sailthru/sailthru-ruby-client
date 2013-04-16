@@ -462,6 +462,30 @@ module Sailthru
       stats(data)
     end
 
+    # params
+    #   template, String
+    #   start_date, String
+    #   end_date, String
+    #   options, Hash
+    #
+    # returns:
+    #   hash, response from server
+    # Retrieve information about a particular blast or aggregated information from all of blasts over a specified date range
+    def stats_send(template = nil, start_date = nil, end_date = nil, options = {})
+      data = options
+      if template != nil
+        data[:template] = template
+      end
+      if start_date != nil
+        data[:start_date] = start_date
+      end
+      if end_date != nil
+        data[:end_date] = end_date
+      end
+      data[:stat] = 'send'
+      stats(data)
+    end
+
 
     # params
     #   title, String
