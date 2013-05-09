@@ -268,12 +268,14 @@ module Sailthru
 
     # params:
     #   blast_id, Fixnum | String
+    #   options, hash
     # returns:
     #   Hash, response data from server
     #
     # Get information on a previously scheduled email blast
-    def get_blast(blast_id)
-      api_get(:blast, {:blast_id => blast_id.to_s})
+    def get_blast(blast_id, options={})
+      options[:blast_id] = blast_id.to_s
+      api_get(:blast, options)
     end
 
     # params:
