@@ -321,7 +321,22 @@ module Sailthru
       data[:templates] = templates unless templates.empty?
       self.api_post(:email, data)
     end
-
+    
+    # params:
+    #   new_email, String
+    #   old_email, String
+    #   options, Hash mapping optional parameters
+    # returns:
+    #   Hash of response data.
+    #
+    # change a user's email address.
+    def change_email(new_email, old_email, options = {})
+      data = options
+      data[:email] = new_email
+      data[:change_email] = old_email
+      self.api_post(:email, data)
+    end
+    
     # params:
     #   template_name, String
     # returns:
