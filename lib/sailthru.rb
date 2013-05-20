@@ -268,12 +268,14 @@ module Sailthru
 
     # params:
     #   blast_id, Fixnum | String
+    #   options, hash
     # returns:
     #   Hash, response data from server
     #
     # Get information on a previously scheduled email blast
-    def get_blast(blast_id)
-      api_get(:blast, {:blast_id => blast_id.to_s})
+    def get_blast(blast_id, options={})
+      options[:blast_id] = blast_id.to_s
+      api_get(:blast, options)
     end
 
     # params:
@@ -306,18 +308,35 @@ module Sailthru
     #   email, String
     #   vars, Hash
     #   lists, Hash mapping list name => 1 for subscribed, 0 for unsubscribed
+    #   options, Hash mapping optional parameters
     # returns:
     #   Hash, response data from server
     #
     # Set replacement vars and/or list subscriptions for an email address.
-    def set_email(email, vars = {}, lists = {}, templates = {})
-      data = {:email => email}
+    def set_email(email, vars = {}, lists = {}, templates = {}, options = {})
+      data = options
+      data[:email] = email
       data[:vars] = vars unless vars.empty?
       data[:lists] = lists unless lists.empty?
       data[:templates] = templates unless templates.empty?
       self.api_post(:email, data)
     end
-
+    
+    # params:
+    #   new_email, String
+    #   old_email, String
+    #   options, Hash mapping optional parameters
+    # returns:
+    #   Hash of response data.
+    #
+    # change a user's email address.
+    def change_email(new_email, old_email, options = {})
+      data = options
+      data[:email] = new_email
+      data[:change_email] = old_email
+      self.api_post(:email, data)
+    end
+    
     # params:
     #   template_name, String
     # returns:
