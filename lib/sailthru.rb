@@ -718,13 +718,7 @@ module Sailthru
         api_get(:user, data)
     end
 
-    # Creates new user
-    def create_new_user(options = {})
-        options.delete('id')
-        api_post(:user, options)
-    end
-
-    # Save existing user
+    # Create new user, or update existing user
     def save_user(id, options = {})
         data = options
         data['id'] = id
