@@ -401,7 +401,7 @@ module Sailthru
     #   params, Hash
     #   request, String
     # returns:
-    #   TrueClass or FalseClass, Returns true if the incoming request is an authenticated verify post.
+    #   TrueClass or FalseClass, Returns true if the incoming request is an authenticated optout post.
     def receive_optout_post(params, request)
       if request.post?
         [:action, :email, :sig].each { |key| return false unless params.has_key?(key) }
