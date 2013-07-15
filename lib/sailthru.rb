@@ -383,8 +383,7 @@ module Sailthru
 
         return false unless params[:action] == :verify
 
-        sig = params[:sig]
-        params.delete(:sig)
+        sig = params.delete(:sig)
         return false unless sig == get_signature_hash(params, @secret)
 
         _send = self.get_send(params[:send_id])
@@ -392,6 +391,25 @@ module Sailthru
 
         return false unless _send[:email] == params[:email]
 
+        return true
+      else
+        return false
+      end
+    end
+
+    # params:
+    #   params, Hash
+    #   request, String
+    # returns:
+    #   TrueClass or FalseClass, Returns true if the incoming request is an authenticated verify post.
+    def receive_optout_post(params, request)
+      if request.post?
+        [:action, :email, :sig].each { |key| return false unless params.has_key?(key) }
+
+        return false unless params[:action] == :optout
+
+        sig = params.delete(:sig)
+        return false unless sig == get_signature_hash(params, @secret)
         return true
       else
         return false
