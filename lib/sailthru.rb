@@ -530,11 +530,12 @@ module Sailthru
     #   date, String
     #   tags, Array or Comma separated string
     #   vars, Hash
+    #   options, Hash
     #
     # Push a new piece of content to Sailthru, triggering any applicable alerts.
     # http://docs.sailthru.com/api/content
-    def push_content(title, url, date = nil, tags = nil, vars = {})
-      data = {}
+    def push_content(title, url, date = nil, tags = nil, vars = {}, options = {})
+      data = options
       data[:title] = title
       data[:url] = url
       if date != nil
