@@ -660,7 +660,7 @@ module Sailthru
       data['emails'] = Array(emails).join(',')
       process_job(:import, data, report_email, postback_url)
     end
-
+    
     # implementation for import job using file upload
     def process_import_job_from_file(list, file_path, report_email = nil, postback_url = nil)
       data = {}
