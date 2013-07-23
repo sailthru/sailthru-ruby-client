@@ -321,7 +321,7 @@ module Sailthru
       data[:templates] = templates unless templates.empty?
       self.api_post(:email, data)
     end
-
+    
     # params:
     #   new_email, String
     #   old_email, String
@@ -336,7 +336,7 @@ module Sailthru
       data[:change_email] = old_email
       self.api_post(:email, data)
     end
-
+    
     # params:
     #   template_name, String
     # returns:
@@ -360,7 +360,7 @@ module Sailthru
       data[:template] = template_name
       self.api_post(:template, data)
     end
-
+    
     # params:
     #   template_name, String
     # returns:
