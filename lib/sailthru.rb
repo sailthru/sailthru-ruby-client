@@ -556,14 +556,14 @@ module Sailthru
     # params
     #   list, String
     #
-    # Get information about a list.
+    # Get information about a list. 
     def get_list(list)
       return api_get(:list, {:list => list})
     end
 
     # params
     #
-    # Get information about all lists
+    # Get information about all lists 
     def get_lists()
         return api_get(:list, {})
     end
@@ -653,7 +653,7 @@ module Sailthru
 
     # params
     #   emails, String | Array
-    # implementation for import_job
+    # implementation for import_job  
     def process_import_job(list, emails, report_email = nil, postback_url = nil)
       data = {}
       data['list'] = list
@@ -668,7 +668,7 @@ module Sailthru
       data['file'] = file_path
       process_job(:import, data, report_email, postback_url, 'file')
     end
-
+    
     # implementation for update job using file upload
     def process_update_job_from_file(file_path, report_email = nil, postback_url = nil)
       data = {}
