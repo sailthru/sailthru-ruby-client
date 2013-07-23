@@ -360,7 +360,7 @@ module Sailthru
       data[:template] = template_name
       self.api_post(:template, data)
     end
-    
+
     # params:
     #   template_name, String
     # returns:
