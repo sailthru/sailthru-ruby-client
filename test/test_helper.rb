@@ -58,6 +58,10 @@ class Test::Unit::TestCase
     FakeWeb.register_uri(:post, URI.parse(url), :body => fixture_file(filename), :content_type => 'application/json')
   end
 
+  def stub_exception(url, filename)
+    FakeWeb.register_uri(:any, URI.parse(url), :exception => Exception)
+  end
+
   def create_query_string(secret, params)
     params['sig'] = get_signature_hash(params, secret)
     params.map{ |key, value| "#{CGI::escape(key.to_s)}=#{CGI::escape(value.to_s)}" }.join("&")
