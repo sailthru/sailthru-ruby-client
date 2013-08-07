@@ -717,6 +717,46 @@ module Sailthru
         api_post(:user, data)
     end
 
+  # params
+  #   template, String
+  #   trigger_id, String
+  # Get an existing trigger
+    def get_trigger(template, trigger_id)
+        data = {}
+        data['template'] = template
+        data['trigger_id'] = trigger_id
+        api_get(:trigger, data)
+    end
+
+  # params
+  #   template, String
+  #   time, String
+  #   time_unit, String
+  #   event, String
+  #   zephyr, String
+  # Create or update a trigger
+    def post_trigger(template, time, time_unit, event, zephyr)
+        data = {}
+        data['template'] = template
+        data['time'] = time
+        data['time_unit'] = time_unit
+        data['event'] = event
+        data['zephyr'] = zephyr
+        api_post(:trigger, data)
+    end
+
+  # params
+  #   id, String
+  #   event, String
+  #   options, Hash (Can contain vars, Hash and/or key)
+  # Notify Sailthru of an Event
+    def post_event(id, event, options = {})
+        data = options
+        data['id'] = id
+        data['event'] = event
+        api_post(:event, data)
+    end
+
     # Perform API GET request
     def api_get(action, data)
       api_request(action, data, 'GET')
