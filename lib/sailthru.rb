@@ -721,10 +721,10 @@ module Sailthru
   #   template, String
   #   trigger_id, String
   # Get an existing trigger
-    def get_trigger(template, trigger_id)
+    def get_trigger(template, trigger_id = nil)
         data = {}
         data['template'] = template
-        data['trigger_id'] = trigger_id
+        if trigger_id != nil then data['trigger_id'] = trigger_id end
         api_get(:trigger, data)
     end
 
