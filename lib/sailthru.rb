@@ -718,13 +718,28 @@ module Sailthru
     end
 
   # params
+  # Get an existing trigger
+    def get_triggers()
+        api_get(:trigger)
+    end
+
+  # params
   #   template, String
   #   trigger_id, String
   # Get an existing trigger
-    def get_trigger(template, trigger_id = nil)
+    def get_trigger_by_template(template, trigger_id = nil)
         data = {}
         data['template'] = template
         if trigger_id != nil then data['trigger_id'] = trigger_id end
+        api_get(:trigger, data)
+    end
+
+  # params
+  #   event, String
+  # Get an existing trigger
+    def get_trigger_by_event(event)
+        data = {}
+        data['event'] = event
         api_get(:trigger, data)
     end
 
@@ -735,9 +750,24 @@ module Sailthru
   #   event, String
   #   zephyr, String
   # Create or update a trigger
-    def post_trigger(template, time, time_unit, event, zephyr)
+    def post_template_trigger(template, time, time_unit, event, zephyr)
         data = {}
         data['template'] = template
+        data['time'] = time
+        data['time_unit'] = time_unit
+        data['event'] = event
+        data['zephyr'] = zephyr
+        api_post(:trigger, data)
+    end
+
+  # params
+  #   template, String
+  #   time, String
+  #   time_unit, String
+  #   zephyr, String
+  # Create or update a trigger
+    def post_event_trigger(event, time, time_unit, zephyr)
+        data = {}
         data['time'] = time
         data['time_unit'] = time_unit
         data['event'] = event
