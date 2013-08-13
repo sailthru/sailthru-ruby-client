@@ -720,7 +720,7 @@ module Sailthru
   # params
   # Get an existing trigger
     def get_triggers()
-        api_get(:trigger)
+        api_get(:trigger, {})
     end
 
   # params
