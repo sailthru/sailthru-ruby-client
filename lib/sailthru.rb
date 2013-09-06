@@ -406,7 +406,7 @@ module Sailthru
       if request.post?
         [:action, :email, :sig].each { |key| return false unless params.has_key?(key) }
 
-        return false unless params[:action] == :optout
+        return false unless params[:action] == 'optout'
 
         sig = params.delete(:sig)
         return false unless sig == get_signature_hash(params, @secret)
@@ -425,7 +425,7 @@ module Sailthru
       if request.post?
         [:action, :email, :sig].each { |key| return false unless params.has_key?(key) }
 
-        return false unless params[:action] == :hardbounce
+        return false unless params[:action] == 'hardbounce'
 
         sig = params.delete(:sig)
         return false unless sig == get_signature_hash(params, @secret)
