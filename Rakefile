@@ -3,21 +3,6 @@ require "rake/gempackagetask"
 require "rake/rdoctask"
 
 
-#
-## Tests
-#
-
-task :default => :test
-
-require 'rake/testtask'
-desc "Run the test suite"
-Rake::TestTask.new do |t|
-  t.libs = [File.expand_path("lib"), "test"]
-  t.test_files = FileList["test/**/*_test.rb"]
-  t.verbose = true
-end
-
-
 # This builds the actual gem. For details of what all these options
 # mean, and other ones you can add, check the documentation here:
 #
@@ -26,7 +11,7 @@ end
 spec = Gem::Specification.new do |s|
   require File.join(File.dirname(__FILE__), 'lib', 'sailthru')
   # Change these as appropriate
-  s.name              = "sailthru-client"
+  s.name              = "sailthru-client-notest"
   s.version           = "#{Sailthru::Version}"
   s.summary           = "A simple client library to remotely access the Sailthru REST API."
   s.author            = "Prajwal Tuladhar"
@@ -45,9 +30,6 @@ spec = Gem::Specification.new do |s|
   s.add_dependency("json")
   s.add_dependency("multipart-post")
 
-  s.add_development_dependency("fakeweb")
-  s.add_development_dependency("shoulda")
-  s.add_development_dependency("mocha")
 end
 
 # This task actually builds the gem. We also regenerate a static
