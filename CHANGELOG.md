@@ -1,3 +1,12 @@
+## 2.0.0 (Sep 6, 2013)
+  - Added triggers and events
+  - Changed push_content to handle additional parameters
+  - Added verification for postbacks
+  - Removed Horizon calls
+  - Remvoed create_new_user method
+  - Added change_email method
+  - Added stats_send method
+
 ## 1.14 (Feb 10, 2012)
   - Remove contact API call
   - Update list API call: save_list() cannot be used for saving emails
