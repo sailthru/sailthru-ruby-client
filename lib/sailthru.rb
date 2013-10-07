@@ -450,7 +450,7 @@ module Sailthru
       data[:email] = email
       data[:items] = items
 
-      if incomplete != nil
+      if incomplete
         data[:incomplete] = incomplete.to_i
       end
 
