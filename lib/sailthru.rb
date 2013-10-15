@@ -676,38 +676,38 @@ module Sailthru
     # params
     #   emails, String | Array
     # implementation for import_job  
-    def process_import_job(list, emails, report_email = nil, postback_url = nil)
-      data = {}
+    def process_import_job(list, emails, report_email = nil, postback_url = nil, options = {})
+      data = options
       data['list'] = list
       data['emails'] = Array(emails).join(',')
       process_job(:import, data, report_email, postback_url)
     end
     
     # implementation for import job using file upload
-    def process_import_job_from_file(list, file_path, report_email = nil, postback_url = nil)
-      data = {}
+    def process_import_job_from_file(list, file_path, report_email = nil, postback_url = nil, options = {})
+      data = options
       data['list'] = list
       data['file'] = file_path
       process_job(:import, data, report_email, postback_url, 'file')
     end
 
     # implementation for update job using file upload
-    def process_update_job_from_file(file_path, report_email = nil, postback_url = nil)
-      data = {}
+    def process_update_job_from_file(file_path, report_email = nil, postback_url = nil, options = {})
+      data = options
       data['file'] = file_path
       process_job(:update, data, report_email, postback_url, 'file')
     end
 
     # implementation for snapshot job
-    def process_snapshot_job(query = {}, report_email = nil, postback_url = nil)
-      data = {}
+    def process_snapshot_job(query = {}, report_email = nil, postback_url = nil, options = {})
+      data = options
       data['query'] = query
       process_job(:snapshot, data, report_email, postback_url)
     end
 
     # implementation for export list job
-    def process_export_list_job(list, report_email = nil, postback_url = nil)
-      data = {}
+    def process_export_list_job(list, report_email = nil, postback_url = nil, options = {})
+      data = options
       data['list'] = list
       process_job(:export_list_data, data, report_email, postback_url)
     end
