@@ -126,7 +126,7 @@ module Sailthru
     # http://docs.sailthru.com/api/send
     def send(template_name, email, vars={}, options = {}, schedule_time = nil)
       warn "[DEPRECATION] `send` is deprecated. Please use `send_email` instead."
-      send_email(template_name, email, vars={}, options = {}, schedule_time = nil)
+      send_email(template_name, email, vars, options, schedule_time)
     end
 
     # params:
