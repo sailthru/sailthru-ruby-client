@@ -14,6 +14,9 @@ module Sailthru
   class SailthruClientException < Exception
   end
 
+  class SailthruUnavailableException < Exception
+  end
+
   module Helpers
     # params:
     #   params, Hash
@@ -938,6 +941,8 @@ module Sailthru
             http.request(req)
         }
 
+      rescue Timeout::Error => e
+        raise SailthruUnavailableException.new(["Timed out: #{_uri}", e.inspect, e.backtrace].join("\n"));
       rescue Exception => e
         raise SailthruClientException.new(["Unable to open stream: #{_uri}", e.inspect, e.backtrace].join("\n"));
       end
