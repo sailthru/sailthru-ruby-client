@@ -109,7 +109,7 @@ module Sailthru
       @proxy_host = proxy_host
       @proxy_port = proxy_port
       @verify_ssl = true
-      @opts = {}
+      @opts = opts
     end
 
     # params:
