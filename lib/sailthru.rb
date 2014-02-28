@@ -941,7 +941,7 @@ module Sailthru
             http.request(req)
         }
 
-      rescue Timeout::Error => e
+      rescue Timeout::Error, EOFError, Errno::ECONNREFUSED, Errno::ECONNRESET => e
         raise SailthruUnavailableException.new(["Timed out: #{_uri}", e.inspect, e.backtrace].join("\n"));
       rescue Exception => e
         raise SailthruClientException.new(["Unable to open stream: #{_uri}", e.inspect, e.backtrace].join("\n"));
