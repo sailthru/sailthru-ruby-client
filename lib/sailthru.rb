@@ -14,6 +14,9 @@ module Sailthru
   class SailthruClientException < Exception
   end
 
+  class SailthruUnavailableException < Exception
+  end
+
   module Helpers
     # params:
     #   params, Hash
@@ -102,13 +105,14 @@ module Sailthru
     #   api_uri, String
     #
     # Instantiate a new client; constructor optionally takes overrides for key/secret/uri and proxy server settings.
-    def initialize(api_key, secret, api_uri=nil, proxy_host=nil, proxy_port=nil)
+    def initialize(api_key, secret, api_uri=nil, proxy_host=nil, proxy_port=nil, opts={})
       @api_key = api_key
       @secret  = secret
       @api_uri = if api_uri.nil? then 'https://api.sailthru.com' else api_uri end
       @proxy_host = proxy_host
       @proxy_port = proxy_port
       @verify_ssl = true
+      @opts = opts
     end
 
     # params:
@@ -927,12 +931,18 @@ module Sailthru
         if _uri.scheme == 'https'
             http.use_ssl = true
             http.verify_mode = OpenSSL::SSL::VERIFY_NONE if @verify_ssl != true  # some openSSL client doesn't work without doing this
+            http.ssl_timeout = @opts[:http_ssl_timeout] || 5
         end
+        http.open_timeout = @opts[:http_open_timeout] || 5
+        http.read_timeout = @opts[:http_read_timeout] || 10
+        http.close_on_empty_response = @opts[:http_close_on_empty_response] || true
 
         response = http.start {
             http.request(req)
         }
 
+      rescue Timeout::Error, Errno::ETIMEDOUT => e
+        raise SailthruUnavailableException.new(["Timed out: #{_uri}", e.inspect, e.backtrace].join("\n"));
       rescue Exception => e
         raise SailthruClientException.new(["Unable to open stream: #{_uri}", e.inspect, e.backtrace].join("\n"));
       end
