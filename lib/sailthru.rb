@@ -142,13 +142,14 @@ module Sailthru
     #     test: send as test email (subject line will be marked, will not count towards stats)
     # returns:
     #   Hash, response data from server
-    def send_email(template_name, email, vars={}, options = {}, schedule_time = nil)
+    def send_email(template_name, email, vars={}, options = {}, schedule_time = nil, limit = {})
       post = {}
       post[:template] = template_name
       post[:email] = email
       post[:vars] = vars if vars.length >= 1
       post[:options] = options if options.length >= 1
       post[:schedule_time] = schedule_time if !schedule_time.nil?
+      post[:limit] = limit if limit.length >= 1
       return self.api_post(:send, post)
     end
 
