@@ -786,6 +786,134 @@ module Sailthru
         data['zephyr'] = zephyr
         api_post(:trigger, data)
     end
+    
+# Get an HTML preview of a template.
+#
+# params
+#    template, email
+#
+#  @link http://docs.sailthru.com/api/preview
+#
+
+def preview_Template_With_HTML(template, email)
+    data = []
+    data['template'] = template
+    data['email'] = email
+    
+    return api_Post(:preview, data)
+end
+
+# Get an HTML preview of a Blast.
+#
+# params
+#    blast_id, email
+#
+#  @link http://docs.sailthru.com/api/preview
+#
+
+def preview_Blast_With_HTML(blast_id, email)
+    data = []
+    data['blast_id'] = blast_id
+    data['email'] = email
+    
+    return api_Post(:preview, data)
+end
+
+# Get an HTML preview of a Recurring BLast.
+#
+# params
+#    blast_repeat_id, email
+#
+#  @link http://docs.sailthru.com/api/preview
+#
+
+def preview_Recurring_Blast_With_HTML(blast_repeat_id, email)
+    data = []
+    data['blast_repeat_id'] = blast_repeat_id
+    data['email'] = email
+    
+    return api_Post(:preview, data)
+end
+
+# Get an HTML preview of a content_html.
+#
+# params
+#    content_html, email
+#
+#  @link http://docs.sailthru.com/api/preview
+#
+    
+def preview_Content_With_HTML(content_html, email)
+    data = []
+    data['content_html'] = content_html
+    data['email'] = email
+    
+    return api_Post(:preview, data)
+end
+
+# Get an email preview of a template
+#
+# params
+#     template, send_email
+#
+# @link http://docs.sailthru.com/api/preview
+#
+
+def preview_Template_With_Email(template, send_email)
+    data = []
+    data['template'] = template
+    data['send_email'] = send_email
+    
+    return api_post(:preview, data)
+end
+
+# Get an email preview of a blast
+#
+# params
+#     blast_id, send_email
+#
+# @link http://docs.sailthru.com/api/preview
+#
+
+def preview_Blast_With_Email(blast_id, send_email)
+    data = []
+    data['blast_id'] = blast_id
+    data['send_email'] = send_email
+    
+    return api_Post(:preview, data)
+end
+
+# Get an email preview of a recurring blast
+#
+# params
+#     blast_repeat_id, send_email
+#
+# @link http://docs.sailthru.com/api/preview
+#
+
+def preview_Recurring_Blast_With_Email(blast_repeat_id, send_email)
+    data = []
+    data['blast_repeat_id'] = blast_repeat_id
+    data['send_email'] = send_email
+    
+    return api_Post(:preview, data)
+end
+
+# Get an email preview of content_html
+#
+# params
+#     content_html, send_email
+#
+# @link http://docs.sailthru.com/api/preview
+#
+
+def preview_Content_With_Email(content_html, send_email)
+    data = []
+    data['content_html'] = content_html
+    data['send_email'] = send_email
+    
+    return api_Post(:preview, data)
+end
 
   # params
   #   template, String
