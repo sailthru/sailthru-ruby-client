@@ -5,7 +5,7 @@ require 'uri'
 require 'json'
 require 'mocha'
 
-require 'ruby-debug'
+require 'debugger'
 Debugger.start
 
 gem 'fakeweb', ">= 1.2.6"
