@@ -19,8 +19,7 @@ class FileUploadTest < Test::Unit::TestCase
 
     should "be able to upload a file of data" do
 
-      Net::HTTP::Post::Multipart.expects(:new)
-        .with(
+      Net::HTTP::Post::Multipart.expects(:new).with(
           instance_of(String),
           has_entries({
             "file" => instance_of(UploadIO)
@@ -28,8 +27,7 @@ class FileUploadTest < Test::Unit::TestCase
         )
 
       Net::HTTP.stubs(:Proxy).returns(Net::HTTP)
-      Net::HTTP.any_instance
-        .stubs(
+      Net::HTTP.any_instance.stubs(
           :request => stub(
             "body" => JSON.unparse({"job_id" => "123"})
           )
@@ -49,8 +47,7 @@ class FileUploadTest < Test::Unit::TestCase
 
     should "be able to upload a string of data" do
 
-      Net::HTTP::Post::Multipart.expects(:new)
-        .with(
+      Net::HTTP::Post::Multipart.expects(:new).with(
           instance_of(String),
           has_entries({
             "file" => instance_of(UploadIO)
@@ -58,8 +55,7 @@ class FileUploadTest < Test::Unit::TestCase
         )
 
       Net::HTTP.stubs(:Proxy).returns(Net::HTTP)
-      Net::HTTP.any_instance
-        .stubs(
+      Net::HTTP.any_instance.stubs(
           :request => stub(
             "body" => JSON.unparse({"job_id" => "123"})
           )

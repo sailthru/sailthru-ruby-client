@@ -878,7 +878,7 @@ module Sailthru
 
         if binary_data.is_a?(StringIO)
           data[binary_key] = UploadIO.new(
-            binary_data, "text/plain"
+            binary_data, "text/plain", "local.path"
           )
         else
           data[binary_key] = UploadIO.new(
