@@ -23,11 +23,11 @@ end
 
 desc "Publish gem to rubygems.org"
 task :publish do
-  require File.join(File.dirname(__FILE__), 'lib', 'sailthru')
+  require File.join(File.dirname(__FILE__), 'lib/sailthru/version')
   sh "gem build sailthru-client.gemspec"
   sh "gem push sailthru-client-#{Sailthru::VERSION}.gem"
-  sh "git commit -am 'BUMP #{Sailthru::Version}'"
-  sh "git tag v#{Sailthru::Version}"
-  sh "git push origin v#{Sailthru::Version}"
+  sh "git commit -am 'BUMP #{Sailthru::VERSION}'"
+  sh "git tag v#{Sailthru::VERSION}"
+  sh "git push origin v#{Sailthru::VERSION}"
   sh "git push origin master"
 end

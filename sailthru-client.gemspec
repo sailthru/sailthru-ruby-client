@@ -1,5 +1,5 @@
 # -*- encoding: utf-8 -*-
-require File.expand_path('../lib/sailthru', __FILE__)
+require File.expand_path('../lib/sailthru/version', __FILE__)
 require 'date'
 
 Gem::Specification.new do |s|

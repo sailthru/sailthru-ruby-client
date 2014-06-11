@@ -8,7 +8,7 @@ class FileUploadTest < Minitest::Test
     before do
       @secret = 'my_secret'
       @api_key = 'my_api_key'
-      @sailthru_client = Sailthru::SailthruClient.new(
+      @sailthru_client = Sailthru::Client.new(
         @api_key, @secret, 'http://api.sailthru.com'
       )
       @api_call_url = sailthru_api_call_url(

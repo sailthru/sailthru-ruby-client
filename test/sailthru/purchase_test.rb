@@ -4,7 +4,7 @@ class PurchaseTest < Minitest::Test
   describe "API Call: purchase" do
     before do
       api_url = 'http://api.sailthru.com'
-      @sailthru_client = Sailthru::SailthruClient.new("my_api_key", "my_secret", api_url)
+      @sailthru_client = Sailthru::Client.new("my_api_key", "my_secret", api_url)
       @api_call_url = sailthru_api_call_url(api_url, 'purchase')
     end
 

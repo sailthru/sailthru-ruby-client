@@ -6,7 +6,7 @@ class EmailTest < Minitest::Test
       api_url = 'http://api.sailthru.com'
       @api_key = 'my_api_key'
       @secret = 'my_secret'
-      @sailthru_client = Sailthru::SailthruClient.new(@api_key, @secret, api_url)
+      @sailthru_client = Sailthru::Client.new(@api_key, @secret, api_url)
       @api_call_url = sailthru_api_call_url(api_url, 'email')
     end
 
