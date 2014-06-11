@@ -7,10 +7,10 @@ require 'cgi'
 require 'json'
 
 module Sailthru
-  class SailthruClientException < Exception
+  class ClientError < StandardError
   end
 
-  class SailthruUnavailableException < Exception
+  class UnavailableError < StandardError
   end
 
   class Client
@@ -858,20 +858,20 @@ module Sailthru
         http.read_timeout = @opts[:http_read_timeout] || 10
         http.close_on_empty_response = @opts[:http_close_on_empty_response] || true
 
-        response = http.start {
-            http.request(req)
-        }
+        response = http.start do
+          http.request(req)
+        end
 
       rescue Timeout::Error, Errno::ETIMEDOUT => e
-        raise SailthruUnavailableException.new(["Timed out: #{_uri}", e.inspect, e.backtrace].join("\n"));
-      rescue Exception => e
-        raise SailthruClientException.new(["Unable to open stream: #{_uri}", e.inspect, e.backtrace].join("\n"));
+        raise UnavailableError, "Timed out: #{_uri}"
+      rescue => e
+        raise ClientError, "Unable to open stream to #{_uri}: #{e.message}"
       end
 
       if response.body
         return response.body
       else
-        raise SailthruClientException.new("No response received from stream: #{_uri}")
+        raise ClientError, "No response received from stream: #{_uri}"
       end
     end
 
