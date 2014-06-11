@@ -13,6 +13,17 @@ module Sailthru
   class UnavailableError < StandardError
   end
 
+  def self.credentials(api_key, secret)
+    @api_key = api_key
+    @secret = secret
+  end
+  def self.api_key
+    @api_key
+  end
+  def self.secret
+    @secret
+  end
+
   class Client
     DEFAULT_API_URI = 'https://api.sailthru.com'
 
@@ -24,9 +35,9 @@ module Sailthru
     #   api_uri, String
     #
     # Instantiate a new client; constructor optionally takes overrides for key/secret/uri and proxy server settings.
-    def initialize(api_key, secret, api_uri=nil, proxy_host=nil, proxy_port=nil, opts={})
-      @api_key = api_key
-      @secret  = secret
+    def initialize(api_key=nil, secret=nil, api_uri=nil, proxy_host=nil, proxy_port=nil, opts={})
+      @api_key = api_key || Sailthru.api_key || raise(ArgumentError, "You must provide an API key or call Sailthru.credentials() first")
+      @secret  = secret || Sailthru.secret || raise(ArgumentError, "You must provide your secret or call Sailthru.credentials() first")
       @api_uri = api_uri.nil? ? DEFAULT_API_URI : api_uri
       @proxy_host = proxy_host
       @proxy_port = proxy_port
@@ -632,10 +643,10 @@ module Sailthru
       api_get(:user, data)
     end
 
-    # Create new user, or update existing user
+    # Update existing user
     def save_user(id, options = {})
       data = options
-      data['id'] = id
+      data['id'] = id if id
       api_post(:user, data)
     end
 
