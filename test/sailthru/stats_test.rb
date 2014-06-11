@@ -34,7 +34,7 @@ class StatsTest < Minitest::Test
       params = {'stat' => 'list'}
       query_string = create_json_payload(@api_key, @secret, params)
       stub_get(@api_call_url + '?' + query_string, 'stats_lists_valid.json')
-      response = @sailthru_client.stats_list()
+      response = @sailthru_client.stats_list
       refute_nil response['lists_signup_count']
     end
 

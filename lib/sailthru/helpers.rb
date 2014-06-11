@@ -14,7 +14,7 @@ module Sailthru
         if v.class == Hash
           values.concat extract_param_values(v)
        elsif v.class == Array
-          temp_hash = Hash.new()
+          temp_hash = {}
           v.each_with_index do |v_,i_|
             temp_hash[i_.to_s] = v_
           end
@@ -60,7 +60,7 @@ module Sailthru
             f["#{_key}#{k}"] = v
           end
         elsif value.class == Array
-          temp_hash = Hash.new()
+          temp_hash = {}
           value.each_with_index do |v, i|
              temp_hash[i.to_s] = v
           end

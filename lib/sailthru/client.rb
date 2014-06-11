@@ -511,7 +511,7 @@ module Sailthru
     # params
     #
     # Get information about all lists
-    def get_lists()
+    def get_lists
       return api_get(:list, {})
     end
 
@@ -666,7 +666,7 @@ module Sailthru
 
     # params
     # Get an existing trigger
-    def get_triggers()
+    def get_triggers
       api_get(:trigger, {})
     end
 

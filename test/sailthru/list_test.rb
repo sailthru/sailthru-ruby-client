@@ -13,7 +13,7 @@ class ListTest < Minitest::Test
     it "can get all lists meta data" do
       query_string = create_json_payload(@api_key, @secret, {})
       stub_get(@api_call_url + '?' + query_string, 'list_get_all.json')
-      response = @sailthru_client.get_lists()
+      response = @sailthru_client.get_lists
       assert_equal(response['lists'].length, 2)
       refute_nil(response['lists'][0]['name'])
     end
