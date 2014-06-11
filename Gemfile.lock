@@ -1,3 +1,10 @@
+PATH
+  remote: .
+  specs:
+    sailthru-client (2.1.0)
+      json
+      multipart-post
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -15,8 +22,7 @@ PLATFORMS
 
 DEPENDENCIES
   fakeweb
-  json
-  minitest
+  minitest (>= 5)
   mocha
-  multipart-post
   rake
+  sailthru-client!
