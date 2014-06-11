@@ -326,7 +326,7 @@ module Sailthru
       data[:templates] = templates unless templates.empty?
       self.api_post(:email, data)
     end
-    
+
     # params:
     #   new_email, String
     #   old_email, String
@@ -341,7 +341,7 @@ module Sailthru
       data[:change_email] = old_email
       self.api_post(:email, data)
     end
-    
+
     # params:
     #   template_name, String
     # returns:
@@ -422,7 +422,7 @@ module Sailthru
         return false
       end
     end
-    
+
     # params:
     #   params, Hash
     #   request, String
@@ -583,16 +583,16 @@ module Sailthru
     # params
     #   list, String
     #
-    # Get information about a list. 
+    # Get information about a list.
     def get_list(list)
       return api_get(:list, {:list => list})
     end
 
     # params
     #
-    # Get information about all lists 
+    # Get information about all lists
     def get_lists()
-        return api_get(:list, {})
+      return api_get(:list, {})
     end
 
     # params
@@ -602,7 +602,7 @@ module Sailthru
     def save_list(list, options = {})
       data = options
       data[:list] = list
-     return api_post(:list, data)
+      return api_post(:list, data)
     end
 
     # params
@@ -677,17 +677,17 @@ module Sailthru
       end
       api_post(:job, data, binary_key)
     end
-    
+
     # params
     #   emails, String | Array
-    # implementation for import_job  
+    # implementation for import_job
     def process_import_job(list, emails, report_email = nil, postback_url = nil, options = {})
       data = options
       data['list'] = list
       data['emails'] = Array(emails).join(',')
       process_job(:import, data, report_email, postback_url)
     end
-    
+
     # implementation for import job using file upload
     def process_import_job_from_file(list, file_path, report_email = nil, postback_url = nil, options = {})
       data = options
@@ -724,94 +724,94 @@ module Sailthru
 
     # Get user by Sailthru ID
     def get_user_by_sid(id, fields = {})
-        api_get(:user, {'id' => id, 'fields' => fields})
+      api_get(:user, {'id' => id, 'fields' => fields})
     end
 
     # Get user by specified key
     def get_user_by_key(id, key, fields = {})
-        data = {
-            'id' => id,
-            'key' => key,
-            'fields' => fields
-        }
-        api_get(:user, data)
+      data = {
+          'id' => id,
+          'key' => key,
+          'fields' => fields
+      }
+      api_get(:user, data)
     end
 
     # Create new user, or update existing user
     def save_user(id, options = {})
-        data = options
-        data['id'] = id
-        api_post(:user, data)
+      data = options
+      data['id'] = id
+      api_post(:user, data)
     end
 
-  # params
-  # Get an existing trigger
+    # params
+    # Get an existing trigger
     def get_triggers()
-        api_get(:trigger, {})
+      api_get(:trigger, {})
     end
 
-  # params
-  #   template, String
-  #   trigger_id, String
-  # Get an existing trigger
+    # params
+    #   template, String
+    #   trigger_id, String
+    # Get an existing trigger
     def get_trigger_by_template(template, trigger_id = nil)
-        data = {}
-        data['template'] = template
-        if trigger_id != nil then data['trigger_id'] = trigger_id end
-        api_get(:trigger, data)
+      data = {}
+      data['template'] = template
+      if trigger_id != nil then data['trigger_id'] = trigger_id end
+      api_get(:trigger, data)
     end
 
-  # params
-  #   event, String
-  # Get an existing trigger
+    # params
+    #   event, String
+    # Get an existing trigger
     def get_trigger_by_event(event)
-        data = {}
-        data['event'] = event
-        api_get(:trigger, data)
+      data = {}
+      data['event'] = event
+      api_get(:trigger, data)
     end
 
-  # params
-  #   template, String
-  #   time, String
-  #   time_unit, String
-  #   event, String
-  #   zephyr, String
-  # Create or update a trigger
+    # params
+    #   template, String
+    #   time, String
+    #   time_unit, String
+    #   event, String
+    #   zephyr, String
+    # Create or update a trigger
     def post_template_trigger(template, time, time_unit, event, zephyr)
-        data = {}
-        data['template'] = template
-        data['time'] = time
-        data['time_unit'] = time_unit
-        data['event'] = event
-        data['zephyr'] = zephyr
-        api_post(:trigger, data)
+      data = {}
+      data['template'] = template
+      data['time'] = time
+      data['time_unit'] = time_unit
+      data['event'] = event
+      data['zephyr'] = zephyr
+      api_post(:trigger, data)
     end
 
-  # params
-  #   template, String
-  #   time, String
-  #   time_unit, String
-  #   zephyr, String
-  # Create or update a trigger
+    # params
+    #   template, String
+    #   time, String
+    #   time_unit, String
+    #   zephyr, String
+    # Create or update a trigger
     def post_event_trigger(event, time, time_unit, zephyr)
-        data = {}
-        data['time'] = time
-        data['time_unit'] = time_unit
-        data['event'] = event
-        data['zephyr'] = zephyr
-        api_post(:trigger, data)
+      data = {}
+      data['time'] = time
+      data['time_unit'] = time_unit
+      data['event'] = event
+      data['zephyr'] = zephyr
+      api_post(:trigger, data)
     end
 
-  # params
-  #   id, String
-  #   event, String
-  #   options, Hash (Can contain vars, Hash and/or key)
-  # Notify Sailthru of an Event
+    # params
+    #   id, String
+    #   event, String
+    #   options, Hash (Can contain vars, Hash and/or key)
+    # Notify Sailthru of an Event
     def post_event(id, event, options = {})
-        data = options
-        data['id'] = id
-        data['event'] = event
-        api_post(:event, data)
+      data = options
+      data['id'] = id
+      data['event'] = event
+      api_post(:event, data)
     end
 
     # Perform API GET request
@@ -956,18 +956,18 @@ module Sailthru
     end
 
     def http_multipart_request(uri, data)
-      req = Net::HTTP::Post::Multipart.new url.path,
+      Net::HTTP::Post::Multipart.new url.path,
         "file" => UploadIO.new(data['file'], "application/octet-stream")
     end
 
     def prepare_json_payload(data)
-        payload = {
-            :api_key => @api_key,
-            :format => 'json', #<3 XML
-            :json => data.to_json
-        }
-        payload[:sig] = get_signature_hash(payload, @secret)
-        payload
+      payload = {
+          :api_key => @api_key,
+          :format => 'json', #<3 XML
+          :json => data.to_json
+      }
+      payload[:sig] = get_signature_hash(payload, @secret)
+      payload
     end
   end
 end
