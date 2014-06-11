@@ -17,8 +17,6 @@ module Sailthru
 
     include Helpers
 
-    attr_accessor :verify_ssl
-
     # params:
     #   api_key, String
     #   secret, String
@@ -31,7 +29,6 @@ module Sailthru
       @api_uri = if api_uri.nil? then 'https://api.sailthru.com' else api_uri end
       @proxy_host = proxy_host
       @proxy_port = proxy_port
-      @verify_ssl = true
       @opts = opts
     end
 
@@ -851,7 +848,6 @@ module Sailthru
 
         if _uri.scheme == 'https'
           http.use_ssl = true
-          http.verify_mode = OpenSSL::SSL::VERIFY_NONE if @verify_ssl != true  # some openSSL client doesn't work without doing this
           http.ssl_timeout = @opts[:http_ssl_timeout] || 5
         end
         http.open_timeout = @opts[:http_open_timeout] || 5
