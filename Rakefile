@@ -1,4 +1,4 @@
-require "rdoc/task"
+require 'rdoc/task'
 require 'rake/testtask'
 
 task :default => :test
@@ -8,7 +8,6 @@ Rake::TestTask.new do |t|
   t.libs = [File.expand_path("lib"), "test"]
   t.test_files = FileList["test/**/*_test.rb"]
 end
-
 
 Rake::RDocTask.new do |rd|
   rd.main = "README.md"
