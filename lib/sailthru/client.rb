@@ -14,6 +14,7 @@ module Sailthru
   end
 
   class Client
+    DEFAULT_API_URI = 'https://api.sailthru.com'
 
     include Helpers
 
@@ -26,7 +27,7 @@ module Sailthru
     def initialize(api_key, secret, api_uri=nil, proxy_host=nil, proxy_port=nil, opts={})
       @api_key = api_key
       @secret  = secret
-      @api_uri = if api_uri.nil? then 'https://api.sailthru.com' else api_uri end
+      @api_uri = api_uri.nil? ? DEFAULT_API_URI : api_uri
       @proxy_host = proxy_host
       @proxy_port = proxy_port
       @opts = opts
