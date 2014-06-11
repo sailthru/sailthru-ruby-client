@@ -36,24 +36,6 @@ module Sailthru
     # params:
     #   template_name, String
     #   email, String
-    #   replacements, Hash
-    #   options, Hash
-    #     replyto: override Reply-To header
-    #     test: send as test email (subject line will be marked, will not count towards stats)
-    #   schedule_time, Date
-    # returns:
-    #   Hash, response data from server
-    #
-    # Send a transactional email, or schedule one for the near future
-    # http://docs.sailthru.com/api/send
-    def send(template_name, email, vars={}, options = {}, schedule_time = nil)
-      warn "[DEPRECATION] `send` is deprecated. Please use `send_email` instead."
-      send_email(template_name, email, vars, options, schedule_time)
-    end
-
-    # params:
-    #   template_name, String
-    #   email, String
     #   vars, Hash
     #   options, Hash
     #     replyto: override Reply-To header

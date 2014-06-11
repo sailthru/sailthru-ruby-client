@@ -30,22 +30,6 @@ class SendTest < Minitest::Test
       assert_equal 12, response['error']
     end
 
-    it "can post send with valid template name and email using deprecated 'send' method" do
-      template_name = 'default'
-      email = 'example@example.com'
-      stub_post(@api_call_url, 'send_get_valid.json')
-      response = @sailthru_client.send template_name, email, {"name" => "Unix",  "myvar" => [1111,2,3], "mycomplexvar" => {"tags" => ["obama", "aaa", "c"]}}
-      assert_equal template_name, response['template']
-    end
-
-    it "cannot post send with invalid template name and/or email using deprecated 'send' method" do
-      template_name = 'invalid-template'
-      email = 'example@example.com'
-      stub_post(@api_call_url, 'send_post_invalid.json')
-      response = @sailthru_client.send template_name, email, {"name" => "Unix",  "myvar" => [1111,2,3], "mycomplexvar" => {"tags" => ["obama", "aaa", "c"]}}
-      assert_equal 14, response['error']
-    end
-
     it "can post send with valid template name and email" do
       template_name = 'default'
       email = 'example@example.com'
