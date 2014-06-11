@@ -1,11 +1,11 @@
-$:.unshift File.join(File.dirname(__FILE__),'..')
 require 'test_helper'
+require 'mocha/setup'
 
-class FileUploadTest < Test::Unit::TestCase
-  
-  context "API Call: blast" do
-    
-    setup do  
+class FileUploadTest < Minitest::Test
+
+  describe "API Call: blast" do
+
+    before do
       @secret = 'my_secret'
       @api_key = 'my_api_key'
       @sailthru_client = Sailthru::SailthruClient.new(
@@ -16,16 +16,13 @@ class FileUploadTest < Test::Unit::TestCase
       )
     end
 
-
-    should "be able to upload a file of data" do
-
+    it "can upload a file of data" do
       Net::HTTP::Post::Multipart.expects(:new).with(
           instance_of(String),
           has_entries({
             "file" => instance_of(UploadIO)
           })
         )
-
       Net::HTTP.stubs(:Proxy).returns(Net::HTTP)
       Net::HTTP.any_instance.stubs(
           :request => stub(
@@ -37,23 +34,19 @@ class FileUploadTest < Test::Unit::TestCase
         "job" => "update",
         "file" => fixture_file_path('user_update_post_valid.json')
       }
-
       response = @sailthru_client.api_post(
         :job, data, 'file'
       )
-      
-      assert_not_nil response['job_id']
+      refute_nil response['job_id']
     end
 
-    should "be able to upload a string of data" do
-
+    it "can upload a string of data" do
       Net::HTTP::Post::Multipart.expects(:new).with(
           instance_of(String),
           has_entries({
             "file" => instance_of(UploadIO)
           })
         )
-
       Net::HTTP.stubs(:Proxy).returns(Net::HTTP)
       Net::HTTP.any_instance.stubs(
           :request => stub(
@@ -67,7 +60,6 @@ class FileUploadTest < Test::Unit::TestCase
           "first_name" => "Dan"
         }
       }
-
       data = {
         "job" => "update",
         "file" => StringIO.new(JSON.unparse(email))
@@ -76,9 +68,7 @@ class FileUploadTest < Test::Unit::TestCase
       response = @sailthru_client.api_post(
         :job, data, 'file'
       )
-      
-      assert_not_nil response['job_id']
-
+      refute_nil response['job_id']
     end
 
   end
