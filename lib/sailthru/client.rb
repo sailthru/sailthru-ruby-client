@@ -76,7 +76,6 @@ module Sailthru
       api_get(:send, {:send_id => send_id.to_s})
     end
 
-
     def cancel_send(send_id)
       api_delete(:send, {:send_id => send_id.to_s})
     end
@@ -398,7 +397,7 @@ module Sailthru
         data[:date] = date
       end
       data[:stat] = 'list'
-      stats(data)
+      api_get(:stats, data)
     end
 
 
@@ -423,7 +422,7 @@ module Sailthru
         data[:end_date] = end_date
       end
       data[:stat] = 'blast'
-      stats(data)
+      api_get(:stats, data)
     end
 
     # params
@@ -447,7 +446,7 @@ module Sailthru
         data[:end_date] = end_date
       end
       data[:stat] = 'send'
-      stats(data)
+      api_get(:stats, data)
     end
 
 
@@ -485,14 +484,14 @@ module Sailthru
     #
     # Get information about a list.
     def get_list(list)
-      return api_get(:list, {:list => list})
+      api_get(:list, {:list => list})
     end
 
     # params
     #
     # Get information about all lists
     def get_lists
-      return api_get(:list, {})
+      api_get(:list, {})
     end
 
     # params
@@ -502,7 +501,7 @@ module Sailthru
     def save_list(list, options = {})
       data = options
       data[:list] = list
-      return api_post(:list, data)
+      api_post(:list, data)
     end
 
     # params
@@ -552,10 +551,6 @@ module Sailthru
       api_delete(:alert, data)
     end
 
-    # Make Stats API Request
-    def stats(data)
-      api_get(:stats, data)
-    end
 
     # params
     #   job, String
@@ -741,12 +736,12 @@ module Sailthru
     # Perform an API request, using the shared-secret auth hash.
     #
     def api_request(action, data, request_type, binary_key = nil)
-      if (!binary_key.nil?)
+      if !binary_key.nil?
         binary_key_data = data[binary_key]
         data.delete(binary_key)
       end
 
-      if data[:format].nil? or data[:format] == 'json'
+      if data[:format].nil? || data[:format] == 'json'
         data = prepare_json_payload(data)
       else
         data[:api_key] = @api_key
@@ -754,7 +749,7 @@ module Sailthru
         data[:sig] = get_signature_hash(data, @secret)
       end
 
-      if (!binary_key.nil?)
+      if !binary_key.nil?
         data[binary_key] = binary_key_data
       end
       _result = http_request("#{@api_uri}/#{action}", data, request_type, binary_key)
@@ -773,7 +768,7 @@ module Sailthru
 
     # set up our post request
     def set_up_post_request(uri, data, headers, binary_key = nil)
-      if (!binary_key.nil?)
+      if !binary_key.nil?
         binary_data = data[binary_key]
 
         if binary_data.is_a?(StringIO)
@@ -847,11 +842,7 @@ module Sailthru
         raise ClientError, "Unable to open stream to #{_uri}: #{e.message}"
       end
 
-      if response.body
-        return response.body
-      else
-        raise ClientError, "No response received from stream: #{_uri}"
-      end
+      response.body || raise(ClientError, "No response received from stream: #{_uri}")
     end
 
     def http_multipart_request(uri, data)
@@ -861,9 +852,9 @@ module Sailthru
 
     def prepare_json_payload(data)
       payload = {
-          :api_key => @api_key,
-          :format => 'json', #<3 XML
-          :json => data.to_json
+        :api_key => @api_key,
+        :format => 'json', #<3 XML
+        :json => data.to_json
       }
       payload[:sig] = get_signature_hash(payload, @secret)
       payload

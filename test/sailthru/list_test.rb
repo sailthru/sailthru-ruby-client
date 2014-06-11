@@ -41,7 +41,7 @@ class ListTest < Minitest::Test
       list = 'new-list2'
       primary = 1
       options = {
-          'primary' => primary
+        'primary' => primary
       }
       stub_post(@api_call_url, 'list_save_valid.json')
       response = @sailthru_client.save_list(list, options)
