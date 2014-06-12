@@ -20,6 +20,7 @@ Gem::Specification.new do |s|
 
   s.add_dependency(%q<json>, [">= 0"])
   s.add_dependency(%q<multipart-post>, [">= 0"])
+  s.add_development_dependency(%q<rake>, [">= 0"])
   s.add_development_dependency(%q<fakeweb>, [">= 0"])
   s.add_development_dependency(%q<minitest>, [">= 5"])
   s.add_development_dependency(%q<mocha>, [">= 0"])
