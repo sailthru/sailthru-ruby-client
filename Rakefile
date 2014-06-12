@@ -7,9 +7,8 @@ CLOBBER.include 'pkg'
 
 task :default => :test
 
-desc "Run the test suite"
 Rake::TestTask.new do |t|
-  t.libs = [File.expand_path("lib"), "test"]
+  t.libs = %w(lib test)
   t.test_files = FileList["test/**/*_test.rb"]
 end
 
