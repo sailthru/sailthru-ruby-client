@@ -1,6 +1,9 @@
-require 'rdoc/task'
-require 'rake/testtask'
 require 'bundler/gem_tasks'
+require 'rake/testtask'
+require 'rake/clean'
+require 'rdoc/task'
+
+CLOBBER.include 'pkg'
 
 task :default => :test
 
@@ -14,9 +17,4 @@ Rake::RDocTask.new do |rd|
   rd.main = "README.md"
   rd.rdoc_files.include("README.md", "lib/**/*.rb")
   rd.rdoc_dir = "rdoc"
-end
-
-desc 'Clear out RDoc and generated packages'
-task :clean do
-  rm_rf "rdoc"
 end
