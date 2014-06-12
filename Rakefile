@@ -1,12 +1,14 @@
-require "rdoc/task"
+require 'bundler/gem_tasks'
 require 'rake/testtask'
-require "bundler/gem_tasks"
+require 'rake/clean'
+require 'rdoc/task'
+
+CLOBBER.include 'pkg'
 
 task :default => :test
 
-desc "Run the test suite"
 Rake::TestTask.new do |t|
-  t.libs = ["lib", "test"]
+  t.libs = %w(lib test)
   t.test_files = FileList["test/**/*_test.rb"]
 end
 
