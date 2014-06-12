@@ -17,9 +17,11 @@ module Sailthru
     @api_key = api_key
     @secret = secret
   end
+
   def self.api_key
     @api_key
   end
+
   def self.secret
     @secret
   end
