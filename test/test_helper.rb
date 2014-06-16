@@ -1,24 +1,14 @@
-require 'rubygems'
-require 'test/unit'
-require 'shoulda'
+require 'minitest/autorun'
+require 'minitest/pride'
 require 'uri'
 require 'json'
-require 'mocha'
-
-require 'ruby-debug'
-Debugger.start
-
-gem 'fakeweb', ">= 1.2.6"
 require 'fakeweb'
-
-$LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
-$LOAD_PATH.unshift(File.dirname(__FILE__))
 
 require 'sailthru'
 
 FakeWeb.allow_net_connect = false
 
-class Test::Unit::TestCase
+class Minitest::Test
 
   include Sailthru::Helpers
 

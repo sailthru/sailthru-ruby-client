@@ -3,3 +3,4 @@
 .rvmrc
 *.gem
 .loadpath
+rdoc
