@@ -645,10 +645,10 @@ module Sailthru
       api_get(:user, data)
     end
 
-    # Update existing user
+    # Create new user, or update existing user
     def save_user(id, options = {})
       data = options
-      data['id'] = id if id
+      data['id'] = id
       api_post(:user, data)
     end
 
