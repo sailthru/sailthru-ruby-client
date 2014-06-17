@@ -6,7 +6,7 @@ class SendTest < Minitest::Test
       api_url = 'http://api.sailthru.com'
       @secret = 'my_secret'
       @api_key = 'my_api_key'
-      @sailthru_client = Sailthru::SailthruClient.new("my_api_key", "my_secret", api_url)
+      @sailthru_client = Sailthru::Client.new("my_api_key", "my_secret", api_url)
       @api_call_url = sailthru_api_call_url(api_url, 'send')
     end
 
@@ -28,22 +28,6 @@ class SendTest < Minitest::Test
       stub_get(@api_call_url + '?' + query_string, 'send_get_invalid.json')
       response = @sailthru_client.get_send(invalid_send_id)
       assert_equal 12, response['error']
-    end
-
-    it "can post send with valid template name and email using deprecated 'send' method" do
-      template_name = 'default'
-      email = 'example@example.com'
-      stub_post(@api_call_url, 'send_get_valid.json')
-      response = @sailthru_client.send template_name, email, {"name" => "Unix",  "myvar" => [1111,2,3], "mycomplexvar" => {"tags" => ["obama", "aaa", "c"]}}
-      assert_equal template_name, response['template']
-    end
-
-    it "cannot post send with invalid template name and/or email using deprecated 'send' method" do
-      template_name = 'invalid-template'
-      email = 'example@example.com'
-      stub_post(@api_call_url, 'send_post_invalid.json')
-      response = @sailthru_client.send template_name, email, {"name" => "Unix",  "myvar" => [1111,2,3], "mycomplexvar" => {"tags" => ["obama", "aaa", "c"]}}
-      assert_equal 14, response['error']
     end
 
     it "can post send with valid template name and email" do

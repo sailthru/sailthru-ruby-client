@@ -1,5 +1,5 @@
 # -*- encoding: utf-8 -*-
-require File.expand_path('../lib/sailthru', __FILE__)
+require File.expand_path('../lib/sailthru/version', __FILE__)
 require 'date'
 
 Gem::Specification.new do |s|
@@ -20,7 +20,8 @@ Gem::Specification.new do |s|
 
   s.add_dependency(%q<json>, [">= 0"])
   s.add_dependency(%q<multipart-post>, [">= 0"])
+  s.add_development_dependency(%q<rake>, [">= 0"])
   s.add_development_dependency(%q<fakeweb>, [">= 0"])
-  s.add_development_dependency(%q<shoulda>, [">= 0"])
+  s.add_development_dependency(%q<minitest>, [">= 5"])
   s.add_development_dependency(%q<mocha>, [">= 0"])
 end

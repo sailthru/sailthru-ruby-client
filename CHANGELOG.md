@@ -1,3 +1,12 @@
+## 4.0.0 (TBD)
+  - Rename Sailthru::SailthruClient to Sailthru::Client
+  - Rework custom exceptions to be StandardErrors
+  - Add `Sailthru.credentials` for easy initialization in Rails apps
+  - Split sailthru.rb into several smaller files
+
+## 3.0.0 (Jun 16, 2014)
+  - Remove Ruby 1.8.7 support.
+
 ## 2.0.0 (Sep 6, 2013)
   - Added triggers and events
   - Changed push_content to handle additional parameters

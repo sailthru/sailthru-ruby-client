@@ -6,14 +6,14 @@ class ListTest < Minitest::Test
       api_url = 'http://api.sailthru.com'
       @secret = 'my_secret'
       @api_key = 'my_api_key'
-      @sailthru_client = Sailthru::SailthruClient.new(@api_key, @secret, api_url)
+      @sailthru_client = Sailthru::Client.new(@api_key, @secret, api_url)
       @api_call_url = sailthru_api_call_url(api_url, 'list')
     end
 
     it "can get all lists meta data" do
       query_string = create_json_payload(@api_key, @secret, {})
       stub_get(@api_call_url + '?' + query_string, 'list_get_all.json')
-      response = @sailthru_client.get_lists()
+      response = @sailthru_client.get_lists
       assert_equal(response['lists'].length, 2)
       refute_nil(response['lists'][0]['name'])
     end
@@ -41,7 +41,7 @@ class ListTest < Minitest::Test
       list = 'new-list2'
       primary = 1
       options = {
-          'primary' => primary
+        'primary' => primary
       }
       stub_post(@api_call_url, 'list_save_valid.json')
       response = @sailthru_client.save_list(list, options)

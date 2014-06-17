@@ -49,7 +49,7 @@ class Minitest::Test
   end
 
   def stub_exception(url, filename)
-    FakeWeb.register_uri(:any, URI.parse(url), :exception => Exception)
+    FakeWeb.register_uri(:any, URI.parse(url), :exception => StandardError)
   end
 
   def create_query_string(secret, params)
