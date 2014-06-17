@@ -74,7 +74,6 @@ module Sailthru
       api_post(:send, post)
     end
 
-
     def multi_send(template_name, emails, vars={}, options = {}, schedule_time = nil, evars = {})
       post = {}
       post[:template] = template_name
@@ -85,7 +84,6 @@ module Sailthru
       post[:evars] = evars if evars.length >= 1
       api_post(:send, post)
     end
-
 
     # params:
     #   send_id, Fixnum
@@ -146,7 +144,6 @@ module Sailthru
       api_post(:blast, post)
     end
 
-
     # params
     #   blast_id, Fixnum | String
     #   name, String
@@ -189,7 +186,6 @@ module Sailthru
       end
       api_post(:blast, data)
     end
-
 
     # params:
     #   blast_id, Fixnum | String
@@ -272,7 +268,6 @@ module Sailthru
       api_get(:template, {:template => template_name})
     end
 
-
     # params:
     #   template_name, String
     #   template_fields, Hash
@@ -295,7 +290,6 @@ module Sailthru
     def delete_template(template_name)
       api_delete(:template, {:template => template_name})
     end
-
 
     # params:
     #   params, Hash
@@ -388,7 +382,6 @@ module Sailthru
       api_post(:purchase, data)
     end
 
-
     # <b>DEPRECATED:</b> Please use either stats_list or stats_blast
     # params:
     #   stat, String
@@ -400,7 +393,6 @@ module Sailthru
       warn "[DEPRECATION] `get_stats` is deprecated. Please use `stats_list` and `stats_blast` instead"
       api_get(:stats, {:stat => stat})
     end
-
 
     # params
     #   list, String
@@ -420,7 +412,6 @@ module Sailthru
       data[:stat] = 'list'
       api_get(:stats, data)
     end
-
 
     # params
     #   blast_id, String
@@ -469,7 +460,6 @@ module Sailthru
       data[:stat] = 'send'
       api_get(:stats, data)
     end
-
 
     # params
     #   title, String
@@ -561,7 +551,6 @@ module Sailthru
       api_post(:alert, data)
     end
 
-
     # params
     #   email, String
     #   alert_id, String
@@ -571,7 +560,6 @@ module Sailthru
       data = {:email => email, :alert_id => alert_id}
       api_delete(:alert, data)
     end
-
 
     # params
     #   job, String

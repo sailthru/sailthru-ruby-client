@@ -37,7 +37,6 @@ module Sailthru
       return secret + extract_param_values(params).sort.join("")
     end
 
-
     # params:
     #   params, Hash
     #   secret, String
@@ -48,7 +47,6 @@ module Sailthru
     def get_signature_hash(params, secret)
       Digest::MD5.hexdigest(get_signature_string(params, secret)).to_s
     end
-
 
     # Flatten nested hash for GET / POST request.
     def flatten_nested_hash(hash, brackets = true)
@@ -74,6 +72,5 @@ module Sailthru
       end
       return f
     end
-
   end
 end
