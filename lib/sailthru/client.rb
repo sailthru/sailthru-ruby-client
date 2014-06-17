@@ -770,13 +770,13 @@ module Sailthru
       # NOTE: don't do the unserialize here
       if data[:format] == 'json'
         begin
-            unserialized = JSON.parse(_result)
-            return unserialized ? unserialized : _result
+          unserialized = JSON.parse(_result)
+          return unserialized ? unserialized : _result
         rescue JSON::JSONError => e
-            return {'error' => e}
+          return {'error' => e}
         end
       end
-      return _result
+      _result
     end
 
     # set up our post request
