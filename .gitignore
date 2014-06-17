@@ -4,3 +4,4 @@
 *.gem
 .loadpath
 rdoc
+Gemfile.lock
