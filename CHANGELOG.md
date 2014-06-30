@@ -1,4 +1,7 @@
-## 4.0.0 (TBD)
+## 4.0.1 (Jun 27, 2014)
+  - Bug fix for https://github.com/sailthru/sailthru-ruby-client/pull/48
+
+## 4.0.0 (Jun 17, 2014)
   - Rename Sailthru::SailthruClient to Sailthru::Client
   - Rework custom exceptions to be StandardErrors
   - Add `Sailthru.credentials` for easy initialization in Rails apps
