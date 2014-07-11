@@ -19,5 +19,13 @@ class HelpersTest < Minitest::Test
       assert((expected_array == converted_array))
     end
 
+    it "converts nested custom hash to array" do
+      class CustomHash < Hash; end
+      h = CustomHash[{"Hash" => "Regular Hash", "HashWithIndifferentAccess" => "Hash accessible by strings or symbols"}]
+      nested_hash = {"framework" => "Rails", "hash_types" => h}
+      expected_array = ["Rails", "Regular Hash", "Hash accessible by strings or symbols"].sort
+      assert_equal expected_array, extract_param_values(nested_hash).sort
+    end
+
   end
 end
