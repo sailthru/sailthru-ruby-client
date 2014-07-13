@@ -11,9 +11,9 @@ module Sailthru
     def extract_param_values(params)
       values = []
       params.each do |k, v|
-        if v.class == Hash
+        if v.is_a? Hash
           values.concat extract_param_values(v)
-       elsif v.class == Array
+       elsif v.is_a? Array
           temp_hash = {}
           v.each_with_index do |v_,i_|
             temp_hash[i_.to_s] = v_
