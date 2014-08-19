@@ -788,7 +788,7 @@ module Sailthru
       end
 
       req = nil
-      headers = {"User-Agent" => "Sailthru API Ruby Client #{VERSION}"}
+      headers = {"User-Agent" => "Sailthru API Ruby Client #{Sailthru::VERSION}"}
 
       _uri  = URI.parse(uri)
 
