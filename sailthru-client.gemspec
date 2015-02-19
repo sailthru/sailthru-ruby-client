@@ -6,9 +6,9 @@ Gem::Specification.new do |s|
   s.name = "sailthru-client"
   s.version = Sailthru::VERSION
 
-  s.authors = ["Prajwal Tuladhar", "Dennis Yu"]
+  s.authors = ["Prajwal Tuladhar", "Dennis Yu", "George Liao"]
   s.date = Date.today.to_s
-  s.email = "praj@sailthru.com"
+  s.email = "gliao@sailthru.com"
   s.extra_rdoc_files = ["README.md"]
   s.files = `git ls-files`.split("\n")
   s.test_files = `git ls-files -- test/*`.split("\n")
