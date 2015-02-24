@@ -306,10 +306,9 @@ module Sailthru
 
         sig = params.delete(:sig)
         params.delete(:controller)
-        return false unless sig == get_signature_hash(params, @secret)
-        return true
+        sig == get_signature_hash(params, @secret)
       else
-        return false
+        false
       end
     end
 
@@ -326,10 +325,9 @@ module Sailthru
 
         sig = params.delete(:sig)
         params.delete(:controller)
-        return false unless sig == get_signature_hash(params, @secret)
-        return true
+        sig == get_signature_hash(params, @secret)
       else
-        return false
+        false
       end
     end
 
@@ -347,10 +345,9 @@ module Sailthru
 
         sig = params.delete(:sig)
         params.delete(:controller)
-        return false unless sig == get_signature_hash(params, @secret)
-        return true
+        sig == get_signature_hash(params, @secret)
       else
-        return false
+        false
       end
     end
 
