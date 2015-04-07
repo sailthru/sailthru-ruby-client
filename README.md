@@ -1,7 +1,7 @@
 # sailthru-ruby-client
 
 For installation instructions, documentation, and examples please visit:
-[http://getstarted.sailthru.com/developers/api-libraries/ruby](http://getstarted.sailthru.com/developers/api-libraries/ruby)
+[http://getstarted.sailthru.com/new-for-developers-overview/api-client-library/ruby-gem](http://getstarted.sailthru.com/new-for-developers-overview/api-client-library/ruby-gem/)
 
 A simple client library to remotely access the `Sailthru REST API` as per [http://getstarted.sailthru.com/api](http://getstarted.sailthru.com/api)
 
