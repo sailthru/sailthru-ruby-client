@@ -19,7 +19,8 @@ This gem supports Ruby 1.9.3 and up.
 
 Increase timeout from 10 (default) to 30 seconds.
 
-   sailthru = Sailthru::Client.new(<api-key>, <api-secret>, "https://api.sailthru.com", nil, nil, {:http_read_timeout => 30, :http_ssl_timeout => 30, :http_open_timeout => 30})
+   sailthru = Sailthru::Client.new("api-key", "api-secret", "https://api.sailthru.com", nil, nil, 
+			          {:http_read_timeout => 30, :http_ssl_timeout => 30, :http_open_timeout => 30})
 
 
 ## License
