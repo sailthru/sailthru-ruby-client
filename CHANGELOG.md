@@ -1,3 +1,6 @@
+## 4.0.3
+  - Explicitly enable TLS (version 1.0)
+
 ## 4.0.2
   - Update contact information
 
