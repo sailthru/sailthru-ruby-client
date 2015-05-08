@@ -1,3 +1,6 @@
+## 4.0.2
+  - Update contact information
+
 ## 4.0.1 (Jun 27, 2014)
   - Bug fix for https://github.com/sailthru/sailthru-ruby-client/pull/48
 
