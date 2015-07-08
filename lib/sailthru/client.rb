@@ -583,6 +583,13 @@ module Sailthru
       process_job(:update, data, report_email, postback_url, 'file')
     end
 
+    # implementation for purchase job using file upload
+    def process_purchase_job_from_file(file_path, report_email = nil, postback_url = nil, options = {})
+      data = options
+      data['file'] = file_path
+      process_job(:purchase_import, data, report_email, postback_url, 'file')
+    end
+
     # implementation for snapshot job
     def process_snapshot_job(query = {}, report_email = nil, postback_url = nil, options = {})
       data = options
