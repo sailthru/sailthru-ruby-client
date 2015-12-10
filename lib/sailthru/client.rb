@@ -312,6 +312,9 @@ module Sailthru
       end
     end
 
+    # List Postbacks must be enabled by Sailthru
+    # Contact your account manager or contact support to have this enabled
+    #
     # params:
     #   params, Hash
     #   request, String
