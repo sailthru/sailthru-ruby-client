@@ -39,6 +39,19 @@ class ReceivePostCallbackTest < Minitest::Test
       assert @sailthru_client.receive_optout_post(params, mock(:post? => true))
     end
 
+    it "can validate a list callback" do
+      params = {
+        :email => 'ian@sailthru.com',
+        :page => 'optout',
+        :optout_email => 'none',
+        :lists => {'All Users' => '0'},
+        :action => 'update',
+        :api_key => @api_key
+      }
+      params[:sig] = get_signature_hash(params, @secret)
+      assert @sailthru_client.receive_list_post(params, mock(:post? => true))
+    end
+
     it "can validate a hardbounce callback" do
       params = {
         :email => 'ian@sailthru.com',

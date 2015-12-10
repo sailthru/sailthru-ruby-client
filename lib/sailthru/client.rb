@@ -306,12 +306,31 @@ module Sailthru
 
         sig = params.delete(:sig)
         params.delete(:controller)
-        return false unless sig == get_signature_hash(params, @secret)
-        return true
+        sig == get_signature_hash(params, @secret)
       else
-        return false
+        false
       end
     end
+
+    # params:
+    #   params, Hash
+    #   request, String
+    # returns:
+    #   TrueClass or FalseClass, Returns true if the incoming request is an authenticated list post.
+    def receive_list_post(params, request)
+      if request.post?
+        [:action, :email, :sig].each { |key| return false unless params.has_key?(key) }
+
+        return false unless params[:action] == 'update'
+
+        sig = params.delete(:sig)
+        params.delete(:controller)
+        sig == get_signature_hash(params, @secret)
+      else
+        false
+      end
+    end
+
 
     # params:
     #   params, Hash
@@ -326,10 +345,9 @@ module Sailthru
 
         sig = params.delete(:sig)
         params.delete(:controller)
-        return false unless sig == get_signature_hash(params, @secret)
-        return true
+        sig == get_signature_hash(params, @secret)
       else
-        return false
+        false
       end
     end
 
