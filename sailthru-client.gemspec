@@ -15,7 +15,7 @@ Gem::Specification.new do |s|
   s.homepage = "http://docs.sailthru.com"
   s.rdoc_options = ["--main", "README.md"]
   s.require_paths = ["lib"]
-  s.summary = "A simple client library to remotely access the Sailthru REST API."
+  s.summary = "A simple client library to remotely access the Sailthru REST API. "
   s.license = "MIT"
 
   s.add_dependency(%q<json>, [">= 0"])
