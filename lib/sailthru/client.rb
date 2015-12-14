@@ -1,4 +1,5 @@
 require 'sailthru/helpers'
+require 'sailthru/version'
 
 require 'net/http'
 require 'net/http/post/multipart'
