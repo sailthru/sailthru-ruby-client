@@ -39,6 +39,15 @@ class TemplateTest < Minitest::Test
       assert_equal from_name, response['from_name']
     end
 
+    it "can save template with test_vars" do
+      valid_template_name = 'my-template-test-vars'
+      valid_test_vars = "{\"firstName\":\"Lindsay\"}"
+      stub_post(@api_call_url, 'template_save_test_vars.json')
+      response = @sailthru_client.save_template(valid_template_name, {'test_vars'=> valid_test_vars})
+      assert_equal valid_template_name, response['name']
+      assert_equal valid_test_vars, response['test_vars']
+    end
+
     it "can delete a template with valid template name" do
       template_name = 'my-template'
       params = {'template' => template_name}

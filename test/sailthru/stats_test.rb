@@ -15,19 +15,9 @@ class StatsTest < Minitest::Test
       params = {'stat' => stat_field}
       query_string = create_json_payload(@api_key, @secret, params)
       stub_get(@api_call_url + '?' + query_string, 'stat_get_valid.json')
-      response = @sailthru_client.get_stats(stat_field)
+      response = @sailthru_client.stats_list()
       assert_nil response['error']
       assert_nil response['errormsg']
-    end
-
-    it "cannot get information about given field when it's invalid" do
-      stat_field = 'invalid_field'
-      params = {'stat' => stat_field}
-      query_string = create_json_payload(@api_key, @secret, params)
-      stub_get(@api_call_url + '?' + query_string, 'stat_get_invalid.json')
-      response = @sailthru_client.get_stats(stat_field)
-      refute_nil response['error']
-      refute_nil response['errormsg']
     end
 
     it "can get stats list data when list and date are not null" do

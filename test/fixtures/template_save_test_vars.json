@@ -1,0 +1,18 @@
+{
+  "name":"my-template-test-vars",
+  "sample":"",
+  "verify_post_url":"",
+  "is_google_analytics":false,
+  "is_unviewable":false,
+  "error_url":"",
+  "subject":"Hello world",
+  "content_html":"Hi {firstName}<p/>{beacon}<p><small>If you believe this has been sent to you in error, please safely <a href=\"{optout_confirm_url}\">unsubscribe</a>.</small></p>",
+  "is_disabled":false,
+  "replyto_email":"",
+  "is_link_tracking":true,
+  "is_invite":false,
+  "success_url":"",
+  "content_sms":"",
+  "content_text":"",
+  "test_vars" : "{\"firstName\":\"Lindsay\"}"
+}
