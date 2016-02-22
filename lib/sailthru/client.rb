@@ -234,6 +234,14 @@ module Sailthru
       data[:change_email] = old_email
       api_post(:email, data)
     end
+  
+    # returns:
+    #   Hash of response data.
+    # 
+    # Get all templates
+    def get_templates(templates = {})
+      api_get(:template, templates)
+    end
 
     # params:
     #   template_name, String
