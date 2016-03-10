@@ -28,6 +28,14 @@ class TemplateTest < Minitest::Test
       assert_equal 14, response['error']
     end
 
+    it "can get a list of all existing templates" do
+      query_string = create_json_payload(@api_key, @secret, {})
+      stub_get(@api_call_url + '?' + query_string, 'templates_get.json')
+      response = @sailthru_client.get_templates  
+      assert response['templates'][0].has_key?('template_id')
+      refute_nil response['templates'][0]['template_id']
+    end
+
     it "can save template with given template name" do
       valid_template_name = 'my-template-new'
       from_email = 'praj@sailthru.com'
