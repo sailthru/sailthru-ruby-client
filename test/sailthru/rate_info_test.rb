@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class RateInfoTest < Minitest::Test
-    describe "get_last_rate_info() (All API Calls)" do
+    describe "get_last_rate_limit_info() (All API Calls)" do
         before do
             @api_url = 'http://api.sailthru.com'
             @secret = 'my_secret'
@@ -9,7 +9,7 @@ class RateInfoTest < Minitest::Test
             @sailthru_client = Sailthru::Client.new(@api_key, @secret, @api_url)
         end
 
-        it "returns rate info for a given endpoint and method" do
+        it "returns rate limit info for a given endpoint and method" do
             # perform a /send GET request
             api_call_url = sailthru_api_call_url(@api_url, 'send')
             valid_send_id = "TT1ClGdj2bRHAAP6"
@@ -23,13 +23,13 @@ class RateInfoTest < Minitest::Test
             assert_equal valid_send_id, response['send_id']
 
             # verify the subsequent rate info for /send GET
-            rate_info = @sailthru_client.get_last_rate_info(:send, :get)
+            rate_info = @sailthru_client.get_last_rate_limit_info(:send, :get)
             assert_equal rate_headers[:x_rate_limit_limit], rate_info[:limit]
             assert_equal rate_headers[:x_rate_limit_remaining], rate_info[:remaining]
             assert_equal rate_headers[:x_rate_limit_reset], rate_info[:reset]
         end
 
-        it "can return distinct rate info for different endpoints" do
+        it "can return distinct rate limit info for different endpoints" do
             # perform a /send GET request
             send_api_call_url = sailthru_api_call_url(@api_url, 'send')
             valid_send_id = "TT1ClGdj2bRHAAP6"
@@ -49,18 +49,18 @@ class RateInfoTest < Minitest::Test
             assert_equal(response['list'], list)
 
             # verify the rate info for each call
-            send_rate_info = @sailthru_client.get_last_rate_info(:send, :get)
+            send_rate_info = @sailthru_client.get_last_rate_limit_info(:send, :get)
             assert_equal send_rate_headers[:x_rate_limit_limit], send_rate_info[:limit]
             assert_equal send_rate_headers[:x_rate_limit_remaining], send_rate_info[:remaining]
             assert_equal send_rate_headers[:x_rate_limit_reset], send_rate_info[:reset]
 
-            list_rate_info = @sailthru_client.get_last_rate_info(:list, :get)
+            list_rate_info = @sailthru_client.get_last_rate_limit_info(:list, :get)
             assert_equal list_rate_headers[:x_rate_limit_limit], list_rate_info[:limit]
             assert_equal list_rate_headers[:x_rate_limit_remaining], list_rate_info[:remaining]
             assert_equal list_rate_headers[:x_rate_limit_reset], list_rate_info[:reset]
         end
 
-        it "can return distinct rate info for different methods" do
+        it "can return distinct rate limit info for different methods" do
             api_call_url = sailthru_api_call_url(@api_url, 'send')
 
             # perform a /send GET request
@@ -80,12 +80,12 @@ class RateInfoTest < Minitest::Test
             assert_equal template_name, response['template']
 
             # verify the rate info for each call
-            get_rate_info = @sailthru_client.get_last_rate_info(:send, :get)
+            get_rate_info = @sailthru_client.get_last_rate_limit_info(:send, :get)
             assert_equal get_rate_headers[:x_rate_limit_limit], get_rate_info[:limit]
             assert_equal get_rate_headers[:x_rate_limit_remaining], get_rate_info[:remaining]
             assert_equal get_rate_headers[:x_rate_limit_reset], get_rate_info[:reset]
 
-            post_rate_info = @sailthru_client.get_last_rate_info(:send, :post)
+            post_rate_info = @sailthru_client.get_last_rate_limit_info(:send, :post)
             assert_equal post_rate_headers[:x_rate_limit_limit], post_rate_info[:limit]
             assert_equal post_rate_headers[:x_rate_limit_remaining], post_rate_info[:remaining]
             assert_equal post_rate_headers[:x_rate_limit_reset], post_rate_info[:reset]

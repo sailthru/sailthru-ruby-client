@@ -29,7 +29,7 @@ module Sailthru
       @proxy_port = proxy_port
       @verify_ssl = true
       @opts = opts
-      @rate_info = {}
+      @last_rate_limit_info = {}
     end
 
     # params:
@@ -757,9 +757,9 @@ module Sailthru
     #   limit: the per-minute limit for the given endpoint/method
     #   remaining: the number of allotted requests remaining in the current minute for the given endpoint/method
     #   reset: unix timestamp of the top of the next minute, when the rate limit will reset
-    def get_last_rate_info(endpoint, method)
-        rate_info_key = get_rate_info_key(endpoint, method)
-        @rate_info[rate_info_key]
+    def get_last_rate_limit_info(endpoint, method)
+        rate_info_key = get_rate_limit_info_key(endpoint, method)
+        @last_rate_limit_info[rate_info_key]
     end
 
     protected
@@ -883,7 +883,7 @@ module Sailthru
         raise ClientError, "Unable to open stream to #{_uri}: #{e.message}"
       end
 
-      save_rate_info(action, method, response)
+      save_rate_limit_info(action, method, response)
 
       response.body || raise(ClientError, "No response received from stream: #{_uri}")
     end
@@ -903,7 +903,7 @@ module Sailthru
       payload
     end
 
-    def save_rate_info(action, method, response)
+    def save_rate_limit_info(action, method, response)
       limit = response['x-rate-limit-limit'].to_i
       remaining = response['x-rate-limit-remaining'].to_i
       reset = response['x-rate-limit-reset'].to_i
@@ -912,15 +912,15 @@ module Sailthru
           return
       end
 
-      rate_info_key = get_rate_info_key(action, method)
-      @rate_info[rate_info_key] = {
+      rate_info_key = get_rate_limit_info_key(action, method)
+      @last_rate_limit_info[rate_info_key] = {
               limit: limit,
               remaining: remaining,
               reset: reset
       }
     end
 
-    def get_rate_info_key(endpoint, method)
+    def get_rate_limit_info_key(endpoint, method)
       :"#{endpoint}_#{method.downcase}"
     end
   end
