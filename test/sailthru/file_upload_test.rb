@@ -3,7 +3,7 @@ require 'mocha/setup'
 
 class FileUploadTest < Minitest::Test
 
-  describe "API Call: blast" do
+  describe "File Upload Functionality" do
 
     before do
       @secret = 'my_secret'
@@ -26,7 +26,8 @@ class FileUploadTest < Minitest::Test
       Net::HTTP.stubs(:Proxy).returns(Net::HTTP)
       Net::HTTP.any_instance.stubs(
           :request => stub(
-            "body" => JSON.unparse({"job_id" => "123"})
+            "body" => JSON.unparse({"job_id" => "123"}),
+            "[]" => nil
           )
         )
 
@@ -50,7 +51,8 @@ class FileUploadTest < Minitest::Test
       Net::HTTP.stubs(:Proxy).returns(Net::HTTP)
       Net::HTTP.any_instance.stubs(
           :request => stub(
-            "body" => JSON.unparse({"job_id" => "123"})
+            "body" => JSON.unparse({"job_id" => "123"}),
+            "[]" => nil
           )
         )
 
