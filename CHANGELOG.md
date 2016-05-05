@@ -1,3 +1,6 @@
+## 4.1.0
+  - added get_last_rate_limit_info method call
+
 ## 4.0.3
   - Explicitly enable TLS (version 1.0)
 

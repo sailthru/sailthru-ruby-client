@@ -29,6 +29,7 @@ module Sailthru
       @proxy_port = proxy_port
       @verify_ssl = true
       @opts = opts
+      @last_rate_limit_info = {}
     end
 
     # params:
@@ -746,6 +747,21 @@ module Sailthru
       api_request(action, data, 'DELETE')
     end
 
+    # params
+    #   endpoint, String a e.g. "user" or "send"
+    #   method, String "GET" or "POST"
+    # returns
+    #   Hash rate info
+    # Get rate info for a particular endpoint/method, as of the last time a request was sent to the given endpoint/method
+    # Includes the following keys:
+    #   limit: the per-minute limit for the given endpoint/method
+    #   remaining: the number of allotted requests remaining in the current minute for the given endpoint/method
+    #   reset: unix timestamp of the top of the next minute, when the rate limit will reset
+    def get_last_rate_limit_info(endpoint, method)
+        rate_info_key = get_rate_limit_info_key(endpoint, method)
+        @last_rate_limit_info[rate_info_key]
+    end
+
     protected
 
     # params:
@@ -774,7 +790,7 @@ module Sailthru
       if !binary_key.nil?
         data[binary_key] = binary_key_data
       end
-      _result = http_request("#{@api_uri}/#{action}", data, request_type, binary_key)
+      _result = http_request(action, data, request_type, binary_key)
 
       # NOTE: don't do the unserialize here
       if data[:format] == 'json'
@@ -817,9 +833,10 @@ module Sailthru
     #   method, String "GET" or "POST"
     # returns:
     #   String, body of response
-    def http_request(uri, data, method = 'POST', binary_key = nil)
+    def http_request(action, data, method = 'POST', binary_key = nil)
       data = flatten_nested_hash(data, false)
 
+      uri = "#{@api_uri}/#{action}"
       if method != 'POST'
         uri += "?" + data.map{ |key, value| "#{CGI::escape(key.to_s)}=#{CGI::escape(value.to_s)}" }.join("&")
       end
@@ -866,6 +883,8 @@ module Sailthru
         raise ClientError, "Unable to open stream to #{_uri}: #{e.message}"
       end
 
+      save_rate_limit_info(action, method, response)
+
       response.body || raise(ClientError, "No response received from stream: #{_uri}")
     end
 
@@ -882,6 +901,27 @@ module Sailthru
       }
       payload[:sig] = get_signature_hash(payload, @secret)
       payload
+    end
+
+    def save_rate_limit_info(action, method, response)
+      limit = response['x-rate-limit-limit'].to_i
+      remaining = response['x-rate-limit-remaining'].to_i
+      reset = response['x-rate-limit-reset'].to_i
+
+      if limit.nil? or remaining.nil? or reset.nil?
+          return
+      end
+
+      rate_info_key = get_rate_limit_info_key(action, method)
+      @last_rate_limit_info[rate_info_key] = {
+              limit: limit,
+              remaining: remaining,
+              reset: reset
+      }
+    end
+
+    def get_rate_limit_info_key(endpoint, method)
+      :"#{endpoint}_#{method.downcase}"
     end
   end
 end

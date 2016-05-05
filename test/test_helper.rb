@@ -34,18 +34,22 @@ class Minitest::Test
     sailthru_api_base_url(url + action)
   end
 
-  def stub_get(url, filename)
+  def stub_get(url, filename, headers={})
     options = { :body => fixture_file(filename), :content_type => 'application/json' }
+    options.merge!(headers)
     FakeWeb.register_uri(:get, URI.parse(url), options)
   end
 
-  def stub_delete(url, filename)
+  def stub_delete(url, filename, headers={})
     options = { :body => fixture_file(filename), :content_type => 'application/json' }
+    options.merge!(headers)
     FakeWeb.register_uri(:delete, URI.parse(url), options)
   end
 
-  def stub_post(url, filename)
-    FakeWeb.register_uri(:post, URI.parse(url), :body => fixture_file(filename), :content_type => 'application/json')
+  def stub_post(url, filename, headers={})
+      options = { :body => fixture_file(filename), :content_type => 'application/json' }
+      options.merge!(headers)
+    FakeWeb.register_uri(:post, URI.parse(url), options)
   end
 
   def stub_exception(url, filename)
@@ -65,4 +69,13 @@ class Minitest::Test
       data['sig'] = get_signature_hash(data, secret)
       data.map{ |key, value| "#{CGI::escape(key.to_s)}=#{CGI::escape(value.to_s)}" }.join("&")
   end
+
+  def get_rate_info_headers(limit, remaining, reset)
+      {
+              :x_rate_limit_limit => limit,
+              :x_rate_limit_remaining => remaining,
+              :x_rate_limit_reset => reset
+      }
+  end
+
 end
