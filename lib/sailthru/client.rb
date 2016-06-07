@@ -366,7 +366,7 @@ module Sailthru
 
     # params:
     #   email, String
-    #   items, String
+    #   items, Array of Hashes
     #   incomplete, Integer
     #   message_id, String
     #   options, Hash
