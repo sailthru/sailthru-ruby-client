@@ -10,6 +10,10 @@ By default, it will make requests in `JSON` format.
 ## Installation
 
     $ gem install sailthru-client
+    
+### Rails & Bundler
+
+    gem 'sailthru-client', :require => 'sailthru'
 
 ## Requirements
 
