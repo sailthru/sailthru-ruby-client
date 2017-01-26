@@ -478,8 +478,10 @@ module Sailthru
     #
     # Push a new piece of content to Sailthru, triggering any applicable alerts.
     # http://docs.sailthru.com/api/content
-    def push_content(title, url, date = nil, tags = nil, keys = {}, vars = {}, options = {})
+    def push_content(id, title, url, date = nil, tags = nil, keys = {}, vars = {}, options = {})
+
       data = options
+      data[:id] = id
       data[:title] = title
       data[:url] = url
       if date != nil
