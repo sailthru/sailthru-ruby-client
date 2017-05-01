@@ -5,3 +5,4 @@
 .loadpath
 rdoc
 Gemfile.lock
+.idea
