@@ -5,3 +5,7 @@ An [API client library](https://getstarted.sailthru.com/developers/api-client/li
 For installation instructions, documentation, and examples please visit:
 [https://getstarted.sailthru.com/developers/api-client/ruby/](https://getstarted.sailthru.com/developers/api-client/ruby/)
 
+## Running tests
+
+1. `bundle install`
+2. `bundle exec rake test`
