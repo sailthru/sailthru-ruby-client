@@ -10,6 +10,97 @@ class ContentTest < Minitest::Test
       @api_call_url = sailthru_api_call_url(api_url, 'content')
     end
 
+    describe '#save_content' do
+      describe 'creating a content' do
+        before do
+          id = 'http://example.com/hello-world'
+          options = {
+            keys: {
+              sku: "123abc"
+            },
+            title: "Product Name Here",
+            description: "Product info text goes here.",
+            price: 2099,
+            inventory: 42,
+            date: "2016-06-20 14:30:00 -0400",
+            tags: "blue, jeans, size-m",
+            vars: {
+              var1: "var 1 value"
+            },
+            images: {
+              full: {
+                url: "http://example.com/images/product.jpg"
+              }
+            },
+            site_name: "Store"
+          }
+
+          stub_post(@api_call_url, 'content_valid.json')
+
+          @response = @sailthru_client.save_content(id, options)
+          @last_request_params = CGI::parse(FakeWeb.last_request.body)
+          @expected_form_params = options.merge({id: id})
+        end
+
+        it 'POST to the correct url' do
+          refute_nil @response['content']
+        end
+
+        it 'POST with the correct parameters' do
+          form_data = JSON.parse(@last_request_params["json"][0], symbolize_names: true)
+          assert_equal(form_data, @expected_form_params)
+        end
+      end
+
+      describe 'updating content by url and sending tags as array' do
+        before do
+          id = 'http://example.com/hello-world'
+          options = {
+            tags: ['tag1', 'tag2'],
+          }
+
+          stub_post(@api_call_url, 'content_valid.json')
+
+          @response = @sailthru_client.save_content(id, options)
+          @last_request_params = CGI::parse(FakeWeb.last_request.body)
+          @expected_form_params = options.merge({id: id})
+        end
+
+        it 'POST to the correct url' do
+          refute_nil @response['content']
+        end
+
+        it 'POST form_data tags as string separated by ","' do
+          form_data = JSON.parse(@last_request_params["json"][0], symbolize_names: true)
+          assert_equal(form_data[:tags], 'tag1,tag2')
+        end
+      end
+
+      describe 'updating content searching by sku key instead of url' do
+        before do
+          id = '123abc'
+          options = {
+            key: 'sku',
+            title: "New Product Name Here",
+          }
+
+          stub_post(@api_call_url, 'content_valid.json')
+
+          @response = @sailthru_client.save_content(id, options)
+          @last_request_params = CGI::parse(FakeWeb.last_request.body)
+          @expected_form_params = options.merge({id: id})
+        end
+
+        it 'POST to the correct url' do
+          refute_nil @response['content']
+        end
+
+        it 'POST with the correct parameters' do
+          form_data = JSON.parse(@last_request_params["json"][0], symbolize_names: true)
+          assert_equal(form_data, @expected_form_params)
+        end
+      end
+    end
 
     describe '#push_content: DEPRECATED IN FAVOUR OF save_content' do
       describe 'create content item' do

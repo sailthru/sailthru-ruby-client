@@ -235,10 +235,10 @@ module Sailthru
       data[:change_email] = old_email
       api_post(:email, data)
     end
-  
+
     # returns:
     #   Hash of response data.
-    # 
+    #
     # Get all templates
     def get_templates(templates = {})
       api_get(:template, templates)
@@ -468,6 +468,7 @@ module Sailthru
       api_get(:stats, data)
     end
 
+    # <b>DEPRECATED:</b> Please use save_content
     # params
     #   title, String
     #   url, String
@@ -494,6 +495,21 @@ module Sailthru
       if vars.length > 0
         data[:vars] = vars
       end
+      api_post(:content, data)
+    end
+
+    # params
+    #   id, String – An identifier for the item (by default, the item’s URL).
+    #   options, Hash - Containing any of the parameters described on
+    #                     https://getstarted.sailthru.com/developers/api/content/#POST_Mode
+    #
+    # Push a new piece of content to Sailthru, triggering any applicable alerts.
+    # http://docs.sailthru.com/api/content
+    def save_content(id, options)
+      data = options
+      data[:id] = id
+      data[:tags] = data[:tags].join(',') if data[:tags].respond_to?(:join)
+
       api_post(:content, data)
     end
 
