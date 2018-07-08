@@ -479,10 +479,11 @@ module Sailthru
     #
     # Push a new piece of content to Sailthru, triggering any applicable alerts.
     # http://docs.sailthru.com/api/content
-    def push_content(title, url, date = nil, tags = nil, vars = {}, options = {})
+    def push_content(id, title, key, date = nil, tags = nil, keys = {}, inventory = nil, vars = {}, options = {})
       data = options
+      data[:id] = id
       data[:title] = title
-      data[:url] = url
+      data[:key] = key
       if date != nil
         data[:date] = date
       end
@@ -491,6 +492,12 @@ module Sailthru
           tags = tags.join(',')
         end
         data[:tags] = tags
+      end
+      if keys.length > 0
+        data[:keys] = keys
+      end
+      if inventory != nil
+        data[:inventory] = inventory
       end
       if vars.length > 0
         data[:vars] = vars
