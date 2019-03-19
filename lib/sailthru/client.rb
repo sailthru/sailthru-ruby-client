@@ -284,7 +284,7 @@ module Sailthru
     #   boolean, Returns true if the incoming request is an authenticated verify post.
     def receive_verify_post(params, request)
       if request.post?
-        [:action, :email, :send_id, :sig].each { |key| return false unless params.has_key?(key) }
+        [:action, :email, :sig].each { |key| return false unless params.has_key?(key) }
 
         return false unless params[:action] == :verify
 
@@ -292,14 +292,16 @@ module Sailthru
         params.delete(:controller)
         return false unless sig == get_signature_hash(params, @secret)
 
-        _send = get_send(params[:send_id])
-        return false unless _send.has_key?('email')
+        if params[:send_id]
+          _send = get_send(params[:send_id])
+          return false unless _send.has_key?('email')
 
-        return false unless _send['email'] == params[:email]
+          return false unless _send['email'] == params[:email]
+        end
 
-        return true
+        true
       else
-        return false
+        false
       end
     end
 
