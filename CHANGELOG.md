@@ -1,3 +1,6 @@
+## 4.3.0
+  - Update TLS version to 1.2
+
 ## 4.2.0
   - added save_content supporting all fields from updated api
   - push_content is now deprecated in favour of save_content
