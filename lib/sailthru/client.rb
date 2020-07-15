@@ -880,7 +880,7 @@ module Sailthru
         http = Net::HTTP::Proxy(@proxy_host, @proxy_port).new(_uri.host, _uri.port)
 
         if _uri.scheme == 'https'
-          http.ssl_version = :TLSv1
+          http.ssl_version = :TLSv1_2
           http.use_ssl = true
           http.verify_mode = OpenSSL::SSL::VERIFY_NONE if @verify_ssl != true  # some openSSL client doesn't work without doing this
           http.ssl_timeout = @opts[:http_ssl_timeout] || 5
