@@ -748,6 +748,19 @@ module Sailthru
       api_post(:event, data)
     end
 
+    # params 
+    #   email, String
+    #   type, String,
+    #   id, String
+    # Get a preview of a template, any custom HTML/Zephyr, campaign, or recurring campaign.
+    # https://getstarted.sailthru.com/developers/api/preview/
+    def preview(email, type, id)
+      data = {}
+      data[type] = id
+      data['email'] = email
+      self.api_get('preview', data)
+    end
+
     # Perform API GET request
     def api_get(action, data)
       api_request(action, data, 'GET')
