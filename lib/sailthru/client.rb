@@ -283,24 +283,22 @@ module Sailthru
     # returns:
     #   boolean, Returns true if the incoming request is an authenticated verify post.
     def receive_verify_post(params, request)
-      if request.post?
-        [:action, :email, :send_id, :sig].each { |key| return false unless params.has_key?(key) }
+      return false unless request.post?
 
-        return false unless params[:action] == :verify
+      [:action, :email, :send_id, :sig].each { |key| return false unless params.has_key?(key) }
 
-        sig = params.delete(:sig)
-        params.delete(:controller)
-        return false unless sig == get_signature_hash(params, @secret)
+      return false unless params[:action] == :verify
 
-        _send = get_send(params[:send_id])
-        return false unless _send.has_key?('email')
+      sig = params.delete(:sig)
+      params.delete(:controller)
+      return false unless sig == get_signature_hash(params, @secret)
 
-        return false unless _send['email'] == params[:email]
+      _send = get_send(params[:send_id])
+      return false unless _send.has_key?('email')
 
-        return true
-      else
-        return false
-      end
+      return false unless _send['email'] == params[:email]
+
+      return true
     end
 
     # params:
@@ -309,17 +307,15 @@ module Sailthru
     # returns:
     #   TrueClass or FalseClass, Returns true if the incoming request is an authenticated optout post.
     def receive_optout_post(params, request)
-      if request.post?
-        [:action, :email, :sig].each { |key| return false unless params.has_key?(key) }
+      return false unless request.post?
 
-        return false unless params[:action] == 'optout'
+      [:action, :email, :sig].each { |key| return false unless params.has_key?(key) }
 
-        sig = params.delete(:sig)
-        params.delete(:controller)
-        sig == get_signature_hash(params, @secret)
-      else
-        false
-      end
+      return false unless params[:action] == 'optout'
+
+      sig = params.delete(:sig)
+      params.delete(:controller)
+      sig == get_signature_hash(params, @secret)
     end
 
     # List Postbacks must be enabled by Sailthru
@@ -331,17 +327,15 @@ module Sailthru
     # returns:
     #   TrueClass or FalseClass, Returns true if the incoming request is an authenticated list post.
     def receive_list_post(params, request)
-      if request.post?
-        [:action, :email, :sig].each { |key| return false unless params.has_key?(key) }
+      return false unless request.post?
+      
+      [:action, :email, :sig].each { |key| return false unless params.has_key?(key) }
 
-        return false unless params[:action] == 'update'
+      return false unless params[:action] == 'update'
 
-        sig = params.delete(:sig)
-        params.delete(:controller)
-        sig == get_signature_hash(params, @secret)
-      else
-        false
-      end
+      sig = params.delete(:sig)
+      params.delete(:controller)
+      sig == get_signature_hash(params, @secret)
     end
 
 
@@ -351,17 +345,15 @@ module Sailthru
     # returns:
     #   TrueClass or FalseClass, Returns true if the incoming request is an authenticated hardbounce post.
     def receive_hardbounce_post(params, request)
-      if request.post?
-        [:action, :email, :sig].each { |key| return false unless params.has_key?(key) }
+      return false unless request.post?
 
-        return false unless params[:action] == 'hardbounce'
+      [:action, :email, :sig].each { |key| return false unless params.has_key?(key) }
 
-        sig = params.delete(:sig)
-        params.delete(:controller)
-        sig == get_signature_hash(params, @secret)
-      else
-        false
-      end
+      return false unless params[:action] == 'hardbounce'
+
+      sig = params.delete(:sig)
+      params.delete(:controller)
+      sig == get_signature_hash(params, @secret)
     end
 
     # params:
