@@ -388,6 +388,31 @@ module Sailthru
       end
       api_post(:purchase, data)
     end
+    
+    # params:
+    #   email, String
+    #   items, Array of Hashes
+    #   incomplete, Integer
+    #   message_id, String
+    #   options, Hash
+    # returns:
+    #   hash, response from server
+    #
+    # Record that a user has made a return or refund.
+    def return(email, items, incomplete = nil, message_id = nil, options = {})
+      data = options
+      data[:email] = email
+      data[:items] = items
+
+      if incomplete != nil
+        data[:incomplete] = incomplete.to_i
+      end
+
+      if message_id != nil
+        data[:message_id] = message_id
+      end
+      api_post(:return, data)
+    end
 
     # <b>DEPRECATED:</b> Please use either stats_list or stats_blast
     # params:
