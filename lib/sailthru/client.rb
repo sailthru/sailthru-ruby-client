@@ -814,7 +814,7 @@ module Sailthru
           unserialized = JSON.parse(_result)
           return unserialized ? unserialized : _result
         rescue JSON::JSONError => e
-          return {'error' => e}
+          raise UnavailableError, "Failed to parse response body:  #{_result}"
         end
       end
       _result
