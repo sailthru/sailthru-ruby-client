@@ -38,7 +38,7 @@ class ContentTest < Minitest::Test
           stub_post(@api_call_url, 'content_valid.json')
 
           @response = @sailthru_client.save_content(id, options)
-          @last_request_params = CGI::parse(FakeWeb.last_request.body)
+          @last_request_params = form_parameters(@last_request_body)
           @expected_form_params = options.merge({id: id})
         end
 
@@ -62,7 +62,7 @@ class ContentTest < Minitest::Test
           stub_post(@api_call_url, 'content_valid.json')
 
           @response = @sailthru_client.save_content(id, options)
-          @last_request_params = CGI::parse(FakeWeb.last_request.body)
+          @last_request_params = form_parameters(@last_request_body)
           @expected_form_params = options.merge({id: id})
         end
 
@@ -87,7 +87,7 @@ class ContentTest < Minitest::Test
           stub_post(@api_call_url, 'content_valid.json')
 
           @response = @sailthru_client.save_content(id, options)
-          @last_request_params = CGI::parse(FakeWeb.last_request.body)
+          @last_request_params = form_parameters(@last_request_body)
           @expected_form_params = options.merge({id: id})
         end
 
@@ -130,7 +130,7 @@ class ContentTest < Minitest::Test
           stub_post(@api_call_url, 'content_valid.json')
           @response = @sailthru_client.push_content(title, url, date, tags, vars, options)
 
-          @last_request_params = CGI::parse(FakeWeb.last_request.body)
+          @last_request_params = form_parameters(@last_request_body)
 
           @expected_form_params = options.merge({
             title: title,
@@ -159,7 +159,7 @@ class ContentTest < Minitest::Test
           stub_post(@api_call_url, 'content_valid.json')
           @response = @sailthru_client.push_content(title, url, nil, tags)
 
-          @last_request_params = CGI::parse(FakeWeb.last_request.body)
+          @last_request_params = form_parameters(@last_request_body)
         end
 
         it 'POST to the correct url' do
