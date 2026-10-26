@@ -17,5 +17,5 @@ local request with dummy credentials. Use `bundle exec rake test` for unit tests
 only, or `bundle exec rake test:package` for the package check. These commands do
 not publish; the existing Rake release tasks run `verify` before publishing.
 
-CI tests Ruby 3.3, 3.4, and the latest stable MRI Ruby on PRs, pushes to `master`,
-weekly, and manual runs. These are tested targets, not a guarantee for all runtimes.
+CI discovers every stable MRI Ruby release line from 3.3 through the latest on PRs,
+pushes to `master`, weekly, and manual runs. These are tested targets, not a guarantee for all runtimes.
