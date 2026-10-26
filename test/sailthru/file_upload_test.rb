@@ -1,5 +1,4 @@
 require 'test_helper'
-require 'mocha/setup'
 
 class FileUploadTest < Minitest::Test
 
@@ -26,7 +25,7 @@ class FileUploadTest < Minitest::Test
       Net::HTTP.stubs(:Proxy).returns(Net::HTTP)
       Net::HTTP.any_instance.stubs(
           :request => stub(
-            "body" => JSON.unparse({"job_id" => "123"}),
+            "body" => JSON.generate({"job_id" => "123"}),
             "[]" => nil
           )
         )
@@ -51,7 +50,7 @@ class FileUploadTest < Minitest::Test
       Net::HTTP.stubs(:Proxy).returns(Net::HTTP)
       Net::HTTP.any_instance.stubs(
           :request => stub(
-            "body" => JSON.unparse({"job_id" => "123"}),
+            "body" => JSON.generate({"job_id" => "123"}),
             "[]" => nil
           )
         )
@@ -64,7 +63,7 @@ class FileUploadTest < Minitest::Test
       }
       data = {
         "job" => "update",
-        "file" => StringIO.new(JSON.unparse(email))
+        "file" => StringIO.new(JSON.generate(email))
       }
 
       response = @sailthru_client.api_post(

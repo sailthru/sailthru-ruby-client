@@ -1,19 +1,21 @@
 require 'minitest/autorun'
 require 'minitest/pride'
+require 'mocha/minitest'
 require 'uri'
 require 'json'
-require 'fakeweb'
+require 'webmock/minitest'
 
 require 'sailthru'
 
-FakeWeb.allow_net_connect = false
+WebMock.disable_net_connect!
 
 class Minitest::Test
 
   include Sailthru::Helpers
 
   def setup
-    FakeWeb.clean_registry
+    WebMock.reset!
+    @last_request_body = nil
   end
 
   def fixture_file(filename)
@@ -35,25 +37,38 @@ class Minitest::Test
   end
 
   def stub_get(url, filename, headers={})
-    options = { :body => fixture_file(filename), :content_type => 'application/json' }
-    options.merge!(headers)
-    FakeWeb.register_uri(:get, URI.parse(url), options)
+    stub_request(:get, url).to_return(:body => fixture_file(filename),
+      :headers => response_headers(headers))
   end
 
   def stub_delete(url, filename, headers={})
-    options = { :body => fixture_file(filename), :content_type => 'application/json' }
-    options.merge!(headers)
-    FakeWeb.register_uri(:delete, URI.parse(url), options)
+    stub_request(:delete, url).to_return(:body => fixture_file(filename),
+      :headers => response_headers(headers))
   end
 
   def stub_post(url, filename, headers={})
-      options = { :body => fixture_file(filename), :content_type => 'application/json' }
-      options.merge!(headers)
-    FakeWeb.register_uri(:post, URI.parse(url), options)
+    response = { :body => fixture_file(filename), :headers => response_headers(headers) }
+    stub_request(:post, url).to_return do |request|
+      @last_request_body = request.body
+      response
+    end
   end
 
   def stub_exception(url, filename)
-    FakeWeb.register_uri(:any, URI.parse(url), :exception => StandardError)
+    stub_request(:any, url).to_raise(StandardError.new('simulated network failure'))
+  end
+
+  def response_headers(headers)
+    normalized = headers.each_with_object({}) do |(name, value), result|
+      result[name.to_s.tr('_', '-')] = value.to_s
+    end
+    { 'Content-Type' => 'application/json' }.merge(normalized)
+  end
+
+  def form_parameters(body)
+    URI.decode_www_form(body).each_with_object({}) do |(name, value), params|
+      (params[name] ||= []) << value
+    end
   end
 
   def create_query_string(secret, params)

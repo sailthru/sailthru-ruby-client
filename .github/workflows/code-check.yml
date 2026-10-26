@@ -1,0 +1,55 @@
+name: Code Quality Check
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+  schedule:
+    # Check runtime compatibility every Monday at 04:37 UTC.
+    - cron: '37 4 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  discover:
+    name: Discover runtimes
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      versions: ${{ steps.versions.outputs.versions }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Test discovery and list stable runtimes
+        id: versions
+        uses: actions/github-script@v7
+        with:
+          script: |
+            require('node:child_process').execFileSync(process.execPath,
+              ['--test', '.github/scripts/runtime-matrix.test.cjs'], {stdio: 'inherit'});
+            await require('./.github/scripts/runtime-matrix.cjs')({core});
+
+  build:
+    needs: discover
+    name: Ruby ${{ matrix.ruby }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    strategy:
+      fail-fast: false
+      matrix:
+        ruby: ${{ fromJSON(needs.discover.outputs.versions) }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Ruby and install dependencies
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
+          bundler-cache: true
+
+      - name: Test and smoke-test the packaged client
+        run: bundle exec rake verify

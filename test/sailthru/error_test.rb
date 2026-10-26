@@ -19,12 +19,11 @@ class ErrorTest < Minitest::Test
 
     it "shows the true origin of the exception" do
       stub_exception(@api_call_url, 'blast_post_update_valid.json')
-      begin
+      error = assert_raises(Sailthru::ClientError) do
         @sailthru_client.cancel_blast(123)
-      rescue => e
-        assert_match /Exception from FakeWeb/, e.message
-        assert_match /Exception from FakeWeb/, e.cause.message if e.respond_to?(:cause) # Ruby 2.1
       end
+      assert_match /simulated network failure/, error.message
+      assert_match /simulated network failure/, error.cause.message
     end
   end
 end
